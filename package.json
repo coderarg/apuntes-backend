@@ -1,0 +1,16 @@
+{
+  "name": "apuntes-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "clase02-apuntes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "jsdoc -c jsdoc.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jsdoc": "^4.0.2"
+  }
+}
