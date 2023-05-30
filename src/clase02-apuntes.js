@@ -250,6 +250,7 @@ console.log();
 class Person {
     /**
      * Variable privada que solo puede accederse desde el constructor y desde un método dentro de la clase.
+     * !Siempre se definen fuera del constructor.
      */
     #fullName;
     constructor(firstName, lastName,){
@@ -270,4 +271,128 @@ class Person {
     #metodoPrivado(){
         return "Soy un método privado"
     }
+
+    getMetodoPrivado(){
+        return this.#metodoPrivado;
+    }
 }
+
+/*---------------------Actividad------------------ */
+
+//?Registrador de tickets de eventos
+
+class TicketManager {
+    #priceBaseGain = 0.15;
+
+    /**Dejo el constructor vacío y le asigno un array para que inicie vacío. */
+    constructor(){
+        this.events = [];
+    }
+
+    /**
+     * Método que toma parámetros y guarda eventos
+     * @param {string} name nombre del evento
+     * @param {string} site lugar
+     * @param {number} price precio
+     * @param {number} capacity capacidad
+     * @param {date} [date] fecha de hoy con new Date() o fecha con formato "aaaa/mm/dd"
+     * @returns {object} event lo pushea a los eventos
+     */
+    addEvent(name, site, price, capacity = 50, date = new Date()) {
+        const event = {
+            id: this.#getMaxId + 1,
+            name,
+            site,
+            capacity,
+            price: price + this.#priceBaseGain,
+            date,
+            participants: []
+        }
+
+        this.events.push(event)
+    }
+
+    /**
+     * Método privado que recorre los eventos y asigna un Id autoincremental
+     */
+    #getMaxId(){
+        let maxId = 0;
+        this.events.map((event) =>{
+            if(event.id > maxId) {
+                maxId = event.id;
+            }
+            return maxId;
+        })
+    }
+
+    /**
+     * Método para devolver todos los eventos
+     * @returns {array > object}
+     */
+    getEvents(){
+        return this.events;
+    }
+
+    /**
+     * Agregar un usuario al evento: Los envía al array de "participants" de cada evento
+     * @param {number} idEvent id de evento
+     * @param {string} idUser nombre de usuario
+     */
+    addUser(idEvent, idUser){
+        const event = this.#getEvent(idEvent);
+        if(event) {
+            if(!event.includes(idUser)) event.participants.push(idUser);
+        }else{
+            console.log("This event doesn't exist!");
+        }
+    }
+    /**
+     * 
+     * @param {number} idEvent id de evento 
+     * @returns {object} idEvent
+     */
+    #getEvent(idEvent){
+        return this.event.find(event => event.id === idEvent);
+    }
+
+
+    
+    //genera un nuevo evento a partir de un evento ya existente con nuevo 
+    /**
+     * 
+     * @param {number} idEvent numero de id
+     * @param {string} newSite Sitio donde se realiza el evento
+     * @param {date} [newDate] Fecha cuando se realiza el evento
+     */
+    eventTour(idEvent, newSite, newDate){
+        const event = this.#getEvent(idEvent);
+        if(event){
+            const newEvent = {
+                ...event,
+                id: this.#getMaxId() + 1,
+                site: newSite,
+                date: new Date(),
+                participants: []
+            };
+            this.events.push(newEvent)
+        }else{
+            console.log("This event doesn't exist")
+        }
+    }
+}
+
+const ticketManager = new TicketManager();
+
+ticketManager.addEvent('Argentina vs Nigeria', 'Santiago del Estero', 56000, 600000);
+
+ticketManager.addEvent('México vs Brasil', 'Córdoba', 56000, 300000);
+ticketManager.addEvent('Recital Metálica', 'Buenos Aires', 100000, 1000000);
+
+console.log(ticketManager.getEvents());
+
+ticketManager.addUser(1, 'Alejandro');
+ticketManager.addUser(1, 'Mateo');
+
+console.log(ticketManager.getEvents());
+
+ticketManager.eventTour(3,'Buenos Aires', new Date("2023/06/27"));
