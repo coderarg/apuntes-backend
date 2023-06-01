@@ -75,5 +75,14 @@ class ProductManager {
         }
     }
 
+    getProductById(idNumber) {
+        let findProduct = this.productos.find((element) => {
+            idNumber === element.id
+        })
+
+        return findProduct;
+        console.log(findProduct)
+    }   
 
 }
+
