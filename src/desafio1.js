@@ -98,7 +98,7 @@ class ProductManager {
         }
     }
 
-    getAllProducts() {
+    getProducts() {
         console.log(this.productos);
     }
 }
@@ -111,9 +111,16 @@ const productManager = new ProductManager();
 
 productManager.addProduct("taza", "taza de cerámica con logo de pikachu", 4500, "taza-pikachu.jpg", "taza01", 4);
 
+productManager.getProducts();
+
 productManager.addProduct("taza harry potter", "taza de cerámica con logo de harry potter", 5000, "taza-harrypotter.jpg", "taza02", 2);
+
+productManager.addProduct("taza picapiedras", "", 3500, "taza-pedropicapiedra.jpg", "taza02", 123123);
 
 productManager.addProduct("taza picapiedras", "taza con dibujo de pedro picapiedras", 3500, "taza-pedropicapiedra.jpg", "taza02", 123123);
 
-productManager.getAllProducts();
-productManager.getProductById(2);
+productManager.getProducts();
+
+productManager.getProductById(1);
+productManager.getProductById(3);
+
