@@ -39,51 +39,68 @@ class ProductManager {
      * @param {string} code código de producto
      * @param {number} stock cantidad de productos disponibles
      */
-    addProduct(title, description, price, thumbnail, code, stock){
-
-        const product = {
-            id: this.#nextId, // variable privada de la clase que se autoincrementa automáticamente después de cargar un producto.
-            title,
-            description,
-            price,
-            thumbnail,
-            code,
-            stock
-        };
+    addProduct(title, description, price, thumbnail, codigo, stock){
 
         /**
          * guardo un boolean. Si alguno de los campos están vacíos da "false"
          */
-        let verifyFields = (!title || !description || !price || !thumbnail || !code || !stock);
-        if(verifyFields){
-            console.error("Todos los campos son obligatorios.")
+        let verifyFields = (!!title || !!description || !!price || !!thumbnail || !!code || !!stock);
+        
+        if(!verifyFields){
+            console.log("Todos los campos son obligatorios.");
+            return;
         }
 
         /**
          * guardo un boolean. Si da true el codigo ingresado ya se encuentra cargado.
          */
-        let verifyCode = this.productos.some((element) => {
-            element.code === code;
+        let verifyCode = false;
+        verifyCode = this.productos.some((element) => {
+            return element.code === codigo;
         })
+
         if(verifyCode) {
-            console.error(`El código ${code} ingresado ya se encuentra en uso`)
-        }
+            console.log(`El código ${codigo} ingresado ya se encuentra en uso`);
+            return;
+        }        
 
         if(verifyFields && !verifyCode){
-            this.#nextId++;
+            const product = {
+                id: this.#nextId, // variable privada de la clase que se autoincrementa automáticamente después de cargar un producto.
+                title: title,
+                description: description,
+                price: price,
+                thumbnail: thumbnail,
+                code: codigo,
+                stock: stock
+            };
+
+
             this.productos.push(product);
+            this.#nextId++;
+
         }
+        
+        
     }
 
     getProductById(idNumber) {
         let findProduct = this.productos.find((element) => {
-            idNumber === element.id
+            element.id === idNumber
         })
 
-        return findProduct;
-        console.log(findProduct)
-    }   
+        if(findProduct) {
+            console.log(findProduct);
+            return findProduct;
+            
+        }else{
+            console.log("Not found")
+        }
+    }
 
+    getAllProducts() {
+        console.log(this.productos);
+    }
 }
 
 /* ------------------------------ 
@@ -96,4 +113,6 @@ productManager.addProduct("taza", "taza de cerámica con logo de pikachu", 4500,
 
 productManager.addProduct("taza harry potter", "taza de cerámica con logo de harry potter", 5000, "taza-harrypotter.jpg", "taza02", 2);
 
-productManager.addProduct("taza picapiedras", "", 3500, "taza-pedropicapiedra.jpg", "taza02", 4);
+productManager.addProduct("taza picapiedras", "taza con dibujo de pedro picapiedras", 3500, "taza-pedropicapiedra.jpg", "taza02", 123123);
+
+productManager.getAllProducts();
