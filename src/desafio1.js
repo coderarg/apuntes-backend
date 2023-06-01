@@ -86,7 +86,7 @@ class ProductManager {
 
     getProductById(idNumber) {
         let findProduct = this.productos.find((element) => {
-            element.id === idNumber
+            return element.id === idNumber
         })
 
         if(findProduct) {
@@ -116,3 +116,4 @@ productManager.addProduct("taza harry potter", "taza de cerámica con logo de ha
 productManager.addProduct("taza picapiedras", "taza con dibujo de pedro picapiedras", 3500, "taza-pedropicapiedra.jpg", "taza02", 123123);
 
 productManager.getAllProducts();
+productManager.getProductById(2);
