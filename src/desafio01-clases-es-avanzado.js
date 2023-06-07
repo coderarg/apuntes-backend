@@ -44,35 +44,32 @@ class ProductManager {
         /**
          * guardo un boolean. Si alguno de los campos están vacíos da "false"
          */
-        let verifyFields = (!!title || !!description || !!price || !!thumbnail || !!code || !!stock);
+        let isAllFields = (!!title && !!description && !!price && !!thumbnail && !!codigo && !!stock);
         
-        if(!verifyFields){
+        if(!isAllFields){
             console.log("Todos los campos son obligatorios.");
             return;
         }
 
-        /**
-         * guardo un boolean. Si da true el codigo ingresado ya se encuentra cargado.
-         */
-        let verifyCode = false;
-        verifyCode = this.productos.some((element) => {
+        let isCodeExist = false;
+        isCodeExist = this.productos.some((element) => {
             return element.code === codigo;
         })
 
-        if(verifyCode) {
+        if(isCodeExist) {
             console.log(`El código ${codigo} ingresado ya se encuentra en uso`);
             return;
         }        
 
-        if(verifyFields && !verifyCode){
+        if(isAllFields && !isCodeExist){
             const product = {
-                id: this.#nextId, // variable privada de la clase que se autoincrementa automáticamente después de cargar un producto.
-                title: title,
-                description: description,
-                price: price,
-                thumbnail: thumbnail,
+                id: this.#nextId,
+                title,
+                description,
+                price,
+                thumbnail,
                 code: codigo,
-                stock: stock
+                stock
             };
 
 
@@ -84,6 +81,11 @@ class ProductManager {
         
     }
 
+    /**
+     * getProductById
+     * @param {number} idNumber id del producto a encontrar
+     * @returns {object}
+     */
     getProductById(idNumber) {
         let findProduct = this.productos.find((element) => {
             return element.id === idNumber

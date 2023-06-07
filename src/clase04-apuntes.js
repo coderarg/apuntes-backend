@@ -182,6 +182,11 @@ class UsersManager {
         }
     }
 
+    /**
+     * createUser
+     * @param {object} user usuario
+     * @returns {object} usuario cargado
+     */
     async createUser(user){
         try {
             const usersFile = await this.getUsers();
