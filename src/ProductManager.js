@@ -6,7 +6,7 @@
  * !consultar, 
  * !modificar y 
  * !eliminar un producto y 
- * !manejarlo en persistencia de archivos (basado en entregable 1).
+ * manejarlo en persistencia de archivos (basado en entregable 1).
  * 
  * Aspectos a Incluir
  * La clase debe contar con una variable 
@@ -33,138 +33,131 @@
  * *Debe tener un método updateProduct, 
  * el cual debe recibir el id del producto a actualizar, así también como el campo a actualizar (puede ser el objeto completo, como en una DB), y debe actualizar el producto que tenga ese id en el archivo. NO DEBE BORRARSE SU ID 
  * *Debe tener un método deleteProduct, 
- * el cual debe recibir un id y debe eliminar el producto que tenga ese id en el archivo. 
+ * el cual debe recibir un id y debe eliminar el producto que tenga ese id en el archivo.
  */
 
 const fs = require('fs');
 
 class ProductManager {
-    constructor(path){
-        this.path = path;
+    constructor(path) {
+        this.products = [];
+        this.path = path
     }
-    #nextId = 1;
-    
-    /**
-     * getProductos: Retora todos los productos del archivo en path
-     * @returns {array<object} productos
-     */
-    async getProducts() {
+    #newId = 1;
 
+    async getProducts() {
         try {
-            if(fs.existsSync(this.path)){
+            if (fs.existsSync(this.path)) {
                 const productsJSON = await fs.promises.readFile(this.path, 'utf-8');
-                const productsJS = JSON.parse(productsJSON);
-                return productsJS;
-            }else{
-                return [];
+                this.products.splice(0, this.products.length);
+                this.products.push(...JSON.parse(productsJSON));
+                return this.products;
+            } else {
+                return this.products;
             }
         } catch (error) {
-            console.log("Error: we couldn't load file", error)
+            console.log(error);
+        }
+    }
+
+    async getProductsById(idNumber) {
+        try {
+            let products = await this.getProducts();
+            let foundProduct = products.find((element) => {
+                return element.id === idNumber;
+            });
+            console.log(foundProduct);
+            return foundProduct;
+        } catch (error) {
+            console.log(error);
         }
 
     }
 
-
-    /**addProduct:
-     * Método que agrega productos al array "productos" y luego los guarda en un archivo JSON
-     * @key {number} id se genera id autoincremental con this.nextId
-     * @param {string} title titulo del producto
-     * @param {string} description descripción del producto
-     * @param {number} price precio
-     * @param {string} thumbnail ruta de archivo
-     * @param {string} insertedCode código de producto
-     * @param {number} stock cantidad de productos disponibles
-     */
-    async addProduct(title, description, price, thumbnail, insertedCode, stock){
+    async addProduct(title, description, price, thumbnail, insertedCode, stock) {
 
         let isAllFields = (!!title && !!description && !!price && !!thumbnail && !!insertedCode && !!stock);
-        
-        if(!isAllFields){
-            console.log("All fields are necesary.");
+
+        if (!isAllFields) {
+            console.log("All fields are requiered");
             return;
         }
 
-        let isCodeExist = false;
-        isCodeExist = this.productos.some((element) => {
+        try {
+            await this.getProducts();
+        } catch (error) {
+            console.log(error);
+        }
+
+        let isCodeExist = this.products.some((element) => {
             return element.code === insertedCode;
-        })
+        });
 
-        if(isCodeExist) {
-            console.log(`Code number ${insertedCode} doesn't exist`);
+        if (isCodeExist) {
+            console.log("Error: Product code already exist");
             return;
-        }        
+        }
+        if (isAllFields && !isCodeExist) {
 
-        if(isAllFields && !isCodeExist){
             const product = {
-                id: this.#nextId,
+                id: this.#newId,
                 title,
                 description,
                 price,
                 thumbnail,
                 code: insertedCode,
                 stock
-            };
+            }
+
+            this.products.push(product);
+            this.#newId++;
 
             try {
-                const productsJS = await this.getProducts();
-                productsJS.push(product);
-                await fs.promises.writeFile(path, JSON.stringify(productsJS))
-                return product
+                await fs.promises.writeFile(this.path, JSON.stringify(this.products));
             } catch (error) {
                 console.log(error);
             }
+        }
 
-            this.#nextId++;
-        }        
     }
 
-    async getProductById(idNumber) {
-
+    async updateProduct(idNumber, updated) {
         try {
-            const productsJS = await this.getProducts();
-            
+            await this.getProducts();
+            let index = this.products.findIndex((element) => {
+                return element.id === idNumber;
+            });
+
+            if(updated.code){
+                if(this.products.some((product) => {
+                    return product.code === updated.code
+                })){
+                    console.log("Error: Product code already exists");
+                    return;
+                }
+            }
+
+            let modifiedProducts = {
+                ...this.products[index],
+                ...updated
+            }
+            this.products[index] = modifiedProducts;
+            await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+
         } catch (error) {
-            
+            console.log(error);
         }
-        let findProduct = this.products.find((element) => {
-            return element.id === idNumber
-        })
-
-        if(findProduct) {
-            console.log(findProduct);
-            return findProduct;
-            
-        }else{
-            console.log("Not found")
-        }
-    }
-
-    updateProduct(idNumber){
-
-    }
-
-    deleteProduct(idNumber){
-
     }
 }
 
-/* ------------------------------ 
-          Verificación 
------------------------------- */
-
-const productManager = new ProductManager();
-
-productManager.addProduct("taza", "taza de cerámica con logo de pikachu", 4500, "taza-pikachu.jpg", "taza01", 4);
-
+const productManager = new ProductManager('./productos.json');
 productManager.getProducts();
+//productManager.addProduct('', 'descripción 1', 100, './imagen1.png', 'A1111', 5);
+productManager.addProduct('1', 'descripción 1', 100, './imagen1.png', 'A1111', 5);
+productManager.addProduct('2', 'descripción 2', 200, './imagen2.png', 'A2222', 5);
+//productManager.addProduct('producto 3', 'descripción 3', 300, './imagen3.png', 'A2222', 5);
+productManager.addProduct('producto 3', 'descripción 3', 300, './imagen3.png', 'A3333', 5);
+//productManager.getProductsById(1);
+//productManager.getProductsById(3);
+productManager.updateProduct(3, {title:'modificado', description: 'modificatres'});
 
-productManager.addProduct("taza harry potter", "taza de cerámica con logo de harry potter", 5000, "taza-harrypotter.jpg", "taza02", 2);
-
-productManager.addProduct("taza picapiedras", "", 3500, "taza-pedropicapiedra.jpg", "taza02", 123123);
-
-productManager.addProduct("taza picapiedras", "taza con dibujo de pedro picapiedras", 3500, "taza-pedropicapiedra.jpg", "taza02", 123123);
-
-productManager.getProducts();
-
-productManager.getProductById(1);
-productManager.getProductById(3);

@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "jsdoc": "^4.0.2"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.22"
   }
 }
