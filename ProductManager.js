@@ -50,7 +50,6 @@ class ProductManager {
             if (fs.existsSync(this.path)) {
                 const productsJSON = await fs.promises.readFile(this.path, 'utf-8');
                 this.products.splice(0, this.products.length);
-                console.log("Borramos los productos?", this.products)
                 this.products.push(...JSON.parse(productsJSON));
                 return this.products;
             } else {
@@ -165,8 +164,8 @@ class ProductManager {
                 });
             
                 this.products.splice(index, 1);
-                console.log(this.products);
-                this.saveProducts(this.products)
+                await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+                return;
             }else{
                 console.log("Error: Product does not exist");
             }
@@ -183,21 +182,19 @@ class ProductManager {
             console.log(error);
         }
     }
-
-    async deleteFile(){
-        try {
-            await fs.promises.unlink(path)
-        } catch (error) {
-            
-        }
-    }
 }
 
 const productManager = new ProductManager('./productsFile.json');
 
-productManager.addProduct('Product 1', 'Description 1', 100, './images/product1.jpg', '123456', 10);
-productManager.addProduct('Product 2', 'Description 2', 200, './images/product2.jpg', '679012', 20);
-productManager.addProduct('Product 3', 'Description 3', 300, './images/product3.jpg', '234567', 30);
+const test = async()=>{
+    await productManager.addProduct('Product 1', 'Description 1', 100, './images/product1.jpg', '123456', 10);
+    await productManager.addProduct('Product 2', 'Description 2', 200, './images/product2.jpg', '679012', 20);
+    await productManager.addProduct('Product 3', 'Description 3', 300, './images/product3.jpg', '234567', 30);
 
-//productManager.updateProduct(2, {description: 'Modificado', title: 'modifica title', price: 333});
-productManager.deleteProduct(1);
+    await productManager.updateProduct(2, {title: 'modificado', code:'234567'});
+    await productManager.updateProduct(3, {title: 'modifica3', code:'123654'});
+
+    await productManager.deleteProduct(1);
+}
+
+test();
