@@ -50,6 +50,7 @@ class ProductManager {
             if (fs.existsSync(this.path)) {
                 const productsJSON = await fs.promises.readFile(this.path, 'utf-8');
                 this.products.splice(0, this.products.length);
+                console.log("Borramos los productos?", this.products)
                 this.products.push(...JSON.parse(productsJSON));
                 return this.products;
             } else {
@@ -76,15 +77,15 @@ class ProductManager {
 
     async addProduct(title, description, price, thumbnail, insertedCode, stock) {
 
-        let isAllFields = (!!title && !!description && !!price && !!thumbnail && !!insertedCode && !!stock);
-
-        if (!isAllFields) {
-            console.log("All fields are requiered");
-            return;
-        }
-
         try {
             await this.getProducts();
+            
+            let isAllFields = (!!title && !!description && !!price && !!thumbnail && !!insertedCode && !!stock);
+
+            if (!isAllFields) {
+                console.log("All fields are requiered");
+                return;
+            }
        
             let isCodeExist = this.products.some((element) => {
                 return element.code === insertedCode;
@@ -94,8 +95,8 @@ class ProductManager {
                 console.log("Error: Product code already exist");
                 return;
             }
+
             if (isAllFields && !isCodeExist) {
-    
                 const product = {
                     id: this.#newId,
                     title,
@@ -105,22 +106,15 @@ class ProductManager {
                     code: insertedCode,
                     stock
                 }
-    
+
                 this.products.push(product);
                 this.#newId++;
-    
-                try {
-                    await fs.promises.writeFile(this.path, JSON.stringify(this.products));
-                } catch (error) {
-                    console.log(error);
-                }
+                await fs.promises.writeFile(this.path, JSON.stringify(this.products));
             }
+                
         } catch (error) {
             console.log(error);
         }
-
-
-
     }
 
     async updateProduct(idNumber, updated) {
@@ -140,7 +134,7 @@ class ProductManager {
                         ...updated
                     }
                     this.products[index] = modifiedProducts;
-                    await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+                    this.saveProducts(this.products);
             
                 } else {
                     console.log("Error: Product code already exist");
@@ -152,7 +146,7 @@ class ProductManager {
                     ...updated
                 }
                 this.products[index] = modifiedProducts;
-                await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+                this.saveProducts(this.products);
                 
             }
             
@@ -162,30 +156,48 @@ class ProductManager {
     }     
 
     async deleteProduct(idNumber) {
-       
         try {
             await this.getProducts();
+
             if(this.products.some(element => element.id === idNumber)){
                 let index = this.products.findIndex((element) => {
                     return element.id === idNumber;
                 });
             
                 this.products.splice(index, 1);
-                await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+                console.log(this.products);
+                this.saveProducts(this.products)
             }else{
                 console.log("Error: Product does not exist");
             }
         } catch (error) {
             console.log(error);
         }
-        
+    }
+
+    async saveProducts(elements){
+        try {
+            const productsJS = JSON.stringify(elements);
+            await fs.promises.writeFile(this.path, productsJS);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async deleteFile(){
+        try {
+            await fs.promises.unlink(path)
+        } catch (error) {
+            
+        }
     }
 }
 
 const productManager = new ProductManager('./productsFile.json');
-productManager.getProducts();
-productManager.addProduct('producto1', 'descripción 1', 100, './imagen1.png', 'A1111', 5);
-productManager.addProduct('producto2', 'descripción 2', 200, './imagen2.png', 'A2222', 5);
-productManager.addProduct('producto3', 'descripción 3', 300, './imagen3.png', 'A3333', 5);
-productManager.deleteProduct(1);
 
+productManager.addProduct('Product 1', 'Description 1', 100, './images/product1.jpg', '123456', 10);
+productManager.addProduct('Product 2', 'Description 2', 200, './images/product2.jpg', '679012', 20);
+productManager.addProduct('Product 3', 'Description 3', 300, './images/product3.jpg', '234567', 30);
+
+//productManager.updateProduct(2, {description: 'Modificado', title: 'modifica title', price: 333});
+productManager.deleteProduct(1);
