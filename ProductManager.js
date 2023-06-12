@@ -36,8 +36,13 @@
  * el cual debe recibir un id y debe eliminar el producto que tenga ese id en el archivo.
  */
 
+
 const fs = require('fs');
 
+/**
+ * ProductManager: Clase
+ * @param {string} path diracción donde se guarda el archivo
+ */
 class ProductManager {
     constructor(path) {
         this.products = [];
@@ -45,6 +50,9 @@ class ProductManager {
     }
     #newId = 1;
 
+    /**
+     * getProductos: Método para cargar productos del archivo .json al array "this.products"
+    */
     async getProducts() {
         try {
             if (fs.existsSync(this.path)) {
@@ -60,7 +68,12 @@ class ProductManager {
         }
     }
 
-    async getProductsById(idNumber) {
+    /**
+     * getProductById: Método para mostrar un producto por su id
+     * @param {number} idNumber 
+     * @returns {object} producto
+     */
+    async getProductById(idNumber) {
         try {
             let products = await this.getProducts();
             let foundProduct = products.find((element) => {
@@ -74,6 +87,16 @@ class ProductManager {
 
     }
 
+    /**
+     * addProduct: Método para agregar un producto.
+     * @param {string} title Título de producto
+     * @param {string} description Descripción de producto
+     * @param {number} price 
+     * @param {string} thumbnail Ruta de imagen
+     * @param {string} insertedCode Código de producto
+     * @param {number} stock 
+     * @returns {file} archivo .json
+     */
     async addProduct(title, description, price, thumbnail, insertedCode, stock) {
 
         try {
@@ -116,6 +139,12 @@ class ProductManager {
         }
     }
 
+    /**
+     * updateProduct: Método para modificar atributos de un producto
+     * @param {number} idNumber id productogram
+     * @param {object} updated atributos a modificar
+     * @returns {file} archivo .json
+     */
     async updateProduct(idNumber, updated) {
         try {
             await this.getProducts();
@@ -154,6 +183,11 @@ class ProductManager {
         }
     }     
 
+    /**
+     * deleteProduct: Método para elemintar un producto por su id
+     * @param {number} idNumber id producto
+     * @returns {file} archivo .json
+     */
     async deleteProduct(idNumber) {
         try {
             await this.getProducts();
@@ -164,7 +198,7 @@ class ProductManager {
                 });
             
                 this.products.splice(index, 1);
-                await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+                await this.saveProducts(this.products)
                 return;
             }else{
                 console.log("Error: Product does not exist");
@@ -174,6 +208,11 @@ class ProductManager {
         }
     }
 
+    /**
+     * saveProducts: Método para guardar los productos en archivo .json
+     * @param {array} productos
+     * @return {object} archivo .json 
+     */
     async saveProducts(elements){
         try {
             const productsJS = JSON.stringify(elements);
@@ -183,6 +222,10 @@ class ProductManager {
         }
     }
 }
+
+/* ---------------------------------- 
+                Test 
+---------------------------------- */
 
 const productManager = new ProductManager('./productsFile.json');
 
