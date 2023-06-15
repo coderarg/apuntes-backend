@@ -24,9 +24,7 @@ export default class UserManager{
         let maxId = 0;
         const users = await this.getUsers();
         users.map((user) => {
-            if (user.id > maxId){
-                return maxId = user.id;
-            }
+            if (user.id > maxId) maxId = user.id;
         })
         return maxId;
     }
@@ -47,13 +45,9 @@ export default class UserManager{
 
     async getUserById(id){
         try {
-            const users = await this.getUsers();
-            const user = usersFile.find(u => u.id === id);
-            if(user){
-                return user;
-            }else{
-                return false;
-            }
+            const usersFile = await this.getUsers();
+            const user = usersFile.find((u) => u.id === id);
+            user ? user : false;
         } catch (error) {
             console.log(error);
         }
@@ -66,9 +60,7 @@ export default class UserManager{
             if(index === -1){
                 throw new Error('Id not found');
             } else {
-                usersFile[index] = {
-                    ...obj, id
-                }
+                usersFile[index] = {...obj, id}
             }
             await fs.promises.writeFile(this.path, JSON.stringify(usersFile));
         } catch (error) {

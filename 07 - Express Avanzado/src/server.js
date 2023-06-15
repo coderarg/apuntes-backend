@@ -68,7 +68,7 @@ app.post('/users', async (req, res) => {
             email
         }
         const newUser = await userManager.createUser(user)
-        //await userManager.createUser({ firstName, lastName, email }) //también podemos hacerlo directamente como otra opción.
+        //await userManager.createUser({ firstName, lastName, email }) //también podemos hacerlo directamente - otra opción.
         res.json(newUser);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -96,7 +96,7 @@ app.delete('/users/:idUser', async (req, res) => {
     try {
         const { idUser } = req.params;
         const idNumber = parseInt(idUser);
-        const userExist = await userManager.getUserById(parseInd(idUser));
+        const userExist = await userManager.getUserById(idNumber);
         if (userExist) {
             await userManager.deleteUser(idNumber);
             res.status(200).json({message: `User ${idNumber} deleted ok`});
@@ -107,7 +107,6 @@ app.delete('/users/:idUser', async (req, res) => {
         res.status(500).json({ message: "Error" })
     }
 });
-
 
 app.listen(8080, () => {
     console.log('Server ok on port:8080');
