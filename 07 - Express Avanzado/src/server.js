@@ -9,7 +9,7 @@ const app = express();
 
 //esto debemos ponerlo siempre para tomar la info del cliente-front
 app.use(express.json());//info que nos llega desde el body
-app.use(express.urlencoded({ extended: true })); //info que nos llega desde el url del cliente.
+app.use(express.urlencoded({extended:true})); //info que nos llega desde el url del cliente.
 
 const userManager = new UserManager('./users.json');
 
@@ -22,7 +22,7 @@ app.get('/users', async (req, res) => {
         const users = await userManager.getUsers(); //traigo los usuarios (si no hay archivo trae array vacio [])
         res.status(200).json(users);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({message: error.message});
     }
 })
 
@@ -34,16 +34,16 @@ app.get('/users/:idUser', async (req, res) => {
         if (user) {
             res.json(user); //si existe lo devuelvo
         } else {
-            res.status(400).json({ message: 'User not found' });
+            res.status(400).json({message: 'User not found'});
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({message: error.message});
     }
 })
 
-app.get('search', async (req, res) => {
+app.get('/search', async (req, res) => {
     try {
-        const { idUser } = req.params;
+        const { idUser } = req.query;
         const user = await userManager.getUserById(Number(idUser));
         if (user) {
             res.json(user);
@@ -52,7 +52,6 @@ app.get('search', async (req, res) => {
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
-
     }
 })
 
@@ -83,7 +82,7 @@ app.put("/users/:idUser", async (req, res) => {
         const userExist = await userManager.getUserById(idNumber);
         if (userExist) {
             await userManager.updateUser(user, idNumber);
-            res.json({ message: `User id: ${idNumber} updated` });
+            res.status(500).json({ message: `User id: ${idNumber} updated` });
         } else {
             res.status(400).json({ message: `User id: ${idNumber} Not found` });
         }
@@ -99,7 +98,7 @@ app.delete('/users/:idUser', async (req, res) => {
         const userExist = await userManager.getUserById(idNumber);
         if (userExist) {
             await userManager.deleteUser(idNumber);
-            res.status(200).json({message: `User ${idNumber} deleted ok`});
+            res.json({message: `User ${idNumber} deleted ok`});
         } else {
             res.json({ message: "User not found" });
         }

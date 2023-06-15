@@ -20,22 +20,22 @@ export default class UserManager{
         }
     }
 
-    async #getMaxId(){
+    async #getMaxId() {
         let maxId = 0;
         const users = await this.getUsers();
-        users.map((user) => {
-            if (user.id > maxId) maxId = user.id;
-        })
+        users.map((user) => { 
+          if (user.id > maxId) maxId = user.id;                                       
+        });
         return maxId;
     }
 
     async getUsers(){
         try {
             if(fs.existsSync(this.path)){
-                const users = await fs.promises.readFile(this.path, 'utf8');
-                const userJS = JSON.parse(users);
-                return userJS;
-            }else{
+                const users = await fs.promises.readFile(this.path, 'utf-8');
+                const usersJS = JSON.parse(users);
+                return usersJS
+            } else {
                 return [];
             }
         } catch (error) {
@@ -45,22 +45,24 @@ export default class UserManager{
 
     async getUserById(id){
         try {
-            const usersFile = await this.getUsers();
-            const user = usersFile.find((u) => u.id === id);
-            user ? user : false;
+           const usersFile = await this.getUsers();
+           const user = usersFile.find((u)=> u.id === id); 
+           if(user) return user
+           else return false;
+        //    user ? user : false
         } catch (error) {
             console.log(error);
         }
     }
 
-    async updateUser(obj, id) {
+    async updateUser(obj, id){
         try {
             const usersFile = await this.getUsers();
-            const index = usersFile.findIndex(u => u.id === id);
+            const index = usersFile.findIndex(user => user.id === id);
             if(index === -1){
-                throw new Error('Id not found');
+                throw new Error('id not found');
             } else {
-                usersFile[index] = {...obj, id}
+                usersFile[index] = { ...obj, id }
             }
             await fs.promises.writeFile(this.path, JSON.stringify(usersFile));
         } catch (error) {
@@ -72,17 +74,13 @@ export default class UserManager{
         try {
             const usersFile = await this.getUsers();
             if(usersFile.length > 0){
-                const newArray = usersFile.filter((user) => {
-                    return user.id !== id;
-                })
+                const newArray = usersFile.filter(user => user.id !== id);
                 await fs.promises.writeFile(this.path, JSON.stringify(newArray));
-            }else{
+            } else {
                 throw new Error('User not found');
             }
         } catch (error) {
             console.log(error);
         }
     }
-
-    
 }
