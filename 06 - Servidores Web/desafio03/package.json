@@ -1,0 +1,16 @@
+{
+  "name": "desafio03",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./server-express.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

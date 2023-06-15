@@ -20,7 +20,7 @@ const userManager = new UserManager('./users.json');
 app.get('/users', async (req, res) => {
     try {
         const users = await userManager.getUsers(); //traigo los usuarios (si no hay archivo trae array vacio [])
-        res.status(200).json(users);
+        res.json(users);
     } catch (error) {
         res.status(500).json({message: error.message});
     }
@@ -55,18 +55,13 @@ app.get('/search', async (req, res) => {
     }
 })
 
-app.post('/users', async (req, res) => {
+app.post('/users', async (req, res)=>{
     try {
-
         //console.log(req.body);//desde acá tenemos accesos a lo que envía el cliente desde el </body>
         //const user = req.body
         const { firstName, lastName, email } = req.body; //traemos lo que envía el cliente
-        const user = { //podemos guardarlo en un objeto y después enviarlo con createUser
-            firstName,
-            lastName,
-            email
-        }
-        const newUser = await userManager.createUser(user)
+        const user = { firstName, lastName, email};//podemos guardarlo en un objeto y después enviarlo con createUser.
+        const newUser = await userManager.createUser(user);
         //await userManager.createUser({ firstName, lastName, email }) //también podemos hacerlo directamente - otra opción.
         res.json(newUser);
     } catch (error) {
