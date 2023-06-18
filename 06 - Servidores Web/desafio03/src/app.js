@@ -2,7 +2,10 @@ import express from 'express';
 import ProductManager from './manager/ProductManager.js'
 const app = express();
 
-const productManager = new ProductManager('./products.json');
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+
+const productManager = new ProductManager('./productsFile.json');
 
 /* ------------------------------------ - ----------------------------------- */
 
@@ -34,8 +37,8 @@ app.post('/products', async(req, res)=>{
     try{
         const { title, description, price, thumbnail, code, stock} = req.body;
 
-        
-        const newProduct = await productManager.addProduct(title, description, price, thumbnail, code, stock);
+        const product = { title, description, price, thumbnail, code, stock};
+        const newProduct = await productManager.addProduct(product);
         
         console.log(newProduct);
         res.json(newProduct)

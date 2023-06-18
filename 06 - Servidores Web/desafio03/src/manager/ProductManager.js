@@ -48,22 +48,12 @@ export default class ProductManager {
 
     }
 
-    /**
-     * addProduct: Método para agregar un producto.
-     * @param {string} title Título de producto
-     * @param {string} description Descripción de producto
-     * @param {number} price 
-     * @param {string} thumbnail Ruta de imagen
-     * @param {string} insertedCode Código de producto
-     * @param {number} stock 
-     * @returns {file} archivo .json
-     */
-    async addProduct(title, description, price, thumbnail, insertedCode, stock) {
+    async addProduct(newProduct) {
 
         try {
             await this.getProducts();
             
-            let isAllFields = (!!title && !!description && !!price && !!thumbnail && !!insertedCode && !!stock);
+            let isAllFields = (!!newProduct.title && !!newProduct.description && !!newProduct.price && !!newProduct.thumbnail && !!newProduct.code && !!newProduct.stock);
 
             if (!isAllFields) {
                 console.log("All fields are requiered");
@@ -71,7 +61,7 @@ export default class ProductManager {
             }
        
             let isCodeExist = this.products.some((element) => {
-                return element.code === insertedCode;
+                return element.code === newProduct.code;
             });
 
             if (isCodeExist) {
@@ -80,15 +70,7 @@ export default class ProductManager {
             }
 
             if (isAllFields && !isCodeExist) {
-                const product = {
-                    id: this.#newId,
-                    title,
-                    description,
-                    price,
-                    thumbnail,
-                    code: insertedCode,
-                    stock
-                }
+                const product = {id: this.#newId, ...newProduct}
 
                 this.products.push(product);
                 this.#newId++;
@@ -123,7 +105,7 @@ export default class ProductManager {
                         ...updated
                     }
                     this.products[index] = modifiedProducts;
-                    this.saveProducts(this.products);
+                    await this.saveProducts(this.products);
             
                 } else {
                     console.log("Error: Product code already exist");
@@ -135,7 +117,7 @@ export default class ProductManager {
                     ...updated
                 }
                 this.products[index] = modifiedProducts;
-                this.saveProducts(this.products);
+                await this.saveProducts(this.products);
                 
             }
             
@@ -183,3 +165,50 @@ export default class ProductManager {
         }
     }
 }
+
+/* ---------------------------------- 
+                Test 
+---------------------------------- */
+
+/* const productManager = new ProductManager('./productsFile.json');
+
+const test = async()=>{
+    
+    await productManager.addProduct(
+        {
+            title: "Product 1",
+            description: "Description 1",
+            price: 100,
+            thumbnail: './images/product1.jpg',
+            code: '123456',
+            stock: 10
+        }
+    );
+    await productManager.addProduct(
+        {
+            title: "Product 2",
+            description: "Description 2",
+            price: 200,
+            thumbnail: './images/product2.jpg',
+            code: '3456789',
+            stock: 20
+        }
+    );
+    await productManager.addProduct(
+        {
+            title: "Product 3",
+            description: "Description 3",
+            price: 300,
+            thumbnail: './images/product3.jpg',
+            code: '938475',
+            stock: 30
+        }
+    );
+
+    await productManager.updateProduct(2, {title: 'modificado', code:'234567'});
+    await productManager.updateProduct(3, {title: 'modifica3', code:'123654'});
+
+    await productManager.deleteProduct(1);
+}
+
+test(); */
