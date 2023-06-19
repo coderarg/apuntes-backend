@@ -18,10 +18,10 @@ app.get('/products', async(req, res) => {
     }
 });
 
-app.get('/products/:idProduct', async(req, res) => {
+app.get('/products/:pid', async(req, res) => {
     try {
-        const { idProduct } = req.params;
-        const product = await productManager.getProductById(Number(idProduct));
+        const { pid } = req.params;
+        const product = await productManager.getProductById(Number(pid));
 
         if(product){
             res.json(product);
@@ -82,7 +82,7 @@ app.put('/products/:idProduct', async(req, res) => {
     }
 });
 
-app.delete('/user/:idProduct', async(req, res)=>{
+app.delete('/products/:idProduct', async(req, res)=>{
     try {
         const { idProduct } = req.params;
         const idNumber = Number(idProduct);
