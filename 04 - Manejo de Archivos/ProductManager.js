@@ -48,7 +48,8 @@ class ProductManager {
         this.products = [];
         this.path = path
     }
-    #newId = 1;
+
+    #maxId = 0;
 
     /**
      * getProductos: Método para cargar productos del archivo .json al array "this.products"
@@ -119,8 +120,9 @@ class ProductManager {
             }
 
             if (isAllFields && !isCodeExist) {
+
                 const product = {
-                    id: this.#newId,
+                    id: await this.#getMaxId() + 1,
                     title,
                     description,
                     price,
@@ -130,7 +132,6 @@ class ProductManager {
                 }
 
                 this.products.push(product);
-                this.#newId++;
                 await fs.promises.writeFile(this.path, JSON.stringify(this.products));
             }
                 
@@ -208,6 +209,21 @@ class ProductManager {
         }
     }
 
+    async #getMaxId() {
+        try {
+            await this.getProducts();
+
+            this.products.forEach((element) => {
+                if(element.id > this.#maxId){
+                    this.#maxId = element.id
+                }
+            })
+            return this.#maxId;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     /**
      * saveProducts: Método para guardar los productos en archivo .json
      * @param {array} productos
@@ -234,8 +250,8 @@ const test = async()=>{
     await productManager.addProduct('Product 2', 'Description 2', 200, './images/product2.jpg', '679012', 20);
     await productManager.addProduct('Product 3', 'Description 3', 300, './images/product3.jpg', '234567', 30);
 
-    await productManager.updateProduct(2, {title: 'modificado', code:'234567'});
-    await productManager.updateProduct(3, {title: 'modifica3', code:'123654'});
+    await productManager.updateProduct(2, {title: 'modifica3', code:'321123'});
+    await productManager.updateProduct(3, {title: 'modifica4', code:'321321'});
 
     await productManager.deleteProduct(1);
 }

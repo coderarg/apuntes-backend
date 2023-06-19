@@ -57,7 +57,6 @@ app.put('/products/:idProduct', async(req, res) => {
         if(productExist){
             await productManager.updateProduct(idNumber, productToUpdate);
             res.json({ message: `Product id:${idNumber} updated`});
-            //Se pasa el id del elemento que quiero modificar y los atributos a modificar, pero por alguna razón que desconozco devuelve error por catch.
         } else {
             res.status(400).json({ message: `Product id: ${idNumber} not found`})
         }

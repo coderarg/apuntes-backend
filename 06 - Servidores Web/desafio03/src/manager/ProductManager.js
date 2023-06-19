@@ -9,7 +9,7 @@ export default class ProductManager {
         this.products = [];
         this.path = path
     }
-    #newId = 1;
+    #maxId = 0;
 
     /**
      * getProductos: Método para cargar productos del archivo .json al array "this.products"
@@ -70,10 +70,9 @@ export default class ProductManager {
             }
 
             if (isAllFields && !isCodeExist) {
-                const product = {id: this.#newId, ...newProduct}
+                const product = {id: await this.#getMaxId() + 1, ...newProduct}
 
                 this.products.push(product);
-                this.#newId++;
                 await fs.promises.writeFile(this.path, JSON.stringify(this.products));
             }
                 
@@ -151,6 +150,21 @@ export default class ProductManager {
         }
     }
 
+    async #getMaxId() {
+        try {
+            await this.getProducts();
+
+            this.products.forEach((element) => {
+                if(element.id > this.#maxId){
+                    this.#maxId = element.id
+                }
+            })
+            return this.#maxId;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     /**
      * saveProducts: Método para guardar los productos en archivo .json
      * @param {array} productos
@@ -165,50 +179,3 @@ export default class ProductManager {
         }
     }
 }
-
-/* ---------------------------------- 
-                Test 
----------------------------------- */
-
-/* const productManager = new ProductManager('./productsFile.json');
-
-const test = async()=>{
-    
-    await productManager.addProduct(
-        {
-            title: "Product 1",
-            description: "Description 1",
-            price: 100,
-            thumbnail: './images/product1.jpg',
-            code: '123456',
-            stock: 10
-        }
-    );
-    await productManager.addProduct(
-        {
-            title: "Product 2",
-            description: "Description 2",
-            price: 200,
-            thumbnail: './images/product2.jpg',
-            code: '3456789',
-            stock: 20
-        }
-    );
-    await productManager.addProduct(
-        {
-            title: "Product 3",
-            description: "Description 3",
-            price: 300,
-            thumbnail: './images/product3.jpg',
-            code: '938475',
-            stock: 30
-        }
-    );
-
-    await productManager.updateProduct(2, {title: 'modificado', code:'234567'});
-    await productManager.updateProduct(3, {title: 'modifica3', code:'123654'});
-
-    await productManager.deleteProduct(1);
-}
-
-test(); */
