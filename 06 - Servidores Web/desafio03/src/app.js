@@ -33,6 +33,25 @@ app.get('/products/:idProduct', async(req, res) => {
     }
 });
 
+app.get('/products/?limit', async(req,res) => {
+    
+    try {
+        const { limit } = req.query;
+        const products = await productManager.getProducts();
+
+        if(products.length < limit){
+            const limitedProducts = products.splice(0, limit);
+            res.json(limitedProducts);
+        }else{
+            res.status(400).json({message: `The limit(${limit}) is highest than the products number ${products.length}`})
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+        
+
+})
+
 app.post('/products', async(req, res)=>{
     try{
         const { title, description, price, thumbnail, code, stock} = req.body;
