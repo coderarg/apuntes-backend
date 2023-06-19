@@ -77,7 +77,7 @@ app.put("/users/:idUser", async (req, res) => {
         const userExist = await userManager.getUserById(idNumber);
         if (userExist) {
             await userManager.updateUser(user, idNumber);
-            res.status(500).json({ message: `User id: ${idNumber} updated` });
+            res.json({ message: `User id: ${idNumber} updated` });
         } else {
             res.status(400).json({ message: `User id: ${idNumber} Not found` });
         }

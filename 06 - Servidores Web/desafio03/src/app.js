@@ -41,7 +41,7 @@ app.post('/products', async(req, res)=>{
         const newProduct = await productManager.addProduct(product);
         
         console.log(newProduct);
-        res.json(newProduct)
+        res.json({message: `${product} added`})
     }catch (error){
         res.status(500).json({error: error.message})
     }
@@ -50,13 +50,40 @@ app.post('/products', async(req, res)=>{
 app.put('/products/:idProduct', async(req, res) => {
     try {
         const { idProduct } = req.params;
-        const productUpdated = req.body;
-        const product = await productManager.updateProduct(idProduct, productUpdated);
-        res.status(200).json({message: `Producto id:${idProduct} updated`});
+        const idNumber = Number(idProduct);
+        const productToUpdate = req.body;
+
+        const productExist = await productManager.getProductById(idNumber);
+        if(productExist){
+            await productManager.updateProduct(idNumber, productToUpdate);
+            res.json({ message: `Product id:${idNumber} updated`});
+            //Se pasa el id del elemento que quiero modificar y los atributos a modificar, pero por alguna razón que desconozco devuelve error por catch.
+        } else {
+            res.status(400).json({ message: `Product id: ${idNumber} not found`})
+        }
     } catch (error) {
         res.status(500).json({message: "Error updating product"})
     }
 });
+
+app.delete('/user/:idProduct', async(req, res)=>{
+    try {
+        const { idProduct } = req.params;
+        const idNumber = Number(idProduct);
+
+        const productExist = await productManager.getProductById(idNumber);
+            
+        if(productExist) {
+            await productManager.deleteProduct(idNumber);
+            res.json({message: `Product with id ${idNumber} deleted`});
+        } else {
+            res.status(500).json({message: `Product not found`})
+        }
+    } catch (error) {
+        res.status(500).json({message: "Error"});
+    }
+})
+
 
 app.listen(8080, () =>{
     console.log("Server ok on port 8080");
