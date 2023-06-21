@@ -33,11 +33,9 @@ app.get('/products/:idProduct', async(req, res) => {
 app.post('/products', async(req, res)=>{
     try{
         const { title, description, price, thumbnail, code, stock} = req.body;
-
+        const product = { title, description, price, thumbnail, code, stock};
+        const newProduct = await productManager.addProduct(product);
         
-        const newProduct = await productManager.addProduct(title, description, price, thumbnail, code, stock);
-        
-        console.log(newProduct);
         res.json(newProduct)
     }catch (error){
         res.status(500).json({error: error.message})

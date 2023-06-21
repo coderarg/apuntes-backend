@@ -58,12 +58,13 @@ export default class ProductManager {
      * @param {number} stock 
      * @returns {file} archivo .json
      */
-    async addProduct(title, description, price, thumbnail, insertedCode, stock) {
+    async addProduct(product) {
 
         try {
             await this.getProducts();
             
-            let isAllFields = (!!title && !!description && !!price && !!thumbnail && !!insertedCode && !!stock);
+
+            let isAllFields = (!!product.title && !!product.description && !!product.price && !!product.thumbnail && !!product.code && !!product.stock);
 
             if (!isAllFields) {
                 console.log("All fields are requiered");
@@ -71,7 +72,7 @@ export default class ProductManager {
             }
        
             let isCodeExist = this.products.some((element) => {
-                return element.code === insertedCode;
+                return element.code === product.code;
             });
 
             if (isCodeExist) {
@@ -80,17 +81,12 @@ export default class ProductManager {
             }
 
             if (isAllFields && !isCodeExist) {
-                const product = {
+                const newProduct = {
                     id: this.#newId,
-                    title,
-                    description,
-                    price,
-                    thumbnail,
-                    code: insertedCode,
-                    stock
+                    ...product
                 }
 
-                this.products.push(product);
+                this.products.push(newProduct);
                 this.#newId++;
                 await fs.promises.writeFile(this.path, JSON.stringify(this.products));
             }
