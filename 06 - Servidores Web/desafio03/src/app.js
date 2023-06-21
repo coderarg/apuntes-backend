@@ -2,7 +2,10 @@ import express from 'express';
 import ProductManager from './manager/ProductManager.js'
 const app = express();
 
-const productManager = new ProductManager('./products.json');
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+
+const productManager = new ProductManager('./productsFile.json');
 
 /* ------------------------------------ - ----------------------------------- */
 
@@ -15,10 +18,10 @@ app.get('/products', async(req, res) => {
     }
 });
 
-app.get('/products/:idProduct', async(req, res) => {
+app.get('/products/:pid', async(req, res) => {
     try {
-        const { idProduct } = req.params;
-        const product = await productManager.getProductById(Number(idProduct));
+        const { pid } = req.params;
+        const product = await productManager.getProductById(Number(pid));
 
         if(product){
             res.json(product);
@@ -30,13 +33,32 @@ app.get('/products/:idProduct', async(req, res) => {
     }
 });
 
+app.get('/limit', async(req,res) => {
+    
+    try {
+        const { cant } = req.query;
+        const products = await productManager.getProducts();
+        if(cant <= products.length){
+            const limitedProducts = products.splice(0, cant);
+            console.log(limitedProducts);
+            res.json(limitedProducts);
+        }else{
+            res.status(400).json({message: `The limit(${cant}) is highest than the products number (${products.length})`})
+        }
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
 app.post('/products', async(req, res)=>{
     try{
         const { title, description, price, thumbnail, code, stock} = req.body;
+
         const product = { title, description, price, thumbnail, code, stock};
         const newProduct = await productManager.addProduct(product);
         
-        res.json(newProduct)
+        console.log(newProduct);
+        res.json({message: `${product} added`})
     }catch (error){
         res.status(500).json({error: error.message})
     }
@@ -45,13 +67,39 @@ app.post('/products', async(req, res)=>{
 app.put('/products/:idProduct', async(req, res) => {
     try {
         const { idProduct } = req.params;
-        const productUpdated = req.body;
-        const product = await productManager.updateProduct(idProduct, productUpdated);
-        res.status(200).json({message: `Producto id:${idProduct} updated`});
+        const idNumber = Number(idProduct);
+        const productToUpdate = req.body;
+
+        const productExist = await productManager.getProductById(idNumber);
+        if(productExist){
+            await productManager.updateProduct(idNumber, productToUpdate);
+            res.json({ message: `Product id:${idNumber} updated`});
+        } else {
+            res.status(400).json({ message: `Product id: ${idNumber} not found`})
+        }
     } catch (error) {
         res.status(500).json({message: "Error updating product"})
     }
 });
+
+app.delete('/products/:idProduct', async(req, res)=>{
+    try {
+        const { idProduct } = req.params;
+        const idNumber = Number(idProduct);
+
+        const productExist = await productManager.getProductById(idNumber);
+            
+        if(productExist) {
+            await productManager.deleteProduct(idNumber);
+            res.json({message: `Product with id ${idNumber} deleted`});
+        } else {
+            res.status(500).json({message: `Product not found`})
+        }
+    } catch (error) {
+        res.status(500).json({message: "Error"});
+    }
+})
+
 
 app.listen(8080, () =>{
     console.log("Server ok on port 8080");

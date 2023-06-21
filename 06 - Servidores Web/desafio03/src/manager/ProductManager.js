@@ -9,7 +9,7 @@ export default class ProductManager {
         this.products = [];
         this.path = path
     }
-    #newId = 1;
+    #maxId = 0;
 
     /**
      * getProductos: Método para cargar productos del archivo .json al array "this.products"
@@ -48,23 +48,12 @@ export default class ProductManager {
 
     }
 
-    /**
-     * addProduct: Método para agregar un producto.
-     * @param {string} title Título de producto
-     * @param {string} description Descripción de producto
-     * @param {number} price 
-     * @param {string} thumbnail Ruta de imagen
-     * @param {string} insertedCode Código de producto
-     * @param {number} stock 
-     * @returns {file} archivo .json
-     */
-    async addProduct(product) {
+    async addProduct(newProduct) {
 
         try {
             await this.getProducts();
             
-
-            let isAllFields = (!!product.title && !!product.description && !!product.price && !!product.thumbnail && !!product.code && !!product.stock);
+            let isAllFields = (!!newProduct.title && !!newProduct.description && !!newProduct.price && !!newProduct.thumbnail && !!newProduct.code && !!newProduct.stock);
 
             if (!isAllFields) {
                 console.log("All fields are requiered");
@@ -72,7 +61,7 @@ export default class ProductManager {
             }
        
             let isCodeExist = this.products.some((element) => {
-                return element.code === product.code;
+                return element.code === newProduct.code;
             });
 
             if (isCodeExist) {
@@ -81,13 +70,9 @@ export default class ProductManager {
             }
 
             if (isAllFields && !isCodeExist) {
-                const newProduct = {
-                    id: this.#newId,
-                    ...product
-                }
+                const product = {id: await this.#getMaxId() + 1, ...newProduct}
 
-                this.products.push(newProduct);
-                this.#newId++;
+                this.products.push(product);
                 await fs.promises.writeFile(this.path, JSON.stringify(this.products));
             }
                 
@@ -119,7 +104,7 @@ export default class ProductManager {
                         ...updated
                     }
                     this.products[index] = modifiedProducts;
-                    this.saveProducts(this.products);
+                    await this.saveProducts(this.products);
             
                 } else {
                     console.log("Error: Product code already exist");
@@ -131,7 +116,7 @@ export default class ProductManager {
                     ...updated
                 }
                 this.products[index] = modifiedProducts;
-                this.saveProducts(this.products);
+                await this.saveProducts(this.products);
                 
             }
             
@@ -160,6 +145,21 @@ export default class ProductManager {
             }else{
                 console.log("Error: Product does not exist");
             }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async #getMaxId() {
+        try {
+            await this.getProducts();
+
+            this.products.forEach((element) => {
+                if(element.id > this.#maxId){
+                    this.#maxId = element.id
+                }
+            })
+            return this.#maxId;
         } catch (error) {
             console.log(error);
         }
