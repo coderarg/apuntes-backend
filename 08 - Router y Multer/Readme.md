@@ -180,8 +180,8 @@ Morgan nos devuelve información sobre las solicitudes que llegan al server:
 - Respuesta
 - Tiempo de Respuesta
 
-Primero debemos importarlo desde nuestro archivo server.js y después lo podemos utilizar con app.use.
-A morgan se le puede pasar varios parámetros como 'dev' o 'combined'.
+Primero debemos importarlo desde nuestro archivo server.js y después lo podemos utilizar con app.use __antes de las rutas__.
+A morgan se le puede pasar varios parámetros como 'dev' o 'combined' dependiendo de la información que querramos traer.
 
 ```javascript
 import morgan from 'morgan';
@@ -191,4 +191,6 @@ app.use(morgan('combined'));
 ```
 
 [+Info Express/Morgan](https://expressjs.com/en/resources/middleware/morgan.html)
+
+---
 
