@@ -47,8 +47,9 @@ router.delete('/:id', async(req,res) => {
 
 export default router;
 ```
-___
+[+info express.router](https://expressjs.com/es/api.html#express.router)
 
+---
 ### server.js
 importamos express y lo guardamos en una constante 'app'.
 importamos el router de la carpeta de routes.
@@ -78,11 +79,12 @@ app.listen(8080, ()=>{
     console.log('Server OK on port 8080');
 })
 ```
+[+info express.json y express.urlencoded](https://expressjs.com/es/api.html)
+
 ---
 # Static
 
 Como utilizar una carpeta de uso público a través de servidor con express.
-
 > Debemos tener en consideración que nuestro archivo package.json tenga la configuración "type":"module" para importar las funciones de express necesarias.
 
 ___
@@ -96,7 +98,6 @@ Para poder utilizar la función __dirname, debemos importarla previamente desde 
 
 La función fileURLToPath() descodifica la URL del archivo a una cadena de ruta y garantiza que los caracteres de control de la URL (/, %) se añadan/ajusten correctamente al convertir la URL del archivo dada en una ruta.
 
-
 ```javascript
 import { dirname } from 'path';
 import { fileURLToPath } from 'URL';
@@ -106,6 +107,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 app.use(express.static(__dirname + '/public'));
 
 ```
+[+info dirname](https://nodejs.org/docs/latest-v15.x/api/esm.html#esm_no_filename_or_dirname)
+
+[+info fileURLToPath](https://nodejs.org/api/url.html#urlfileurltopathurl)
+
+[+info import.meta.url](https://nodejs.org/docs/latest-v15.x/api/esm.html#esm_import_meta_url)
+
 ---
 # Middlewares
 Funciones que se van a ejecutar antes de que el servidor procese la respuesta.
@@ -161,4 +168,27 @@ router.post('/', userValidator, async(req, res) =>{
     }
 })
 ```
+[+info Middleware para Express](http://expressjs.com/es/guide/writing-middleware.html#escritura-de-middleware-para-su-uso-en-aplicaciones-express)
+
+## Middleware de terceros
+
+### Morgan
+Morgan nos devuelve información sobre las solicitudes que llegan al server:
+- Método
+- URL
+- Estado
+- Respuesta
+- Tiempo de Respuesta
+
+Primero debemos importarlo desde nuestro archivo server.js y después lo podemos utilizar con app.use.
+A morgan se le puede pasar varios parámetros como 'dev' o 'combined'.
+
+```javascript
+import morgan from 'morgan';
+
+app.use(morgan('dev'));
+app.use(morgan('combined'));
+```
+
+[+Info Express/Morgan](https://expressjs.com/en/resources/middleware/morgan.html)
 
