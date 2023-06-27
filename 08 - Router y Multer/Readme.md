@@ -1,6 +1,4 @@
 # Router
-
-## Router
 Paso a paso de como realizar rutas con administrador de archivos con express.
 
 > Debemos tener en consideración que nuestro archivo package.json tenga la configuración "type":"module" para importar los métodos de node necesarios.
@@ -195,11 +193,69 @@ app.use(morgan('combined'));
 ---
 
 # Multer
+Middleware utilizado para guardar archivos traídos desde body en una carpeta específica.
 Primero debe ser instaldo desde la terminal en la carpeta que utilizaremos a nivel node.
 
 ```shell
 npm i multer
 ```
 
-En la carpeta de middlewares creamos un archivo para traer a multer multer.js
+> Tener en cuenta que por buenas prácticas pondremos la constante __dirname y sus correspondientes import en un archivo llamado 'utils.js' que estará en la misma carpeta que 'server.js'.
 
+### utils.js
+```javascript
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+export const __dirname = dirname(fileURLToPath(import.meta.url));
+```
+
+### multer.js
+En la carpeta de middlewares creamos un archivo multer.js
+Importamos Multer
+Importamos el dirname de utils.js
+
+utilizamos la constante storage que se encuentra en la documentación de Multer donde llamaremos al método de multer.diskStorage. En este storage guardaremos la ruta de ubicación del archivo que se guardará y el nombre que tendrá el archivo.
+Para la ubicación del archivo, antes de ejecutar el server, debe existir la carpeta donde se guardarán lo archivos cargados.
+Tendremos 2 opciones para el nombre del archivo.
+- Darle un nombre aleatorio.
+- Tomar el nombre original como es subido.
+- Agregar caracteres al nombre original.
+
+Luego exportamos la consante uploader que será utilizada en router.js como un middleware más.
+
+```javascript
+import multer from 'multer';
+import { __dirname } from '../utils.js';
+
+const storage = multer.diskStorage({
+    destination: function (req, res, cb) {
+        cb(null, __dirname + '/images')
+    },
+    filename: function (req, file, cb) {
+        /* const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, file.fieldname + '-' + uniqueSuffix) */
+        cb(null, file.originalname)
+        //cb(null, 'coder' + '-' + file.originalname)
+    }
+});
+
+export const uploader = multer({ storage: storage });
+```
+
+### router.js
+En este caso tomaremos un archivo del body(form), el uploader guardará el archivo en la carpeta seleccionada en el multer y en nuestro users.json guardaremos como uno de los atributos la ruta a ese archivo.
+
+```javascript
+router.post('/profile', uploader.single('profile'), async (req, res) => {
+    try {
+        console.log(req.file);
+        const user = req.body;
+        user.profile = req.file.path;
+        const newUser = await userManager.createUser(user);
+        res.json(newUser);
+    } catch (error) {
+        res.status(500).json({ message: "Error" })
+    }
+});
+```
