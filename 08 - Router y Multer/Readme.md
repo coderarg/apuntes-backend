@@ -19,11 +19,12 @@ ___
 
 ### router.js
 Dentro del router importamos { Router } de express y lo guardamos en una constante.
-Importamos el archivo de manager.js y generamos el objeto a través de la case y le pasamos el 'path.json' donde guardaremos los archivos.
 
-Luego programamos las acciones que realizará cada ruta y exportamos el router para utilizarlo en el server. Estas rutas no tienen una "ruta raiz" ya que la agregaremos dependiendo la ruta que llegue. 
+Importamos el archivo de manager.js, generamos el objeto a través de la clase y le pasamos el 'path.json' donde guardaremos los archivos.
 
-Por ejemplo si tenemos 2 router, uno para productos y otro para carritos, si llegara una petición get por ruta localhost:8080/productos automáticamente pasará por el router de productos y generará la respuesta de ese router. Mismo caso para una ruta localhost:8080/carritos.
+Luego programamos las acciones que realizará cada ruta y exportamos el router para utilizarlo en el server. Estas rutas no tienen una "ruta raiz" ya que la agregaremos dependiendo de la ruta que llegue. 
+
+Por ejemplo si tenemos 2 routers, uno para productos y otro para carritos, si llegara una petición get por ruta localhost:8080/productos automáticamente pasará por el router de productos y generará la respuesta de ese router. Mismo caso para una ruta localhost:8080/carritos.
 
 ```javascript
 
@@ -274,3 +275,5 @@ router.post('/profile', uploader.single('profile'), async (req, res) => {
     }
 });
 ```
+
+[+ info Multer](https://github.com/expressjs/multer)
