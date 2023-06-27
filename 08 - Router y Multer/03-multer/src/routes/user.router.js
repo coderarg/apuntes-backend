@@ -4,11 +4,13 @@ esto nos trae todo express*/
 
 //Acá solamente traemos el método Router
 import { Router } from 'express';
-const router = Router();
-
 import UserManager from '../managers/user.manager.js';
+import { uploader} from '../middlewares/multer.js'
 
+
+const router = Router();
 const userManager = new UserManager('/users.json');
+
 
 router.get('/', async (req, res) => {
     try {
@@ -86,6 +88,20 @@ router.delete('/:idUser', async (req, res) => {
         } else {
             res.json({ message: "User not found" });
         }
+    } catch (error) {
+        res.status(500).json({ message: "Error" })
+    }
+});
+
+//Ruta para probar Multer
+
+router.post('/profile', uploader.single('profile'), async (req, res) => {
+    try {
+        console.log(req.file);
+        const user = req.body;
+        user.profile = req.file.path;
+        const newUser = await userManager.createUser(user);
+        res.json(newUser);
     } catch (error) {
         res.status(500).json({ message: "Error" })
     }
