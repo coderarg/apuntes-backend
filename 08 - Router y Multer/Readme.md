@@ -20,6 +20,7 @@ ___
 ### router.js
 Dentro del router importamos { Router } de express y lo guardamos en una constante.
 Importamos el archivo de manager.js y generamos el objeto a través de la case y le pasamos el 'path.json' donde guardaremos los archivos.
+
 Luego programamos las acciones que realizará cada ruta y exportamos el router para utilizarlo en el server. Estas rutas no tienen una "ruta raiz" ya que la agregaremos dependiendo la ruta que llegue. 
 
 Por ejemplo si tenemos 2 router, uno para productos y otro para carritos, si llegara una petición get por ruta localhost:8080/productos automáticamente pasará por el router de productos y generará la respuesta de ese router. Mismo caso para una ruta localhost:8080/carritos.
@@ -49,13 +50,16 @@ export default router;
 
 ---
 ### server.js
-importamos express y lo guardamos en una constante 'app'.
-importamos el router de la carpeta de routes.
+Importamos express y lo guardamos en una constante 'app'.
+
+Importamos el router de la carpeta de routes.
 
 express.json() es una función de middleware. Este método se utiliza para analizar las solicitudes entrantes con cargas útiles JSON y se basa en bodyparser.
+
 Devuelve el middleware que sólo analiza JSON y sólo mira las peticiones en las que la cabecera content-type coincide con la opción type.
 
 express.urlencoded({extended}) es un middleware integrado en Express.js. El objetivo principal de este método es analizar la solicitud entrante con cargas útiles codificadas con url y se basa en body-parser.
+
 {extended} - Esta opción permite elegir entre analizar los datos codificados en URL con la biblioteca queryString o con la biblioteca qs.
 
 Luego pasamos la ruta por defecto que utiliza el router.
@@ -89,9 +93,11 @@ ___
 
 ## server.js
 En el archivo de server llamamos a express.static(), cuya función de middleware a la que le pasamos la ruta de la carpeta pública que contiene los archivos estáticos.
+
 > Importante: La vía de acceso que proporciona a la función express.static es relativa al directorio desde donde inicia el proceso node. Si ejecuta la aplicación Express desde cualquier otro directorio, es más seguro utilizar la vía de acceso absoluta del directorio al que desea dar servicio (__dirname).
 
 Debemos tener en cuenta que al inicio, en nuestro archivo package.json, modificamos la configuración de "type" a "module" para importar módulos ("type" por defecto viene seteado en "commonjs").
+
 Para poder utilizar la función __dirname, debemos importarla previamente desde 'path' junto al módulo "fileURLToPath" desde 'URL'.
 
 La función fileURLToPath() descodifica la URL del archivo a una cadena de ruta y garantiza que los caracteres de control de la URL (/, %) se añadan/ajusten correctamente al convertir la URL del archivo dada en una ruta.
@@ -124,9 +130,11 @@ Funciones que se van a ejecutar antes de que el servidor procese la respuesta.
 - Middleware de terceros
 
 ## Como crear un Middleware
+
 En una carpeta "middlewares" a nivel de server, creamos nuestros archivos middlewares.js.
 
 ### middleware.js
+
 Un middleware es una función que recibe 3 parámetros:
 - Objecto request
 - Objeto response
@@ -146,6 +154,7 @@ export const userValidator = (req, res, next) =>{
 ```
 
 En nuestro archivo de router vamos a utilizar el middleware creado.
+
 Primero lo importamos desde el archivo creado anteriormente y lo llamamos entre la ruta y el endpoint.
 
 ```javascript
@@ -179,6 +188,7 @@ Morgan nos devuelve información sobre las solicitudes que llegan al server:
 - Tiempo de Respuesta
 
 Primero debemos importarlo desde nuestro archivo server.js y después lo podemos utilizar con app.use __antes de las rutas__.
+
 A morgan se le puede pasar varios parámetros como 'dev' o 'combined' dependiendo de la información que querramos traer.
 
 ```javascript
@@ -194,6 +204,7 @@ app.use(morgan('combined'));
 
 # Multer
 Middleware utilizado para guardar archivos traídos desde body en una carpeta específica.
+
 Primero debe ser instaldo desde la terminal en la carpeta que utilizaremos a nivel node.
 
 ```shell
@@ -211,12 +222,16 @@ export const __dirname = dirname(fileURLToPath(import.meta.url));
 ```
 
 ### multer.js
-En la carpeta de middlewares creamos un archivo multer.js
+En la carpeta de middlewares creamos un archivo multer.js.
+
 Importamos Multer
+
 Importamos el dirname de utils.js
 
-utilizamos la constante storage que se encuentra en la documentación de Multer donde llamaremos al método de multer.diskStorage. En este storage guardaremos la ruta de ubicación del archivo que se guardará y el nombre que tendrá el archivo.
+Utilizamos la constante storage que se encuentra en la documentación de Multer donde llamaremos al método de multer.diskStorage. En este storage guardaremos la ruta de ubicación del archivo que se guardará y el nombre que tendrá el archivo.
+
 Para la ubicación del archivo, antes de ejecutar el server, debe existir la carpeta donde se guardarán lo archivos cargados.
+
 Tendremos 2 opciones para el nombre del archivo.
 - Darle un nombre aleatorio.
 - Tomar el nombre original como es subido.
