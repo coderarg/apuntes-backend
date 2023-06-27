@@ -48,34 +48,23 @@ export default class ProductManager {
 
     }
 
+    /**
+     * addProduct: Método para gregar productos
+     * @param {object} newProduct a agregar
+     */
     async addProduct(newProduct) {
 
         try {
             await this.getProducts();
             
-            let isAllFields = (!!newProduct.title && !!newProduct.description && !!newProduct.price && !!newProduct.thumbnail && !!newProduct.code && !!newProduct.stock);
+            const product = {
+                id: await this.#getMaxId() + 1, 
+                ...newProduct,
+                status: true}
 
-            if (!isAllFields) {
-                console.log("All fields are requiered");
-                return;
-            }
-       
-            let isCodeExist = this.products.some((element) => {
-                return element.code === newProduct.code;
-            });
-
-            if (isCodeExist) {
-                console.log("Error: Product code already exist");
-                return;
-            }
-
-            if (isAllFields && !isCodeExist) {
-                const product = {id: await this.#getMaxId() + 1, ...newProduct}
-
-                this.products.push(product);
-                await fs.promises.writeFile(this.path, JSON.stringify(this.products));
-            }
-                
+            this.products.push(product);
+            await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+            
         } catch (error) {
             console.log(error);
         }
