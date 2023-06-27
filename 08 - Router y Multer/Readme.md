@@ -194,3 +194,12 @@ app.use(morgan('combined'));
 
 ---
 
+# Multer
+Primero debe ser instaldo desde la terminal en la carpeta que utilizaremos a nivel node.
+
+```shell
+npm i multer
+```
+
+En la carpeta de middlewares creamos un archivo para traer a multer multer.js
+

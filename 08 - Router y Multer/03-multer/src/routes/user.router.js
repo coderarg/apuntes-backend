@@ -4,9 +4,7 @@ esto nos trae todo express*/
 
 //Acá solamente traemos el método Router
 import { Router } from 'express';
-import { userValidator } from '../middlewares/userValidator.js'
 const router = Router();
-
 
 import UserManager from '../managers/user.manager.js';
 
@@ -49,10 +47,10 @@ router.get('/search', async (req, res) => {
     }
 })
 
-router.post('/', userValidator, async (req, res)=>{
+router.post('/', async (req, res)=>{
     try {
-        const { firstName, lastName, email, role } = req.body;
-        const user = { firstName, lastName, email, role};
+        const { firstName, lastName, email } = req.body;
+        const user = { firstName, lastName, email};
         const newUser = await userManager.createUser(user);
         res.json(newUser);
     } catch (error) {

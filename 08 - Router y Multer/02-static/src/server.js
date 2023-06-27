@@ -1,6 +1,5 @@
 import express from 'express';
-import {dirname} from 'path';
-import {fileURLToPath} from 'url';
+import dirname from './utils.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
