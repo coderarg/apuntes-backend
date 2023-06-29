@@ -1,9 +1,5 @@
 import fs from 'fs';
 
-/**
- * ProductManager: Clase
- * @param {string} path diracción donde se guarda el archivo
- */
 export default class ProductManager {
     constructor(path) {
         this.products = [];
@@ -11,9 +7,6 @@ export default class ProductManager {
     }
     #maxId = 0;
 
-    /**
-     * getProductos: Método para cargar productos del archivo .json al array "this.products"
-    */
     async getProducts() {
         try {
             if (fs.existsSync(this.path)) {
@@ -29,18 +22,12 @@ export default class ProductManager {
         }
     }
 
-    /**
-     * getProductById: Método para mostrar un producto por su id
-     * @param {number} idNumber 
-     * @returns {object} producto
-     */
     async getProductById(idNumber) {
         try {
             let products = await this.getProducts();
             let foundProduct = products.find((element) => {
                 return element.id === idNumber;
             });
-            console.log(foundProduct);
             return foundProduct;
         } catch (error) {
             console.log(error);
@@ -48,10 +35,7 @@ export default class ProductManager {
 
     }
 
-    /**
-     * addProduct: Método para gregar productos
-     * @param {object} newProduct a agregar
-     */
+
     async addProduct(newProduct) {
 
         try {
@@ -70,12 +54,6 @@ export default class ProductManager {
         }
     }
 
-    /**
-     * updateProduct: Método para modificar atributos de un producto
-     * @param {number} idNumber id productogram
-     * @param {object} updated atributos a modificar
-     * @returns {file} archivo .json
-     */
     async updateProduct(idNumber, updated) {
         try {
             await this.getProducts();
@@ -114,11 +92,6 @@ export default class ProductManager {
         }
     }     
 
-    /**
-     * deleteProduct: Método para elemintar un producto por su id
-     * @param {number} idNumber id producto
-     * @returns {file} archivo .json
-     */
     async deleteProduct(idNumber) {
         try {
             await this.getProducts();
@@ -154,11 +127,6 @@ export default class ProductManager {
         }
     }
 
-    /**
-     * saveProducts: Método para guardar los productos en archivo .json
-     * @param {array} productos
-     * @return {object} archivo .json 
-     */
     async saveProducts(elements){
         try {
             const productsJS = JSON.stringify(elements);
@@ -168,3 +136,28 @@ export default class ProductManager {
         }
     }
 }
+
+/* const productManager = new ProductManager('./files/productos.json');
+
+const testManager = async () => {
+    await productManager.getProducts();
+    await productManager.addProduct({
+        title: "producto 1",
+        description: "descripción 1",
+        code: "AAAA",
+        price: 10,
+        stock: 20,
+        category: "A"
+    });
+    await productManager.addProduct({
+        title: "producto 2",
+        description: "descripción 2",
+        code: "BBBB",
+        price: 20,
+        stock: 30,
+        category: "B"
+    });
+    await productManager.getProducts();
+};
+
+testManager(); */

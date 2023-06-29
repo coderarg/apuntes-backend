@@ -1,5 +1,5 @@
 import { Router } from 'express';
-const router = Router();
+const productsRouter = Router();
 
 import ProductManager from '../managers/products.manager.js';
 const productManager = new ProductManager('./files/productos.json')
@@ -7,7 +7,7 @@ const productManager = new ProductManager('./files/productos.json')
 import { fieldsValidator } from '../middlewares/FieldsValidator.middleware.js';
 import { idExist } from '../middlewares/idExist.middleware.js';
 
-router.get('/', async(req, res) =>{
+productsRouter.get('/', async(req, res) =>{
     try {
         const products = await productManager.getProducts();
         res.json(products);
@@ -16,7 +16,7 @@ router.get('/', async(req, res) =>{
     }
 })
 
-router.get('/:pid', async(req, res) => {
+productsRouter.get('/:pid', async(req, res) => {
     try {
         const { pid } = req.params;
         const productById = await productManager.getProductsById(Number(pid));
@@ -30,7 +30,7 @@ router.get('/:pid', async(req, res) => {
     }
 })
 
-router.get('/limit', async(req,res) => {
+productsRouter.get('/limit', async(req,res) => {
     
     try {
         const { cant } = req.query;
@@ -47,7 +47,7 @@ router.get('/limit', async(req,res) => {
     }
 })
 
-router.post('/', [idExist, fieldsValidator], async(req, res) => {
+productsRouter.post('/', [idExist, fieldsValidator], async(req, res) => {
     try {
         const newProduct = req.body;
         const savedProduct = await productManager.addProduct(newProduct);
@@ -58,7 +58,7 @@ router.post('/', [idExist, fieldsValidator], async(req, res) => {
     }
 })
 
-router.put('/:pid', idExist, async(req, res) => {
+productsRouter.put('/:pid', idExist, async(req, res) => {
     try {
         const { pid } = req.params;
         const updatedProduct = req.body;
@@ -71,7 +71,7 @@ router.put('/:pid', idExist, async(req, res) => {
 
 })
 
-router.delete('/pid', async(req, res) => {
+productsRouter.delete('/pid', async(req, res) => {
     try {
         const { pid } = req.params;
         const product = await productManager.getProductsById(Number(id));
@@ -86,4 +86,4 @@ router.delete('/pid', async(req, res) => {
     }
 })
 
-export default router;
+export default productsRouter;
