@@ -1,12 +1,11 @@
 import { Router } from 'express';
 const cartRouter = Router();
 
-
 import CartsManager from '../managers/carts.manager.js';
 const cartsManager = new CartsManager('./files/carts.json', './files/productos.json')
 
-import { fieldsValidator } from '../middlewares/FieldsValidator.middleware.js';
-import { idExist } from '../middlewares/idExist.middleware.js';
+/* ------------------------------------ - ----------------------------------- */
+
 
 cartRouter.get('/', async(req, res) =>{
     try {
@@ -17,24 +16,7 @@ cartRouter.get('/', async(req, res) =>{
     }
 })
 
-cartRouter.get('/limit', async(req,res) => {
-    
-    try {
-        const { cant } = req.query;
-        const products = await cartsManager.getProducts();
-        if(cant <= products.length){
-            const limitedProducts = products.splice(0, Number(cant));
-            console.log(limitedProducts);
-            res.json(limitedProducts);
-        }else{
-            res.status(400).json({message: `The limit(${cant}) is highest than the products number (${products.length})`})
-        }
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
-})
-
-cartRouter.post('/', [idExist, fieldsValidator], async(req, res) => {
+cartRouter.post('/', async(req, res) => {
     try {
         const newProduct = req.body;
         const savedProduct = await cartsManager.addProduct(newProduct);

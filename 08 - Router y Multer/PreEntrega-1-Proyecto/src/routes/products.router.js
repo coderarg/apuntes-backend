@@ -7,6 +7,9 @@ const productManager = new ProductManager('./files/productos.json')
 import { fieldsValidator } from '../middlewares/FieldsValidator.middleware.js';
 import { idExist } from '../middlewares/idExist.middleware.js';
 
+/* ------------------------------------ - ----------------------------------- */
+
+
 productsRouter.get('/', async(req, res) =>{
     try {
         const products = await productManager.getProducts();
