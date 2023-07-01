@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export default class ProductManager {
+export default class ProductsManager {
     constructor(path) {
         this.products = [];
         this.path = path
@@ -136,28 +136,3 @@ export default class ProductManager {
         }
     }
 }
-
-/* const productManager = new ProductManager('./files/productos.json');
-
-const testManager = async () => {
-    await productManager.getProducts();
-    await productManager.addProduct({
-        title: "producto 1",
-        description: "descripción 1",
-        code: "AAAA",
-        price: 10,
-        stock: 20,
-        category: "A"
-    });
-    await productManager.addProduct({
-        title: "producto 2",
-        description: "descripción 2",
-        code: "BBBB",
-        price: 20,
-        stock: 30,
-        category: "B"
-    });
-    await productManager.getProducts();
-};
-
-testManager(); */

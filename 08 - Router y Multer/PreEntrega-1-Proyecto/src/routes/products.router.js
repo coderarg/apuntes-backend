@@ -1,8 +1,8 @@
 import { Router } from 'express';
-const productsRouter = Router();
+const productRouter = Router();
 
-import ProductManager from '../managers/products.manager.js';
-const productManager = new ProductManager('./files/productos.json')
+import ProductsManager from '../managers/products.manager.js';
+const productsManager = new ProductsManager('./files/productos.json')
 
 import { fieldsValidator } from '../middlewares/FieldsValidator.middleware.js';
 import { idExist } from '../middlewares/idExist.middleware.js';
@@ -10,19 +10,19 @@ import { idExist } from '../middlewares/idExist.middleware.js';
 /* ------------------------------------ - ----------------------------------- */
 
 
-productsRouter.get('/', async(req, res) =>{
+productRouter.get('/', async(req, res) =>{
     try {
-        const products = await productManager.getProducts();
+        const products = await productsManager.getProducts();
         res.json(products);
     } catch (error) {
         res.status(500).json({error: error.message})
     }
 })
 
-productsRouter.get('/:pid', async(req, res) => {
+productRouter.get('/:pid', async(req, res) => {
     try {
         const { pid } = req.params;
-        const productById = await productManager.getProductsById(Number(pid));
+        const productById = await productsManager.getProductsById(Number(pid));
         if(productById){
             res.json(productById);
         }else{
@@ -33,11 +33,11 @@ productsRouter.get('/:pid', async(req, res) => {
     }
 })
 
-productsRouter.get('/limit', async(req,res) => {
+productRouter.get('/limit', async(req,res) => {
     
     try {
         const { cant } = req.query;
-        const products = await productManager.getProducts();
+        const products = await productsManager.getProducts();
         if(cant <= products.length){
             const limitedProducts = products.splice(0, Number(cant));
             console.log(limitedProducts);
@@ -50,10 +50,10 @@ productsRouter.get('/limit', async(req,res) => {
     }
 })
 
-productsRouter.post('/', [idExist, fieldsValidator], async(req, res) => {
+productRouter.post('/', [idExist, fieldsValidator], async(req, res) => {
     try {
         const newProduct = req.body;
-        const savedProduct = await productManager.addProduct(newProduct);
+        const savedProduct = await productsManager.addProduct(newProduct);
 
         res.json({message: `${savedProduct} saved`})
     } catch (error) {
@@ -61,11 +61,11 @@ productsRouter.post('/', [idExist, fieldsValidator], async(req, res) => {
     }
 })
 
-productsRouter.put('/:pid', idExist, async(req, res) => {
+productRouter.put('/:pid', idExist, async(req, res) => {
     try {
         const { pid } = req.params;
         const updatedProduct = req.body;
-        const products = await productManager.updateProduct(Number(pid), updatedProduct);
+        const products = await productsManager.updateProduct(Number(pid), updatedProduct);
 
         res.json({message: `Product by id ${pid} updated`})
     } catch (error) {
@@ -74,12 +74,12 @@ productsRouter.put('/:pid', idExist, async(req, res) => {
 
 })
 
-productsRouter.delete('/pid', async(req, res) => {
+productRouter.delete('/:pid', async(req, res) => {
     try {
         const { pid } = req.params;
-        const product = await productManager.getProductsById(Number(id));
+        const product = await productsManager.getProductsById(Number(id));
         if(!!product) {
-            const productDeleted = await productManager.deleteProduct(Number(pid));
+            const productDeleted = await productsManager.deleteProduct(Number(pid));
             res.json(`${productDeleted} deleted`)
         }else{
             res.status(404).json({message: `Trying to delete: Product by id ${pid} doesn't exist`})
@@ -89,4 +89,4 @@ productsRouter.delete('/pid', async(req, res) => {
     }
 })
 
-export default productsRouter;
+export default productRouter;

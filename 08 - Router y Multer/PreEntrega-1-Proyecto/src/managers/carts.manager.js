@@ -1,3 +1,4 @@
+import { log } from 'console';
 import fs from 'fs';
 
 export default class CartManager {
@@ -32,7 +33,7 @@ export default class CartManager {
                 this.products.push(...JSON.parse(productsJSON));
                 return this.products;
             } else {
-                return this.products;
+                return [];
             }
         } catch (error) {
             console.log(error);
@@ -41,13 +42,13 @@ export default class CartManager {
 
     async getCarts() {
         try {
-            if(fs.existsSync(this.cartspath)){
-                const cartsJSON = await fs.promises.readFile(this.cartspath, 'utf-8');
-                this.cartspath.splice(0, this.cartspath.length);
-                this.cartspath.push(...JSON.parse(cartsJSON));
+            if(fs.existsSync(this.cartsPath)){
+                const cartsJSON = await fs.promises.readFile(this.cartsPath, 'utf-8');
+                this.carts.splice(0, this.carts.length);
+                this.carts.push(...JSON.parse(cartsJSON));
                 return this.carts;
             }else{
-                return this.carts;
+                return [];
             }
         } catch (error) {
             console.log(error);
@@ -83,73 +84,44 @@ export default class CartManager {
         }
     }
 
-    async addProductToCart(idCart, product) {
+    async addProductToCart(idCart, idProduct) {
         try {
             await this.getCarts();
             await this.getProducts();
             
-            const cartExist = this.carts.some(c => c.id === idCart);
-            const productExist = this.products.some(p => p.id === product.id);
-
-            if (!productExist) {
-                console.log(`The product doesn't exist. Load it in productos.json`);
-                return;
-            }else{
-                if(cartExist){
-                    const cartIndex = this.carts.findIndex( c => c.id === idCart);
-                    const prodInCartExist = this.carts[cartIndex].products.some( p => p.id = product.id);
-
-                    if(prodInCartExist){
-                        const prodInCartIndex = this.carts[cartIndex].products.findIndex( p => p.id = product.id);
-                        
-                        this.carts[cartIndex].products[prodInCartIndex].quantity ++;
+            const isProdInJSON = this.products.some(p => p.id === idProduct); //true or false
+            const cartIndex = this.carts.findIndex(c => c.id === idCart); // -1 or index
+            
+            if(isProdInJSON) {
+                if(cartIndex > -1) {
+                    const indexProdInCart = this.carts[cartIndex].products.findIndex(p => p.id === idProduct);
+                    if(indexProdInCart > -1 ) {
+                        this.carts[cartIndex].products[indexProdInCart].quantity += 1;
                         await fs.promises.writeFile(this.cartsPath, JSON.stringify(this.carts));
+
                     }else{
-                        this.carts[cartIndex].products.push({id: product.id, quantity: 1});
+                        this.carts[cartIndex].products.push({id: idProduct, quantity: 1});
                         await fs.promises.writeFile(this.cartsPath, JSON.stringify(this.carts));
                     }
-    
                 }else{
-                    
-                    await this.getCarts();
                     this.carts.push({
-                        id: await this.#getMaxId() + 1,
+                        id: idCart,
                         products: [
                             {
-                                id: product.id,
+                                id: idProduct,
                                 quantity: 1
-                            }   
+                            }
                         ]
-                    })
-
+                    }) 
                     await fs.promises.writeFile(this.cartsPath, JSON.stringify(this.carts));
                 }
+            }else{
+                console.log(`Product with id: ${idProduct} does not exist`);
             }
 
-        } catch (error) {
+        }catch(error){
             console.log(error);
         }
     }
     
 }
-
-/* const cartManager = new CartManager('./files/carritos.json', './files/productos.json');
-
-const testManager = async () => {
-    await cartManager.getCarts();
-    await cartManager.addProductToCart(1, {
-        id: 1,
-    })
-    await cartManager.addProductToCart(1, {
-        id: 1,
-    })
-    await cartManager.addProductToCart(1, {
-        id: 2,
-    })
-    await cartManager.addProductToCart(3, {
-        id: 2,
-    })
-    await cartManager.getCarts();
-};
-
-testManager(); */
