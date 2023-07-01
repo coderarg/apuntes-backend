@@ -29,7 +29,7 @@ Por ejemplo si tenemos 2 routers, uno para productos y otro para carritos, si ll
 ```javascript
 
 import { Router } from 'express';
-const router = new Router();
+const router = Router();
 
 import Manager from '../managers/manager.js';
 const Manager = new Manager('path.json');
@@ -56,7 +56,6 @@ Importamos express y lo guardamos en una constante 'app'.
 Importamos el router de la carpeta de routes.
 
 express.json() es una función de middleware. Este método se utiliza para analizar las solicitudes entrantes con cargas útiles JSON y se basa en bodyparser.
-
 Devuelve el middleware que sólo analiza JSON y sólo mira las peticiones en las que la cabecera content-type coincide con la opción type.
 
 express.urlencoded({extended}) es un middleware integrado en Express.js. El objetivo principal de este método es analizar la solicitud entrante con cargas útiles codificadas con url y se basa en body-parser.
