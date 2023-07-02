@@ -1,0 +1,16 @@
+
+<div>
+    <h1>Lista de elementos</h1>
+    {{#if users.length}}
+        {{#each users}}
+            <ul>
+                <li>{{firstname}}</li>
+                <li>{{lastname}}</li>
+                <li>{{age}}</li>
+                <li>{{mail}}</li>
+            </ul>
+        {{/each}}
+        {{else}}
+        <p>No hay usuarios disponibles</p>
+    {{/if}}
+</div>

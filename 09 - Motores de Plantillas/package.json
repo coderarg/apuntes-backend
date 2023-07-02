@@ -1,8 +1,9 @@
 {
   "name": "09---motores-de-plantillas",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sirve para escribir HTML a través del BackEnd. Esto no se usa mucho ya que es reemplazado por el uso de Frameworks como VUE, React o Angular.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
