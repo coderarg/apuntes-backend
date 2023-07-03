@@ -34,7 +34,7 @@ productRouter.get('/:pid', async(req, res) => {
     }
 })
 
-productRouter.get('/limit', async(req,res) => {
+productRouter.get('/product/limit', async(req,res) => {
     try {
         const { cant } = req.query;
         console.log(cant);
