@@ -35,7 +35,6 @@ export default class ProductManager {
 
     }
 
-
     async addProduct(newProduct) {
 
         try {
@@ -48,7 +47,7 @@ export default class ProductManager {
 
             this.products.push(product);
             await fs.promises.writeFile(this.path, JSON.stringify(this.products));
-            
+            return product;
         } catch (error) {
             console.log(error);
         }
@@ -72,7 +71,7 @@ export default class ProductManager {
                     }
                     this.products[index] = modifiedProducts;
                     await this.saveProducts(this.products);
-            
+                    return modifiedProducts;
                 } else {
                     console.log("Error: Product code already exist");
                     return;
@@ -84,7 +83,7 @@ export default class ProductManager {
                 }
                 this.products[index] = modifiedProducts;
                 await this.saveProducts(this.products);
-                
+                return modifiedProducts;
             }
             
         } catch (error) {

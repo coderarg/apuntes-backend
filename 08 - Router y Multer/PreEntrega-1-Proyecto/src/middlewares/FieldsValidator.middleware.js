@@ -1,11 +1,16 @@
+import __dirname from "../utils.js";
+import ProductManager from "../managers/products.manager.js";
+const productManager = new ProductManager(__dirname + '/files/products.json');
+
 export const fieldsValidator = async (req, res, next) => {
     try {
         const products = await productManager.getProducts();
         const newProduct = req.body;
     
         let isAllFields = (!!newProduct.title && !!newProduct.description && !!newProduct.code && !!newProduct.price && !!newProduct.stock && !!newProduct.category);
+
         if (!isAllFields) {
-            console.log("All fields are requiered");
+            res.status(500).send("All fields are requiered");
             return;
         }
     
@@ -13,7 +18,7 @@ export const fieldsValidator = async (req, res, next) => {
             return element.code === newProduct.code;
         });
         if (isCodeExist) {
-            console.log("Error: Product code already exist");
+            res.status(500).send("Error: Product code already exist");
             return;
         }
     
@@ -28,7 +33,7 @@ export const fieldsValidator = async (req, res, next) => {
         }
         
     } catch (error) {
-        res.status(500).send("fieldsValidator: All fields are required.")
+        res.status(500).send(`fieldsValidator: All fields are required.`)
     }
 
 }

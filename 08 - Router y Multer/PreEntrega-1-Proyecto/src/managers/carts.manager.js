@@ -59,8 +59,9 @@ export default class CartManager {
             await this.getCarts();
 
             const foundCart = this.carts.find((element) => {
-                element.id == idNumber;
+                return element.id == idNumber;
             })
+
             return foundCart;
         } catch (error) {
             console.log(error);
@@ -77,7 +78,7 @@ export default class CartManager {
 
             this.carts.push(newCart);
             await fs.promises.writeFile(this.cartsPath, JSON.stringify(this.carts));
-            
+            return newCart;
         } catch (error) {
             console.log(error);
         }

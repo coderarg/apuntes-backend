@@ -1,8 +1,9 @@
 import { Router } from 'express';
 const productRouter = Router();
 
+import __dirname from '../utils.js'
 import ProductManager from '../managers/products.manager.js';
-const productManager = new ProductManager('./files/productos.json')
+const productManager = new ProductManager(__dirname + '/files/products.json')
 
 import { fieldsValidator } from '../middlewares/FieldsValidator.middleware.js';
 import { idExist } from '../middlewares/idExist.middleware.js';
@@ -10,7 +11,7 @@ import { idExist } from '../middlewares/idExist.middleware.js';
 /* ------------------------------------ - ----------------------------------- */
 
 
-productRouter.get('/productos', async(req, res) =>{
+productRouter.get('/', async(req, res) =>{
     try {
         const products = await productManager.getProducts();
         res.json(products);
@@ -19,10 +20,10 @@ productRouter.get('/productos', async(req, res) =>{
     }
 })
 
-productRouter.get('/productos/:pid', async(req, res) => {
+productRouter.get('/:pid', async(req, res) => {
     try {
         const { pid } = req.params;
-        const productById = await productManager.getProductsById(Number(pid));
+        const productById = await productManager.getProductById(Number(pid));
         if(productById){
             res.json(productById);
         }else{
@@ -33,10 +34,10 @@ productRouter.get('/productos/:pid', async(req, res) => {
     }
 })
 
-productRouter.get('/productos/limit', async(req,res) => {
-    
+productRouter.get('/limit', async(req,res) => {
     try {
         const { cant } = req.query;
+        console.log(cant);
         const products = await productManager.getProducts();
         if(cant <= products.length){
             const limitedProducts = products.splice(0, Number(cant));
@@ -50,31 +51,30 @@ productRouter.get('/productos/limit', async(req,res) => {
     }
 })
 
-productRouter.post('/productos', [idExist, fieldsValidator], async(req, res) => {
+productRouter.post('/', [idExist, fieldsValidator], async(req, res) => {
     try {
         const newProduct = req.body;
         const savedProduct = await productManager.addProduct(newProduct);
 
-        res.json({message: `${savedProduct} saved`})
+        res.json({message: `${JSON.stringify(savedProduct)} saved`})
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 })
 
-productRouter.put('/productos/:pid', idExist, async(req, res) => {
+productRouter.put('/:pid', idExist, async(req, res) => {
     try {
         const { pid } = req.params;
-        const updatedProduct = req.body;
-        const products = await productManager.updateProduct(Number(pid), updatedProduct);
-
-        res.json({message: `Product by id ${pid} updated`})
+        const newProduct = req.body;
+        const updated = await productManager.updateProduct(Number(pid), newProduct);
+        res.json({message: `Product updated:  ${updated}`})
     } catch (error) {
         res.status(500).json({message: message.error})
     }
 
 })
 
-productRouter.delete('/productos/:pid', async(req, res) => {
+productRouter.delete('/:pid', idExist, async(req, res) => {
     try {
         const { pid } = req.params;
         const product = await productManager.getProductsById(Number(id));
