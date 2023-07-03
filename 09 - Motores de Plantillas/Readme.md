@@ -3,10 +3,8 @@ Sirve para escribir HTML a través del BackEnd. Esto no se usa mucho ya que es r
 
 Los motores de plantillas más utilizados son Handlebar, EJS y PUGJS.
 
-> _"Recomendación de tutor: Te recomiendo ir mirando AWS y bases de Cloud Computing y con eso tenes hosting gratis si sabes manejarlo y se consigue mucho laburo de eso."_
-
 ## Express y Handlebar
-En este curso estaremos utilizando Handlebar.
+En este curso estaremos utilizando Handlebars.
 
 Primero debemos instalar express y express-handlebars a través de la terminal.
 
@@ -15,10 +13,9 @@ npm i express
 npm i express express-handlebars
 ```
 
-
 ### utils.js
 
-En nuestro archivo de utils.js vamos a generar la dirección __dirname. Para ellos importamos:
+En nuestro archivo de utils.js vamos a generar la dirección __dirname. Para ello importamos:
 
 - dirname
 - fileURLToPath
@@ -36,7 +33,6 @@ export default __dirname;
 ```
 
 ### server.js
-
 En nuestro archivo de server.js vamos a importar
 - Express
 - Handlebars
@@ -62,9 +58,8 @@ app.use(express.urlencoded({extended}));
 app.use(express.static(__dirname + '/public'));
 
 app.engine('handlebars', handlebars.engine());
-app.set('views', __dirname + '/views');
-app.set('view engine', 'handlebars');
-
+app.set('views', __dirname + '/views'); //Este es el nombre de la carpeta (views) donde guardaremos no solo las vistas, sino también layouts y partials.
+app.set('view engine', 'handlebars'); //Aquí colocaremos el nombre del motor de handlebars llamado "view engine".
 app.listen(8080, ()=> {
     console.log(`Server OK 8080`);
 })
@@ -137,7 +132,7 @@ viewsRouter.get('/vista3', async (req, res) => {
 export default viewsRouter;
 ```
 
-### Test
+## Test
 Dentro de nuestro navegador escribiremos en la url el localhost:8080 y a continuación la ruta del router que queremos renderizar.
 
 Ejemplos:
@@ -148,9 +143,9 @@ localhost:8080/vista2
 localhost:8080/vista3
 ```
 
-### Partials
+## Partials
 Además de los layouts, tenemos partial: son componentes que se pueden repetir y se guardan dentro de la carpeta views>partials. Luego se renderizan llamándolos desde una vista
-partial.handlebars
+### partial.handlebars
 ```handlebars
 <div>
     <h1>Partial</h1>
@@ -162,17 +157,16 @@ partial.handlebars
 </div>
 ```
 
-vista2.handlebars
+### vista2.handlebars
 ```handlebars
 {{>partial}}
 <h2>Esta es la vista 2</h2>
 ```
 
-### Variables
-
+## Variables
 Para poder renderizar variables, debemos especificar en la ruta cual es el dato que vamos a renderizar.
 
-router.js
+### router.js
 ```javascript
 router.get('/vista3', async (req, res) => {
     const user = {
@@ -185,7 +179,7 @@ router.get('/vista3', async (req, res) => {
 export default router;
 ```
 
-vista3.handlebars
+### vista3.handlebars
 ```javascript
 <div>
     <h1>Bienvenido {{user.name}}</h1>
@@ -211,20 +205,29 @@ Para poder renderizar un array de datos debemos escribirlo con la sintaxis corre
     {{/if}}    
 </div>
 ```
+[+ info Handlebars](https://handlebarsjs.com/)  
+[+ info Handlebars](https://www.npmjs.com/package/handlebars)
+
+
+## Actividad con Handlebars
 
 
 
-<!-- 
-Cómo configurar Snippets
-Ctrl + shift + p  -- >set user snipets
-javascript
-se nos habre un json donde podremos escribir código que escribimos frecuentemente.
+## Notas a parte  
+### Recomendación de tutor:
+> _"Te recomiendo ir mirando AWS y bases de Cloud Computing y con eso tenes hosting gratis si sabes manejarlo y se consigue mucho laburo de eso."_
+
+### Cómo configurar Snippets en VSCode  
+-> Ctrl + Shift + p  
+-> set user snipets  
+-> javascript
+-> al abrir el json donde podremos escribir código que escribimos frecuentemente configuramos los snippets de la siguiente manera.
 
 "ejemplo": {
 	"prefix": "_ejemplo",
 	"body": {
 		"cada linea de código entre comillas"
 	}
-} -->
+}
 
 
