@@ -10,6 +10,10 @@ Primero debemos instalar express y express-handlebars a través de la terminal.
 
 ```shell
 npm i express
+npm i express-handlebars
+```
+o instalarlo todo al mismo tiempo
+```shell
 npm i express express-handlebars
 ```
 
