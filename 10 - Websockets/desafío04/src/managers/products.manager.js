@@ -135,12 +135,3 @@ export default class ProductManager {
         }
     }
 }
-
-
-const productManager = new ProductManager('./products.json');
-const test = async() => {
-    const idNumber = 1;
-    await productManager.deleteProduct(idNumber)
-}
-
-test();
