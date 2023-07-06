@@ -2,15 +2,20 @@
 const socketIndex = io();
 
 //DOM
-const productsDiv = document.getElementById('productsWrapper');
+const productsList = document.getElementById('products__list');
 
 socketIndex.on('productsArray', (products)=>{
     
-    productsDiv.innerHTML = ' ';
+    productsList.innerHTML = '';
 
     products.forEach((p)=> {
-        const itemList = document.createElement('ul');
-        itemList.innerHTML = `<li>${p.nombre}</li>`; 
-        productsDiv.append(itemList);
+        const itemList = document.createElement('div');
+        itemList.innerHTML = `
+        <h3>${p.name}</h3>
+        <p>id: ${p.id}</p>
+        <p>Price: $${p.price}</p>
+        <p>Stock: ${p.stock}</p>
+        `; 
+        productsList.append(itemList);
     })
 })

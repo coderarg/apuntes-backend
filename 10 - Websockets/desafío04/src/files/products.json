@@ -1,17 +1,1 @@
-[
-    {
-        "id": 1,
-        "nombre": "Producto 1",
-        "precio": 250
-    },
-    {
-        "id": 2,
-        "nombre": "Producto 2",
-        "precio": 250
-    },
-    {
-        "id": 3,
-        "nombre": "Producto 3",
-        "precio": 250
-    }
-]
+[{"id":1,"name":"Yerba","price":"123","stock":"123","status":true},{"id":2,"name":"Azúcar","price":"400","stock":"30","status":true}]

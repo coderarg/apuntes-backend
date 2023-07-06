@@ -33,10 +33,19 @@ const httpServer = app.listen(8080, ()=>{
 })
 const socketServer = new Server(httpServer);
 
+const productsArray = [];
+
 //Socket Server
 socketServer.on('connection', async(socket)=>{
     console.log("Cliente Conectado");
     
     socket.emit('productsArray', await productManager.getProducts());
+    
+    socket.on('productObject', async(object)=>{
+
+        await productManager.addProduct(object)
+
+        socket.emit('productsArray', await productManager.getProducts());
+    });
     
 })
