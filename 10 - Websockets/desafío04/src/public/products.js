@@ -7,6 +7,8 @@ const nameInput = document.getElementById('product__name');
 const priceInput = document.getElementById('product__price');
 const stockInput = document.getElementById('product__stock');
 
+const buttons = document.querySelectorAll('.delete-button');
+
 const productsList = document.getElementById('products__list');
 
 socketProducts.on('productsArray', (products)=>{
@@ -20,10 +22,12 @@ socketProducts.on('productsArray', (products)=>{
         <p>id: ${p.id}</p>
         <p>Price: $${p.price}</p>
         <p>Stock: ${p.stock}</p>
-        <button class="delete-button" id="borrar-${p.id}">Borrar</button>
+        <button class="delete-button" id="${p.id}">Borrar</button>
         `;
         productsList.append(itemList);
     })
+
+    deleteButtons();
 })
 
 form.addEventListener('submit', (e) => {
@@ -38,3 +42,15 @@ form.addEventListener('submit', (e) => {
     socketProducts.emit('productObject', product);
 
 })
+
+const deleteButtons = () => {
+
+    const buttons = document.querySelectorAll('.delete-button');
+    buttons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            socketProducts.emit('deleteProduct', Number(button.id));
+        })
+    })
+}

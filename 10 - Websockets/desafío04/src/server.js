@@ -47,5 +47,9 @@ socketServer.on('connection', async(socket)=>{
 
         socket.emit('productsArray', await productManager.getProducts());
     });
+
+    socket.on('deleteProduct', async(idNumber)=> {
+        await productManager.deleteProduct(idNumber);
+    })
     
 })
