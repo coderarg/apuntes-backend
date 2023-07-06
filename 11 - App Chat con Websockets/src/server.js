@@ -16,7 +16,7 @@ app.use(errorHandler);
 
 app.engine('handlebars', handlebars.engine()); 
 app.set('view engine', 'handlebars');  
-app.set('views', __dirname+'/views');  
+app.set('views', __dirname + '/views');  
 
 app.use('/chat', viewsRouter);
 
