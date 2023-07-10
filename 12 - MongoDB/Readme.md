@@ -48,5 +48,5 @@ Ejecutamos el comando "mongod", esto da de alta el servidor.
 
 Luego abrimos una nueva terminal "cmd" en esta ejecutamos el comando "mongosh". Esto nos permite abrir la terminal de Mongo Shell y podremos empezar a gestionar nuestras bases de datos.
 
-[Video Tutorial Youtube][https://www.youtube.com/watch?v=2cWZ0lFbJoY&ab_channel=CarlosAlbertoFuelTulc%C3%A1n]
+[Video Tutorial Youtube](https://www.youtube.com/watch?v=2cWZ0lFbJoY&ab_channel=CarlosAlbertoFuelTulc%C3%A1n)
 
