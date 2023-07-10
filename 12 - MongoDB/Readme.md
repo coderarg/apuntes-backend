@@ -83,6 +83,16 @@ show collections
 db createCollection('nombreColeccion')
 ```
 
+### Cambiar nombre de colección
+```shell
+db.nombreColeccion.renameCollection('nuevoNombre')
+```
+
+### Eliminar colección
+```shell
+db.nombreColeccion.drop()
+```
+
 ### Mostrar registros dentro de colección  
 ```shell
 ### Mostrar info
@@ -108,4 +118,26 @@ const array = [{name: 'Juan'}, {name: 'Carlos'}, {name: 'Pedro'}]
 
 db.nombreColeccion.inserMany(array)
 ```
+
+### Buscar un campo en particular
+Esto nos devuelve los registros que cumpla con el campo buscado.
+```shell
+db.nombreColeccion.find({name: 'Carlos'})
+```  
+Esto nos devuelve el primer registro que cumpla con el campo buscado
+```shell
+db.nombreColeccion.findOne({name: 'Carlos'})
+```
+
+### Trear registros por límite
+```shell
+db.nombreColeccion.find().limit(4)
+```
+
+### Mostrar estadísticas
+```shell
+db.stats()
+```
+
+
 
