@@ -50,3 +50,62 @@ Luego abrimos una nueva terminal "cmd" en esta ejecutamos el comando "mongosh". 
 
 [Video Tutorial Youtube](https://www.youtube.com/watch?v=2cWZ0lFbJoY&ab_channel=CarlosAlbertoFuelTulc%C3%A1n)
 
+## Comandos
+
+### Mostrar Bases de Datos
+Solo va a mostar las DB que contengan colecciones
+```shell
+show dbs
+```
+
+### Usar una base de datos
+```shell
+use nombreBaseDatos
+```
+
+### Sabe que base de datos estoy
+```shell
+db
+```
+
+### Crear Base de Datos
+```shell
+use nuevaBaseDatos
+```
+
+### Mostrar colecciones
+```shell
+show collections
+```
+
+### Crear colección dentro de DB
+```shell
+db createCollection('nombreColeccion')
+```
+
+### Mostrar registros dentro de colección  
+```shell
+### Mostrar info
+db.nombreColeccion.find()
+
+### Mostrar info identada
+db.nombreColeccion.find().pretty()
+```
+
+### Nuevo doc dentro de colección
+```shell
+### Agregar un registro
+db.nombreColeccion.insertOne({name: 'Nombre', age: 30}) 
+### Agregar varios registros
+db.nombreColeccion.inserMany({name: 'Nombre', age:30}, {name: "OtroNombre, age: 34})
+
+### Nos devuelve un ObjectId
+```
+
+### Crear Arrays e Insertar Varios
+```shell
+const array = [{name: 'Juan'}, {name: 'Carlos'}, {name: 'Pedro'}]
+
+db.nombreColeccion.inserMany(array)
+```
+
