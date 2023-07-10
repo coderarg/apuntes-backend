@@ -21,13 +21,13 @@ Vamos a explicar como realizar la instalación de Mongo DB __6.0__ y Mongo Shell
 ### Paso 1: Descargamos mongodb.msi y mongoshell.zip  
 En los siguientes links se encuentran los descargables de MongoDB y MongoShell
 
-[MongoDB Download](https://www.mongodb.com/try/download/community)
+[MongoDB Download](https://www.mongodb.com/try/download/community)  
 [MongoShell Download](https://www.mongodb.com/products/shell)
 
 ### Paso 2: Instalamos MongoDB y Mongo Compass  
 Luego de haber instalado MongoDB en conjunto con Mongo Compass, abrimos y generamos conexión en el puerto que nos trae por defecto en la configuración.
 
-## Paso 3: Extraer archivo mongosh.exe  
+### Paso 3: Extraer archivo mongosh.exe  
 Extraemos la carpeta zip de mongoshell y copiamos el archivo mongosh.exe en la carpeta bin donde hallamos instaldo MongoDB.  
 En mi caso "C:\Program Files\MongoDB\Server\6.0\bin".
 
