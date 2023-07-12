@@ -107,7 +107,7 @@ db.nombreColeccion.find().pretty()
 ### Agregar un registro
 db.nombreColeccion.insertOne({name: 'Nombre', age: 30}) 
 ### Agregar varios registros
-db.nombreColeccion.inserMany({name: 'Nombre', age:30}, {name: "OtroNombre, age: 34})
+db.nombreColeccion.insertMany({name: 'Nombre', age:30}, {name: "OtroNombre, age: 34})
 
 ### Nos devuelve un ObjectId
 ```
@@ -116,7 +116,7 @@ db.nombreColeccion.inserMany({name: 'Nombre', age:30}, {name: "OtroNombre, age: 
 ```shell
 const array = [{name: 'Juan'}, {name: 'Carlos'}, {name: 'Pedro'}]
 
-db.nombreColeccion.inserMany(array)
+db.nombreColeccion.insertMany(array)
 ```
 
 ### Buscar un campo en particular
