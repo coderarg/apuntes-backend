@@ -54,47 +54,47 @@ Luego abrimos una nueva terminal "cmd" en esta ejecutamos el comando "mongosh". 
 
 ### Mostrar Bases de Datos
 Solo va a mostar las DB que contengan colecciones
-```shell
+```javascript
 show dbs
 ```
 
 ### Usar una base de datos
-```shell
+```javascript
 use nombreBaseDatos
 ```
 
 ### Sabe que base de datos estoy
-```shell
+```javascript
 db
 ```
 
 ### Crear Base de Datos
-```shell
+```javascript
 use nuevaBaseDatos
 ```
 
 ### Mostrar colecciones
-```shell
+```javascript
 show collections
 ```
 
 ### Crear colección dentro de DB
-```shell
+```javascript
 db createCollection('nombreColeccion')
 ```
 
 ### Cambiar nombre de colección
-```shell
+```javascript
 db.nombreColeccion.renameCollection('nuevoNombre')
 ```
 
 ### Eliminar colección
-```shell
+```javascript
 db.nombreColeccion.drop()
 ```
 
 ### Mostrar registros dentro de colección  
-```shell
+```javascript
 ### Mostrar info
 db.nombreColeccion.find()
 
@@ -103,7 +103,7 @@ db.nombreColeccion.find().pretty()
 ```
 
 ### Nuevo doc dentro de colección
-```shell
+```javascript
 ### Agregar un registro
 db.nombreColeccion.insertOne({name: 'Nombre', age: 30}) 
 ### Agregar varios registros
@@ -113,7 +113,7 @@ db.nombreColeccion.insertMany({name: 'Nombre', age:30}, {name: "OtroNombre, age:
 ```
 
 ### Crear Arrays e Insertar Varios
-```shell
+```javascript
 const array = [{name: 'Juan'}, {name: 'Carlos'}, {name: 'Pedro'}]
 
 db.nombreColeccion.insertMany(array)
@@ -121,23 +121,20 @@ db.nombreColeccion.insertMany(array)
 
 ### Buscar un campo en particular
 Esto nos devuelve los registros que cumpla con el campo buscado.
-```shell
+```javascript
 db.nombreColeccion.find({name: 'Carlos'})
 ```  
 Esto nos devuelve el primer registro que cumpla con el campo buscado
-```shell
+```javascript
 db.nombreColeccion.findOne({name: 'Carlos'})
 ```
 
 ### Trear registros por límite
-```shell
+```javascript
 db.nombreColeccion.find().limit(4)
 ```
 
 ### Mostrar estadísticas
-```shell
+```javascript
 db.stats()
 ```
-
-
-
