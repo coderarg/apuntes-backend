@@ -67,5 +67,59 @@ A medida que nos acercamos a Software como servicio, perdemos control de modific
 
 2. Seleccionamos Drivers.
 
-3. Copiamos el string de conección.
+3. Copiamos el string de conección y lo reservamos para utilizarlo luego.
 
+## Mongoose
+
+En una terminal de Visual Studio Code iniciamos node e instalamos la dependencia de mongoose
+
+```shell
+npm init -y
+npm i mongoose
+```
+
+### 01-connection.js
+Creamos un archivo donde generamos la conexión de mongoose con mongodb.
+
+1. Importamos Mongoose.
+2. Generamos la conexión con la base de datos. Aquí tenemos 2 alternativas:
+    1. Conectarnos a una base de datos local, por ejemplo a través de Mongo Compass. Para esto vamos a ingresar el puerto que nos indica Compass al configurarlo.
+    2. Conectarnos a una base de datos en la nube como Mongo Atlas. Aquí copiaremos el String de Conexión que no indica al configurar el Cluster.
+3. Exportamos la constante que inicia la conexión de mongoose y le pasamos el string de conexión.
+
+```javascript
+import mongoose from "mongoose";
+
+const connectionString = 'mongodb://localhost:27017/coderhouse';
+
+//const connectionString = 'copiar dentro del strign de conexión de MongoDB Atlas aquí';
+
+export const initMongoDB = async () => {
+    try {
+        await mongoose.connect(connectionString)
+        console.log('Conectado a MongoDB');
+    } catch (error) {
+        console.log(error);
+    }
+}
+```
+
+### 02-schema.js
+Dentro de este archivo vamos a crear los schemas de la base de datos. Este Schema es como los llamados schemas de MySQL, solo que en este caso tendremos una "tabla" por schema.
+
+1. Importamos mongoose.
+2. Creamos un modelo de Schema para cada entidad.
+3. Exportamos el modelo de Schema.
+
+```javascript
+import mongoose from "mongoose";
+
+const UserSchema = new mongoose.Schema({
+    first_name: { type: String, required: true, max: 100 },
+    last_name: { type: String, required: true, max: 100 },
+    admin: { type: Boolean, default: false },
+    age: { type: Number, required: true }
+});
+
+export const UserModel = mongoose.model('users', UserSchema);
+```
