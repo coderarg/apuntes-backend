@@ -1,4 +1,4 @@
-import { initMongoDB } from "./01-connection.js";
+import { initMongoDB } from "./01-conexion.js";
 import { UserModel } from "./02-schema.js";
 
 const test = async() => {

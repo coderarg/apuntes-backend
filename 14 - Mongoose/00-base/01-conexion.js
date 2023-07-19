@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
-//const connectionString = 'mongodb://localhost/coderhouse';
-
-const connectionString = 'mongodb+srv://lucasgarciadeveloper:lucasgarciadeveloper@cluster0.69pyxtr.mongodb.net/?retryWrites=true&w=majority';
+//const connectionString = 'mongodb://127.0.0.1:27017/coderhouse';
+const connectionString = 'mongodb+srv://lucasgarciadeveloper:admin@coderhouseproject.bjwfjs8.mongodb.net/coderhouse?retryWrites=true&w=majority';
 
 export const initMongoDB = async () => {
     try {
