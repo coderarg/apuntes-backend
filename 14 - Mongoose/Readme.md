@@ -78,7 +78,8 @@ npm init -y
 npm i mongoose
 ```
 
-### 01-connection.js
+
+### 01-conexión.js
 Creamos un archivo donde generamos la conexión de mongoose con mongodb.
 
 1. Importamos Mongoose.
@@ -90,9 +91,13 @@ Creamos un archivo donde generamos la conexión de mongoose con mongodb.
 ```javascript
 import mongoose from "mongoose";
 
+// Este string de conexión puede fallar en la base de datos local.
 const connectionString = 'mongodb://localhost:27017/coderhouse';
 
-//const connectionString = 'copiar dentro del strign de conexión de MongoDB Atlas aquí';
+// Se reemplaza por este y funciona.
+const connectionStringLocal2 = 'mongodb://127.0.0.1:27017/coderhouse';
+
+//const connectionStringAtlas = 'copiar dentro del strign de conexión de MongoDB Atlas aquí';
 
 export const initMongoDB = async () => {
     try {
@@ -103,7 +108,7 @@ export const initMongoDB = async () => {
     }
 }
 ```
-
+s
 ### 02-schema.js
 Dentro de este archivo vamos a crear los schemas de la base de datos. Este Schema es como los llamados schemas de MySQL, solo que en este caso tendremos una "tabla" por schema.
 
@@ -122,4 +127,55 @@ const UserSchema = new mongoose.Schema({
 });
 
 export const UserModel = mongoose.model('users', UserSchema);
+```
+
+### métodos.js
+
+```javascript
+// Importamos la conexión con la base de datos
+import { initMongoDB } from "./01-conexion.js";
+
+// Importamos el Schema
+import { UserModel } from "./02-schema.js";
+
+const user = {
+    first_name: 'Matias',
+    last_name: 'Merlo',
+    age: 37
+}
+
+// Método Create
+const createUser = async (obj) =>{
+    await UserModel.create(obj);
+}
+
+const test = async() => {
+    await initMongoDB();
+
+    // Método create
+    await UserModel.create(user);
+    
+    // Método findById
+    const findByIdMethod = await UserModel.findById('6466b1de59553c6548dedb54')
+    console.log(findByIdMethod);
+
+    // Método find
+    const findMethod = await UserModel.find({});
+    console.log(findMethod);
+
+    // Método findByIdAndUpdate
+    await initMongoDB();
+    const update1 = await UserModel.findByIdAndUpdate(
+        '64af47ed5523b83fdeb51f25',
+        { admin: true },
+        { new: true }
+        )
+    console.log(update1);
+
+    // Método findByIdAndDelete
+    const delete1 = await UserModel.findByIdAndDelete('64af47ed5523b83fdeb51f25');
+    console.log(delete1);
+}
+
+test()
 ```

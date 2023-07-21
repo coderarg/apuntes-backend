@@ -1,6 +1,7 @@
 import { initMongoDB } from "./01-conexion.js";
 import { UserModel } from "./02-schema.js";
 
+
 const test = async() => {
     await initMongoDB();
     // const consulta1 = await UserModel.find({}).limit(1)
