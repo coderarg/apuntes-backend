@@ -42,9 +42,9 @@ export const updateService = async (idNumber, obj) => {
     }
 }
 
-export const deleteService = async (idNumber|) => {
+export const deleteService = async (idNumber) => {
     try {
-        const deletedItem = await productDao.delete(idNumber)
+        const deletedItem = await productDao.delete(idNumber);
         return deletedItem;
     } catch (error) {
         console.log(error);
