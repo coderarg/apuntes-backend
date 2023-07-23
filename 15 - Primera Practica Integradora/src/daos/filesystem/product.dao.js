@@ -7,7 +7,7 @@ export default class ProductDaoFS{
     }
     #maxId = 0;
 
-    async getProducts() {
+    async getAll() {
         try {
             if (fs.existsSync(this.path)) {
                 const productsJSON = await fs.promises.readFile(this.path, 'utf-8');
@@ -22,9 +22,9 @@ export default class ProductDaoFS{
         }
     }
 
-    async getProductById(idNumber) {
+    async getById(idNumber) {
         try {
-            let products = await this.getProducts();
+            let products = await this.getAll();
             let foundProduct = products.find((element) => {
                 return element.id === idNumber;
             });
@@ -35,10 +35,10 @@ export default class ProductDaoFS{
 
     }
 
-    async addProduct(newProduct) {
+    async create(newProduct) {
 
         try {
-            await this.getProducts();
+            await this.getAll();
             
             const product = {
                 id: await this.#getMaxId() + 1, 
@@ -53,9 +53,9 @@ export default class ProductDaoFS{
         }
     }
 
-    async updateProduct(idNumber, updated) {
+    async update(idNumber, updated) {
         try {
-            await this.getProducts();
+            await this.getAll();
             
             let index = this.products.findIndex((element) => {
                 return element.id === idNumber;
@@ -91,9 +91,9 @@ export default class ProductDaoFS{
         }
     }     
 
-    async deleteProduct(idNumber) {
+    async delete(idNumber) {
         try {
-            await this.getProducts();
+            await this.getAll();
 
             if(this.products.some(element => element.id === idNumber)){
                 let index = this.products.findIndex((element) => {
@@ -113,7 +113,7 @@ export default class ProductDaoFS{
 
     async #getMaxId() {
         try {
-            await this.getProducts();
+            await this.getAll();
 
             this.products.forEach((element) => {
                 if(element.id > this.#maxId){
