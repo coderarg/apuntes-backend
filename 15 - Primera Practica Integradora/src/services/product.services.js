@@ -2,7 +2,7 @@ import ProductDaoMongoDB from "../daos/mongodb/product.dao.js";
 
 const productDao = new ProductDaoMongoDB();
 
-export const getAllService = async () => {
+export const getAll = async () => {
     try {
         const response = await productDao.getAll();
         return response;
@@ -11,7 +11,7 @@ export const getAllService = async () => {
     }
 }
 
-export const getByIdService = async (idNumber) => {
+export const getById = async (idNumber) => {
     try {
         const item = await productDao.getById(idNumber);
 
@@ -23,7 +23,7 @@ export const getByIdService = async (idNumber) => {
     }
 }
 
-export const createService = async (obj) => {
+export const create = async (obj) => {
     try {
         const newItem = await productDao.create(obj);
         if(!newItem) return false;
@@ -33,7 +33,7 @@ export const createService = async (obj) => {
     }
 }
 
-export const updateService = async (idNumber, obj) => {
+export const update = async (idNumber, obj) => {
     try {
         const updatedItem = await productDao.update(idNumber, obj);
         return updatedItem;
@@ -42,7 +42,7 @@ export const updateService = async (idNumber, obj) => {
     }
 }
 
-export const deleteService = async (idNumber) => {
+export const remove = async (idNumber) => {
     try {
         const deletedItem = await productDao.delete(idNumber);
         return deletedItem;
