@@ -11,5 +11,6 @@ productRouter.post('/', controller.create);
 
 productRouter.put('/:id', controller.update);
 
-productRouter.delete('/:id', controller.delete);
+productRouter.delete('/:id', controller.remove);
+
 export default productRouter;
