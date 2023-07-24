@@ -1,42 +1,46 @@
-import { ProductModel } from './models/product.model.js';
+import { ProductModel } from "./models/product.model.js";
 
 export default class ProductDaoMongoDB {
     async getAll(){
         try {
-            const products = await ProductModel.find({});
-            return products;
+            const response = await ProductModel.find({});
+            return response;
         } catch (error) {
             console.log(error);
         }
     }
-    async getById(idNumber){
+
+    async getById(id){
         try {
-            const productById = await ProductModel.findById(idNumber)
-            return productById;
+            const response = await ProductModel.findById(id);
+            return response;
         } catch (error) {
             console.log(error);
         }
     }
+
     async create(obj){
         try {
-            const newProduct = await ProductModel.create(obj);
-            return newProduct;
+            const response = await ProductModel.create(obj);
+            return response;
         } catch (error) {
             console.log(error);
         }
     }
-    async update(idNumber, obj){
+
+    async update(id, obj){
         try {
-            const updatedProduct = await ProductModel.findByIdAndUpdate(idNumber, obj, { new: true });
-            return updatedProduct;
+            const response = await ProductModel.findByIdAndUpdate(id, obj, { new: true });
+            return response;
         } catch (error) {
             console.log(error);
         }
     }
-    async delete(idNumber){
+    
+    async delete(id){
         try {
-            const deletedProduct = await ProductModel.findByIdAndDelete(idNumber);
-            return deletedProduct;
+           const response = await ProductModel.findByIdAndDelete(id);
+           return response;
         } catch (error) {
             console.log(error);
         }

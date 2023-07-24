@@ -1,137 +1,91 @@
 import fs from 'fs';
 
 export default class ProductDaoFS{
-    constructor(path) {
-        this.products = [];
-        this.path = path
+    constructor(path){
+        this.path = path;
     }
-    #maxId = 0;
 
-    async getAll() {
+    async #getMaxId(){
+        let maxId = 0;
+        const products = await this.getAll();
+        products.map((prod) => { 
+          if (prod.id > maxId) maxId = prod.id;                                       
+        });
+        return maxId;
+    }
+
+    async getAll(){
         try {
-            if (fs.existsSync(this.path)) {
-                const productsJSON = await fs.promises.readFile(this.path, 'utf-8');
-                this.products.splice(0, this.products.length);
-                this.products.push(...JSON.parse(productsJSON));
-                return this.products;
+            if(fs.existsSync(this.path)){
+                const products = await fs.promises.readFile(this.path, 'utf-8');
+                const productsJSON = JSON.parse(products);
+                return productsJSON; 
             } else {
-                return this.products;
+                return []
             }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async getById(idNumber) {
-        try {
-            let products = await this.getAll();
-            let foundProduct = products.find((element) => {
-                return element.id === idNumber;
-            });
-            return foundProduct;
-        } catch (error) {
-            console.log(error);
-        }
-
-    }
-
-    async create(newProduct) {
-
-        try {
-            await this.getAll();
             
-            const product = {
-                id: await this.#getMaxId() + 1, 
-                ...newProduct,
-                status: true}
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-            this.products.push(product);
-            await fs.promises.writeFile(this.path, JSON.stringify(this.products));
+    async getById(id){
+        try {
+            const products = await this.getAll();
+            const product = products.find((prod) => prod.id === id);
+            if(product) {
+                return product
+            }
+            return false;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async create(obj){
+        try {
+            const product = {
+                id: await this.#getMaxId() + 1,
+                ...obj
+            };
+            const productsFile = await this.getAll();
+            productsFile.push(product);
+            await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
             return product;
         } catch (error) {
             console.log(error);
         }
     }
 
-    async update(idNumber, updated) {
+    async update(obj, id){
         try {
-            await this.getAll();
-            
-            let index = this.products.findIndex((element) => {
-                return element.id === idNumber;
-            });
-            
-            if(updated.code){
-                let isCodeExist = false;
-                isCodeExist = this.products.some((item) => item.code === updated.code);
-                if (!isCodeExist) {
-                    let modifiedProducts = {
-                        ...this.products[index],
-                        ...updated
-                    }
-                    this.products[index] = modifiedProducts;
-                    await this.saveProducts(this.products);
-                    return modifiedProducts;
-                } else {
-                    console.log("Error: Product code already exist");
-                    return;
-                }
+            const productsFile = await this.getAll();
+            const index = productsFile.findIndex(prod => prod.id === id);
+            console.log('index:::', index);
+            if(index === -1){
+                throw new Error(`Id ${id} not found`)
             } else {
-                let modifiedProducts = {
-                    ...this.products[index],
-                    ...updated
-                }
-                this.products[index] = modifiedProducts;
-                await this.saveProducts(this.products);
-                return modifiedProducts;
+                productsFile[index] = { ...obj, id }
             }
-            
+            await fs.promises.writeFile(this.path, JSON.stringify(productsFile));
         } catch (error) {
             console.log(error);
         }
-    }     
+    }
 
-    async delete(idNumber) {
+    async delete(id){
         try {
-            await this.getAll();
-
-            if(this.products.some(element => element.id === idNumber)){
-                let index = this.products.findIndex((element) => {
-                    return element.id === idNumber;
-                });
-            
-                this.products.splice(index, 1);
-                await this.saveProducts(this.products)
-                return;
-            }else{
-                console.log("Error: Product does not exist");
+            const productsFile = await this.getAll();
+            if(productsFile.length > 0){
+                const newArray = productsFile.filter(prod => prod.id !== id);
+                await fs.promises.writeFile(this.path, JSON.stringify(newArray));
+            } else {
+                throw new Error(`Product id: ${id} not found`);
             }
         } catch (error) {
             console.log(error);
         }
     }
 
-    async #getMaxId() {
-        try {
-            await this.getAll();
-
-            this.products.forEach((element) => {
-                if(element.id > this.#maxId){
-                    this.#maxId = element.id
-                }
-            })
-            return this.#maxId;
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async saveProducts(elements){
-        try {
-            const productsJS = JSON.stringify(elements);
-            await fs.promises.writeFile(this.path, productsJS);
-        } catch (error) {
-            console.log(error);
-        }
-    }
 }
+
