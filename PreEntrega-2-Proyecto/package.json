@@ -1,0 +1,17 @@
+{
+  "name": "preentrega-2-proyecto",
+  "version": "1.0.0",
+  "description": "Profesionalizando la DB",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.4.1",
+    "mongoose-paginate-v2": "^1.7.31"
+  }
+}
