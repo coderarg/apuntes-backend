@@ -40,21 +40,7 @@ Para el carrito, el cual tendrá su router en /api/carts/, configurar dos rutas:
     - product: SÓLO DEBE CONTENER EL ID DEL PRODUCTO (Es crucial que __no__ agregues el producto completo).
     - quantity: debe contener el número de ejemplares de dicho producto. El producto, de momento, se agregará de uno en uno.
 
-Además, si un producto ya existente intenta agregarse al producto, incrementar el campo quantity de dicho producto. 
-
-La persistencia de la información se implementará utilizando el file system, donde los archivos “productos,json” y “carrito.json”, respaldan la información.
-
-No es necesario realizar ninguna implementación visual, todo el flujo se puede realizar por Postman o por el cliente de tu preferencia.
-
-
-### Formato
-- Link al repositorio de Github con el proyecto completo, sin la carpeta de Node_modules.
-
-### Sugerencias
-
-- No olvides app.use(express.json())  
-- No es necesario implementar multer  
-- Link al video donde se explica.
+Además, si un producto ya existente intenta agregarse al producto, incrementar el campo quantity de dicho producto.
 
 # 2° PreEntrega Proyecto
 ## Profesionalizando la BD
