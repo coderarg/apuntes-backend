@@ -21,6 +21,6 @@ router.delete('/:id', controller.deleteCtr);
 
 router.get('/aggregation', controller.aggregation);
 
-router.put('/updatedocs', controller.updateManyAge)
+router.put('/updatedocs', controller.updateManyAge);
 
 export default router;

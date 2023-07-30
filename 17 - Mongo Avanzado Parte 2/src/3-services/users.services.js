@@ -1,4 +1,4 @@
-import UserDaoMongoDB from "../daos/mongodb/users.dao.js";
+import UserDaoMongoDB from "../2-daos/mongodb/users.dao.js";
 const userDao = new UserDaoMongoDB();
 import fs from 'fs';
 import {__dirname} from '../utils.js';

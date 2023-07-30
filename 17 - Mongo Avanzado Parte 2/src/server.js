@@ -3,7 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import usersRouter from './routes/users.router.js';
 import petsRouter from './routes/pets.router.js';
-import { errorHandler } from './middlewares/errorHandler.js';
+import { errorHandler } from './6-middlewares/errorHandler.js';
 
 const app = express();
 
