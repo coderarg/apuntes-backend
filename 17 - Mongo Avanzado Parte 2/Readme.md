@@ -220,8 +220,30 @@ export const getAllUsers = async (page, limit) => {
 ```
 
 ### users.controllers.js
-En controllers vamos a tomar los parámetros "page" y "limit" desde el req.query;
+Creamos el controlador para el método de mostrar todos.
 
 ```javascript
-
+export const getAllCtr = async (req, res, next) => {
+  try {
+    // tomamos los parámetros page y limit desde req.query
+    const { page, limit } = req.query;
+    // guardamos la respuesta en una constante
+    const response = await service.getAllUsers(page, limit);
+    // en caso de que haya una página siguiente generamos el link para cargar esos elementos.
+    const next = response.hasNextPage ? `http://localhost:8080/users/all?page=${response.nextPage}` : null;
+    // en caso de que haya una página anterior generamos el link apra cargar esos elementos.
+    const prev = response.hasPrevPage ? `http://localhost:8080/users/all?page=${response.prevPage}` : null;
+    res.json({
+      info: {
+        count: response.totalDocs,
+        pages: response.totalPages,
+        next,
+        prev
+      },
+      results: response.docs
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 ```

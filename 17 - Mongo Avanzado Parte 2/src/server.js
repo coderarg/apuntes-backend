@@ -1,8 +1,8 @@
-import './db/database.js';
+import './0-db/database.js';
 import express from 'express';
 import morgan from 'morgan';
-import usersRouter from './routes/users.router.js';
-import petsRouter from './routes/pets.router.js';
+import usersRouter from './5-routes/users.router.js';
+import petsRouter from './5-routes/pets.router.js';
 import { errorHandler } from './6-middlewares/errorHandler.js';
 
 const app = express();

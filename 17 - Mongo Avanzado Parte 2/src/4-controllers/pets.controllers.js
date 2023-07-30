@@ -1,4 +1,4 @@
-import * as service from "../services/pets.services.js";
+import * as service from "../3-services/pets.services.js";
 
 export const addPetToUser = async (req, res, next) => {
   try {
