@@ -6,7 +6,7 @@
         "price": 10,
         "stock": 10,
         "category": "A",
-        "thumbnail": "img1.png",
+        "thumbnail": ["img1.png"],
         "status": true
     },
     {
@@ -16,7 +16,7 @@
         "price": 20,
         "stock": 20,
         "category": "B",
-        "thumbnail": "img2.png",
+        "thumbnail": ["img2.png"],
         "status": false
     },
     {
@@ -26,7 +26,7 @@
         "price": 30,
         "stock": 30,
         "category": "C",
-        "thumbnail": "img3.png",
+        "thumbnail": ["img3.png"],
         "status": true
     },
     {
@@ -36,7 +36,7 @@
         "price": 40,
         "stock": 40,
         "category": "D",
-        "thumbnail": "img4.png",
+        "thumbnail": ["img4.png"],
         "status": false
     },
     {
@@ -46,7 +46,7 @@
         "price": 50,
         "stock": 50,
         "category": "E",
-        "thumbnail": "img5.png",
+        "thumbnail": ["img5.png"],
         "status": true
     },
     {
@@ -56,7 +56,7 @@
         "price": 30,
         "stock": 30,
         "category": "F",
-        "thumbnail": "img6.png",
+        "thumbnail": ["img6.png"],
         "status": true
     },
     {
@@ -66,7 +66,7 @@
         "price": 20,
         "stock": 20,
         "category": "A",
-        "thumbnail": "img7.png",
+        "thumbnail": ["img7.png"],
         "status": true
     },
     {
@@ -76,7 +76,7 @@
         "price": 40,
         "stock": 40,
         "category": "B",
-        "thumbnail": "img8.png",
+        "thumbnail": ["img8.png"],
         "status": true
     },
     {
@@ -86,7 +86,7 @@
         "price": 20,
         "stock": 20,
         "category": "C",
-        "thumbnail": "img9.png",
+        "thumbnail": ["img9.png"],
         "status": true
     },
     {
@@ -96,7 +96,7 @@
         "price": 60,
         "stock": 30,
         "category": "E",
-        "thumbnail": "img10.png",
+        "thumbnail": ["img10.png"],
         "status": true
     },
     {
@@ -106,7 +106,7 @@
         "price": 100,
         "stock": 10,
         "category": "C",
-        "thumbnail": "img11.png",
+        "thumbnail": ["img11.png"],
         "status": false
     },
     {
@@ -116,7 +116,7 @@
         "price": 30,
         "stock": 30,
         "category": "F",
-        "thumbnail": "img12.png",
+        "thumbnail": ["img12.png"],
         "status": true
     },
     {
@@ -126,7 +126,7 @@
         "price": 30,
         "stock": 30,
         "category": "A",
-        "thumbnail": "img13.png",
+        "thumbnail": ["img13.png"],
         "status": true
     },
     {
@@ -136,7 +136,7 @@
         "price": 30,
         "stock": 30,
         "category": "D",
-        "thumbnail": "img14.png",
+        "thumbnail": ["img14.png"],
         "status": true
     },
     {
@@ -146,7 +146,7 @@
         "price": 30,
         "stock": 30,
         "category": "C",
-        "thumbnail": "img15.png",
+        "thumbnail": ["img15.png"],
         "status": true
     },
     {
@@ -156,7 +156,7 @@
         "price": 30,
         "stock": 30,
         "category": "E",
-        "thumbnail": "img16.png",
+        "thumbnail": ["img16.png"],
         "status": true
     },
     {
@@ -166,7 +166,7 @@
         "price": 30,
         "stock": 30,
         "category": "C",
-        "thumbnail": "img17.png",
+        "thumbnail": ["img17.png"],
         "status": true
     },
     {
@@ -176,7 +176,7 @@
         "price": 30,
         "stock": 30,
         "category": "D",
-        "thumbnail": "img18.png",
+        "thumbnail": ["img18.png"],
         "status": true
     },
     {
@@ -186,7 +186,7 @@
         "price": 30,
         "stock": 30,
         "category": "A",
-        "thumbnail": "img19.png",
+        "thumbnail": ["img19.png"],
         "status": true
     },
     {
@@ -196,7 +196,7 @@
         "price": 30,
         "stock": 30,
         "category": "B",
-        "thumbnail": "img20.png",
+        "thumbnail": ["img20.png"],
         "status": true
     }
 ]
