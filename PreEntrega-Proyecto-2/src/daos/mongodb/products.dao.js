@@ -1,4 +1,4 @@
-import { ProductsModel } from './model/products.model.js';
+import { ProductsModel } from './model/products.model.js'
 
 export default class ProductDaoMongoDB {
 
