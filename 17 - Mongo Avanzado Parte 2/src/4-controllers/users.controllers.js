@@ -26,7 +26,6 @@ export const getByIdCtr = async (req, res, next) => {
     const { id } = req.params;
     const item = await service.getByIdUser(id);
     if (!item) throw new Error("User not found!");
-
     res.json(item);
   } catch (error) {
     next(error);
@@ -43,8 +42,6 @@ export const getByEmailCtr = async (req, res, next) => {
     next(error);
   }
 };
-
-
 
 export const createCtr = async (req, res, next) => {
   try {

@@ -9,7 +9,7 @@ export const createFileUser = async () => {
     const usersFile = JSON.parse(fs.readFileSync(__dirname+'/data/Users.json', 'utf-8'));
     const newUsers = await userDao.createUser(usersFile);
     if(!newUsers) return false;
-    else return { message: '¡Users saved success!' }
+    else return { message: 'Successful uploading users!' }
   } catch (error) {
     console.log(error);
   }

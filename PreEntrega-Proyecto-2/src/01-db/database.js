@@ -5,7 +5,7 @@ const connectionString = 'mongodb+srv://lucasgarciadeveloper:admin@coderhousepro
 const localConnectionString = 'mongodb://127.0.0.1:27017/ecommerce'
 
 try {
-    await mongoose.connect(localConnectionString);
+    await mongoose.connect(connectionString);
     console.log(`Conectado a Atlas DB Ecommerce`);
 } catch (error) {
     console.log(error);
