@@ -39,3 +39,20 @@ export const addProdToCart = async (cid, pid) => {
 		console.log(error);
 	}
 }
+
+export const deleteProd = async (cid, pid) => {
+	try {
+		const cart = await cartsDao.getCartById(cid);
+		const product = await productsDao.getProdById(pid);
+		const response = await cartsDao.deleteProd(cid, product);
+		if (!cart) throw new Error('Cart does not exist');
+		else {
+			if (!product) throw new Error('Product does not exist')
+			else {
+				return response;
+			}
+		}
+	} catch (error) {
+		console.log(error);
+	}
+}

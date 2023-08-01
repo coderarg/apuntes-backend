@@ -29,3 +29,14 @@ export const addProdToCartCtrl = async (req, res, next) => {
         next(error)
     }
 }
+
+export const deleteProdCtrl = async (req, res, next) => {
+    try {
+        const { cid } = req.params; 
+        const { pid } = req.params;
+        const response = await cartService.deleteProd(cid, pid);
+        res.json(response);
+    } catch (error) {
+        next(error)
+    }
+}
