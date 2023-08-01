@@ -64,4 +64,14 @@ export default class CartsDaoMongoDB {
 			console.log(error);
 		}
 	}
+
+	async deleteCart(cid){
+		try {
+			const cart = await CartsModel.findById(cid);
+			cart.products.length = 0;
+			return cart;
+		} catch (error) {
+			console.log(error);
+		}
+	}
 }

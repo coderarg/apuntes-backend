@@ -56,3 +56,14 @@ export const deleteProd = async (cid, pid) => {
 		console.log(error);
 	}
 }
+
+export const deleteCart = async (cid) => {
+	try {
+		const cart = await cartsDao.getCartById(cid);
+		const response = await cartsDao.deleteCart(cid);
+		if (!cart) throw new Error('Cart does not exist');
+		else return response;
+	} catch (error) {
+		console.log(error);
+	}
+}

@@ -40,3 +40,13 @@ export const deleteProdCtrl = async (req, res, next) => {
         next(error)
     }
 }
+
+export const deleteCartCtrl = async (req, res, next) => {
+    try {
+        const { cid } = req.params;
+        const response = await cartService.deleteCart(cid);
+        res.json(response);
+    } catch (error) {
+        next(error)
+    }
+}
