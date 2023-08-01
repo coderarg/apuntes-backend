@@ -27,7 +27,7 @@ export const addProdToCart = async (cid, pid) => {
 	try {
 		const cart = await cartsDao.getCartById(cid);
 		const product = await productsDao.getProdById(pid);
-		const response = await cartsDao.addProdToCart(cid, pid);
+		const response = await cartsDao.addProdToCart(cid, product);
 		if (!cart) throw new Error('Cart does not exist');
 		else {
 			if (!product) throw new Error('Product does not exist')
