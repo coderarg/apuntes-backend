@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { __dirname } from './utils.js';
 import prodRouter from './routes/products.router.js';
+import cartRouter from './routes/carts.router.js';
 
 const app = express();
 
@@ -12,7 +13,8 @@ app.use(express.urlencoded({extended:true}));
 app.use(morgan('dev'));
 app.use(errorHandler);
 
-app.use('/products', prodRouter)
+app.use('/api/products', prodRouter);
+app.use('/api/carts', cartRouter);
 
 const port = 8080;
 

@@ -99,7 +99,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     index: true
   //aquí realizamos indexación de first_name.
-
   },
   last_name: { type: String, required: true },
   email:  { type: String, required: true, unique: true },
