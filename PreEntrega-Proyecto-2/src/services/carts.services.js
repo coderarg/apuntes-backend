@@ -67,3 +67,4 @@ export const deleteCart = async (cid) => {
 		console.log(error);
 	}
 }
+

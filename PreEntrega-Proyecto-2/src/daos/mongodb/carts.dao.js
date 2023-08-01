@@ -69,6 +69,7 @@ export default class CartsDaoMongoDB {
 		try {
 			const cart = await CartsModel.findById(cid);
 			cart.products.length = 0;
+			await cart.save();
 			return cart;
 		} catch (error) {
 			console.log(error);
