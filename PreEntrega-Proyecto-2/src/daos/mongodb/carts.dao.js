@@ -20,11 +20,22 @@ export default class CartsDaoMongoDB {
         }
     }
 
-    async addProdToCart(cid, pid){
+    async addProdToCart(cid, product){
         try {
             const cart = await CartsModel.findById(cid);
-            cart.products.push(pid);
-            cart.save();
+            const prodExist = cart.products.find((p)=>{
+                console.log(p.id);
+                return p.id == product.id;
+            })
+            if(prodExist){
+                prodExist.quantity += 1
+            }else{
+                cart.products.push({
+                    id: product._id,
+                    quantity: 1
+                })
+            }
+            await cart.save();
             return cart;
         } catch (error) {
             console.log(error);
