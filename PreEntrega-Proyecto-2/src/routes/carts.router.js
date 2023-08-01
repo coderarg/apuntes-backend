@@ -6,4 +6,6 @@ const cartRouter = Router();
 cartRouter.get('/createcart', cartCtrl.createCartCtrl);
 cartRouter.get('/getcartbyid/:id', cartCtrl.getCartByIdCtrl);
 
+cartRouter.post('/addprodtocart/:cid/:pid', cartCtrl.addProdToCartCtrl);
+
 export default cartRouter;

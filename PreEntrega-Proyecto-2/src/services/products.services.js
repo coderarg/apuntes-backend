@@ -1,5 +1,5 @@
-import ProductDaoMongoDB from "../daos/mongodb/products.dao.js";
-const productDao = new ProductDaoMongoDB();
+import ProductsDaoMongoDB from "../daos/mongodb/products.dao.js";
+const productDao = new ProductsDaoMongoDB();
 import fs from 'fs';
 import { __dirname } from "../utils.js";
 

@@ -49,11 +49,11 @@ Además, si un producto ya existente intenta agregarse al producto, incrementar 
 - Tendrás definidos todos los endpoints para poder trabajar con productos y carrito.
 
 ### Objetivos específicos
-- Profesionalizar las consultas de productos con fintros, paginación y ordenamiento.
+- Profesionalizar las consultas de productos con filtros, paginación y ordenamiento.
 - Profesionalizar la gestión de carrito para implementar los últimos conceptos vistos.
 
 ### Formato
-- Link al repositorio de Github, sin la carpeta de node_modules
+- Link al repositorio de Github, sin la carpeta de node_modules.
 
 ### Sugerencias
 - Permitir comentarios en el archivo.

@@ -10,7 +10,7 @@ export const addPetToUser = async(userId, petId) => {
   } catch (error) {
       console.log(error);
   } 
-}
+};
 
 export const getByIdPet = async (id) => {
   try {
