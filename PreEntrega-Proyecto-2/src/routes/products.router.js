@@ -1,16 +1,16 @@
 import { Router } from 'express';
-import * as productCtlr from '../controllers/products.controllers.js';
+import * as productCtrl from '../controllers/products.controllers.js';
 const prodRouter = Router();
 
-prodRouter.get('/getall', productCtlr.getAllProductsCtrl);
-prodRouter.get('/getbyid/:id', productCtlr.getProdByIdCtrl);
-prodRouter.get('/getbycode/:codetf', productCtlr.getByCodeCtrl);
+prodRouter.get('/getall', productCtrl.getAllProductsCtrl);
+prodRouter.get('/getbyid/:id', productCtrl.getProdByIdCtrl);
+prodRouter.get('/getbycode/:codetf', productCtrl.getByCodeCtrl);
 
-prodRouter.post('/readfile', productCtlr.readFileCtrl);
-prodRouter.post('/createprod', productCtlr.createProductCtrl);
+prodRouter.post('/readfile', productCtrl.readFileCtrl);
+prodRouter.post('/createprod', productCtrl.createProductCtrl);
 
-prodRouter.put('/updateprod/:id', productCtlr.updateProdCtrl);
+prodRouter.put('/updateprod/:id', productCtrl.updateProdCtrl);
 
-prodRouter.delete('/delete/:id', productCtlr.deleteProdCtrl);
+prodRouter.delete('/delete/:id', productCtrl.deleteProdCtrl);
 
 export default prodRouter;
