@@ -20,18 +20,18 @@ export default class CartsDaoMongoDB {
         }
     }
 
-    async addProdToCart(cid, product){
+    async addProdToCart(cid, pid){
         try {
             const cart = await CartsModel.findById(cid);
             const prodExist = cart.products.find((p)=>{
                 console.log(p.id);
-                return p.id == product.id;
+                return p.id == pid;
             })
             if(prodExist){
                 prodExist.quantity += 1
             }else{
                 cart.products.push({
-                    id: product._id,
+                    id: pid,
                     quantity: 1
                 })
             }
