@@ -10,3 +10,12 @@ export const createCart = async () => {
         console.log(error);
     }
 }
+
+export const getCartById = async (idNumber) => {
+    try {
+        const response = await cartsDao.getCartById(idNumber);
+        return response;
+    }catch (error){
+        console.log(error);
+    }
+}

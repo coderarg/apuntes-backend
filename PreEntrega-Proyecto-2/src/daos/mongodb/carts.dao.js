@@ -10,4 +10,13 @@ export default class CartsDaoMongoDB {
             console.log(error);
         }
     }
+
+    async getCartById(idNumber){
+        try {
+            const cartById = await CartsModel.findById(idNumber)
+            return cartById;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }

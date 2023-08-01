@@ -61,6 +61,7 @@ Además, si un producto ya existente intenta agregarse al producto, incrementar 
 - Los nuevos endpoints deben seguir la misma estructura y lógica que hemos seguido.
 
 ## Se debe entregar
+## Products
 Con base en nuestra implementación actual de productos, modificar el método GET/ para que cumpla con los siguientes puntos:
 - Deberá poder recibir por query params un limit (opcional), una page (opcional), un sort (opcional) y query (opcional)
     - limit permitirá devolver sólo el número de elementos solicitados al momento de la petición, en caso de no recibir limit, éste será de 10.
@@ -84,6 +85,7 @@ El método GET deberá devolver un objeto con el siguiente formato:
 
 Se deberá poder buscar productos por categoría o por disponibilidad, y se deberá poder realizar un ordenamiento de estos productos de manera ascendete o descendente por precio.
 
+## Carts
 Agregar al router de carts los siguientes endpoints:
 - DELETE api/carts/:cid/products/:pid : Deberá eliminatar del carrito el producto seleccionado.
 - PUT api/carts/:cid : deberá actualizar el carrito con un arreglo de productos con el formato específicado arriba.
