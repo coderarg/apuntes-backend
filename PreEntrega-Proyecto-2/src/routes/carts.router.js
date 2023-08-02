@@ -8,6 +8,8 @@ cartRouter.get('/getcartbyid/:id', cartCtrl.getCartByIdCtrl);
 cartRouter.post('/createcart', cartCtrl.createCartCtrl);
 cartRouter.post('/addprodtocart/:cid/:pid', cartCtrl.addProdToCartCtrl);
 
+cartRouter.put('/addmanyprods/:cid', cartCtrl.addManyProdsCtrl);
+
 cartRouter.delete('/deleteprod/:cid/:pid', cartCtrl.deleteProdCtrl);
 cartRouter.delete('/deletecart/:cid', cartCtrl.deleteCartCtrl);
 

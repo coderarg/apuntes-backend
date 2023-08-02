@@ -50,3 +50,14 @@ export const deleteCartCtrl = async (req, res, next) => {
         next(error)
     }
 }
+
+export const addManyProdsCtrl = async (req, res, next) => {
+    try {
+        const { cid } = req.params;
+        const prodArray = req.body;
+        const response = await cartService.addManyProds(cid, prodArray);
+        res.json(response)
+    } catch (error) {
+        next(error);
+    }
+}

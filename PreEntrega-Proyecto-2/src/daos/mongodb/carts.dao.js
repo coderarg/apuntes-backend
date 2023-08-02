@@ -1,4 +1,5 @@
 import { CartsModel } from './model/carts.model.js';
+import { ProductsModel } from './model/products.model.js';
 
 export default class CartsDaoMongoDB {
 
@@ -69,6 +70,38 @@ export default class CartsDaoMongoDB {
 		try {
 			const cart = await CartsModel.findById(cid);
 			cart.products.length = 0;
+			await cart.save();
+			return cart;
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	async addManyProds(cid, prodArray){
+		try {
+			const cart = await CartsModel.findById(cid);
+			const newProdArray = [];
+			for (let i = 0; i < prodArray.length; i++) {
+				const prod = prodArray[i];
+				const prodbycode = await ProductsModel.find({code: prod.code});
+				newProdArray.push(prodbycode);
+			}
+
+			newProdArray.forEach((p)=>{
+				const prodExist = cart.products.find((item) => {
+					return item.id.toString() === p[0]._id.toString(); 
+				})
+
+				console.log(!prodExist);
+
+				if (!prodExist) {
+					cart.products.push({
+						id: p[0]._id,
+						quantity: 1,
+					});
+				}
+				else prodExist.quantity++;
+			})
 			await cart.save();
 			return cart;
 		} catch (error) {

@@ -68,3 +68,11 @@ export const deleteCart = async (cid) => {
 	}
 }
 
+export const addManyProds = async(cid, prodArray) => {
+	try {
+		const response = await cartsDao.addManyProds(cid, prodArray);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}
