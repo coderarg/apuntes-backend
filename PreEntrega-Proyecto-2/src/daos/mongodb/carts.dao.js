@@ -80,7 +80,10 @@ export default class CartsDaoMongoDB {
 	async addManyProds(cid, prodArray){
 		try {
 			const cart = await CartsModel.findById(cid);
+			//Para poder comparar id producto con id producto de carrito, traigo los productos de la base de datos.
 			const newProdArray = [];
+
+			//Uso un for, en vez de un forEach, para poder usar asincronismo.
 			for (let i = 0; i < prodArray.length; i++) {
 				const prod = prodArray[i];
 				const prodbycode = await ProductsModel.find({code: prod.code});
@@ -92,16 +95,36 @@ export default class CartsDaoMongoDB {
 					return item.id.toString() === p[0]._id.toString(); 
 				})
 
-				console.log(!prodExist);
-
 				if (!prodExist) {
 					cart.products.push({
 						id: p[0]._id,
-						quantity: 1,
+						quantity: 1, 
 					});
-				}
-				else prodExist.quantity++;
+				}else prodExist.quantity++;
+
 			})
+			await cart.save();
+			return cart;
+		} catch (error) {
+			console.log(error);
+		}
+	}
+	
+	async modifyQuantity(cid, pid, cant){
+		try {
+			const cart = await CartsModel.findById(cid);
+			const product = await ProductsModel.findById(pid);
+
+			const prodExist = cart.products.find((p)=> {
+				return p.id.toString() === product._id.toString();
+			})
+
+			if (!prodExist) {
+				cart.products.push({
+					id: product._id,
+					quantity: cant, 
+				});
+			}else prodExist.quantity = cant;
 			await cart.save();
 			return cart;
 		} catch (error) {

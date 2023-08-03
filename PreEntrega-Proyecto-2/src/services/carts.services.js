@@ -76,3 +76,15 @@ export const addManyProds = async(cid, prodArray) => {
 		console.log(error);
 	}
 }
+
+export const modifyQuantity = async (cid, pid, cant) => {
+	try {
+		const response = await cartsDao.modifyQuantity(cid, pid, cant);
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+// cant = -3
+// 	  i = 0

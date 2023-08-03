@@ -61,3 +61,19 @@ export const addManyProdsCtrl = async (req, res, next) => {
         next(error);
     }
 }
+
+export const modifyQuantityCtrl = async (req, res, next) => {
+    try {
+        const body = req.body;
+        const { cid } = req.params;
+        const { pid } = req.params;
+
+        // body // [{ cant: 3 }]
+        const response = await cartService.modifyQuantity(cid, pid, body[0].cant);
+        res.json(response)
+
+    } catch (error) {
+        next();
+    }
+}
+
