@@ -194,7 +194,7 @@ En nuestro dao aplicamos el método paginate.
 Este método recibe 2 parámetros: el primero es un filtro {} (aquí traemos todos) y el segundo es la página en la que inicia y el límite de elementos por página.
 
 ```javascript
-async getAllUsers(page = 1, limit = 10) {
+async getAllUsers(page = 1, limit = 10) //en los parámetros, damos los valores por default {
     try {
       const response = await UserModel.paginate({}, { page, limit });
       return response;

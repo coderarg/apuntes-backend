@@ -12,9 +12,28 @@ export const readFileCtrl = async (req, res, next) => {
 
 export const getAllProductsCtrl = async (req, res, next) => {
   try {
-    const allProducts = await prodService.getAllProducts();
-    if (!allProducts) throw new Error('Products not found');
-    else res.json(allProducts);
+    const { page, limit } = req.query;
+
+    const response = await prodService.getAllProducts(page, limit);
+
+    const next = response.hasNextPage ? `https://localhost:8080/api/products/getall?page=${response.nextPage}` : null;
+    const prev = response.hasPrevPage ? `https://localhost:8080/api/products/getall?page=${response.prevPage}` : null;
+
+    if (!response) throw new Error('Products not found');
+    else res.json({
+/*       info: {
+        status: success/error,
+        payload: Resultado de los productos solicitados,
+        "total pages": response.totalPages,
+        prevPage: Página anterior,
+        nextPage; Página siguiente,
+        page: Página actual,
+        hasPrevPage: Indicador para saber si la página previa existe,
+        hasNextPage: Indicador para saber si la página siguiente existe,
+        prevLink: Link directo a la página previa (null si hasPrevPage=false)
+        nextLink: Link directo a la página siguiente (null si hasNextPage=false)
+      } */
+    });
   } catch (error) {
     next(error);
   }

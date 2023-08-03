@@ -14,10 +14,11 @@ export const readFile = async () => {
     }
 }
 
-export const getAllProducts = async () => {
+export const getAllProducts = async (page, limit) => {
     try {
-        const response = await productDao.getAllProducts();
-        return response;
+        const response = await productDao.getAllProducts(page, limit);
+        if(!response) return false;
+        else return response;
     } catch (error) {
         console.log(error);
     }

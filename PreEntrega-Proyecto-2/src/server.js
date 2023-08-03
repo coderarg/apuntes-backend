@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(morgan('dev'));
 app.use(errorHandler);
 
-app.use('/api/products', prodRouter);
+app.use('/api/products', morgan('dev'), prodRouter);
 app.use('/api/carts', cartRouter);
 
 const port = 8080;
