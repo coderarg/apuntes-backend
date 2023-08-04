@@ -16,24 +16,26 @@ export const getAllProductsCtrl = async (req, res, next) => {
 
     const response = await prodService.getAllProducts(page, limit);
 
-    const next = response.hasNextPage ? `https://localhost:8080/api/products/getall?page=${response.nextPage}` : null;
-    const prev = response.hasPrevPage ? `https://localhost:8080/api/products/getall?page=${response.prevPage}` : null;
+    const next = response.hasNextPage ? `http://localhost:8080/api/products/getall?page=${response.nextPage}&limit=${response.limit}` : null;
+    const prev = response.hasPrevPage ? `http://localhost:8080/api/products/getall?page=${response.prevPage}&limit=${response.limit}` : null;
 
     if (!response) throw new Error('Products not found');
-    else res.json({
-/*       info: {
-        status: success/error,
-        payload: Resultado de los productos solicitados,
-        "total pages": response.totalPages,
-        prevPage: Página anterior,
-        nextPage; Página siguiente,
-        page: Página actual,
-        hasPrevPage: Indicador para saber si la página previa existe,
-        hasNextPage: Indicador para saber si la página siguiente existe,
-        prevLink: Link directo a la página previa (null si hasPrevPage=false)
-        nextLink: Link directo a la página siguiente (null si hasNextPage=false)
-      } */
-    });
+    else res.json([
+      {
+        info: {
+          "status": res.statusCode,
+          "payload": "no lo encontré",
+          "total pages": response.totalPages,
+          "prevPage": response.prevPage,
+          "nextPage": response.nextPage,
+          "page": response.page,
+          "hasPrevPage": response.hasPrevPage,
+          "hasNextPage": response.hasNextPage,
+          "prevLink": prev,
+          "nextLink": next
+       }
+      }, response.docs
+    ]);
   } catch (error) {
     next(error);
   }
