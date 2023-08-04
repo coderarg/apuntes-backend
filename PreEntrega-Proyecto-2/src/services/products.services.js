@@ -14,9 +14,9 @@ export const readFile = async () => {
     }
 }
 
-export const getAllProducts = async (page, limit) => {
+export const getAllProducts = async (page, limit, optional) => {
     try {
-        const response = await productDao.getAllProducts(page, limit);
+        const response = await productDao.getAllProducts(page, limit, optional);
         if(!response) return false;
         else return response;
     } catch (error) {

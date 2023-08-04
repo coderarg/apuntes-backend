@@ -2,10 +2,10 @@ import { ProductsModel } from './model/products.model.js'
 
 export default class ProductsDaoMongoDB {
 
-  async getAllProducts(page = 1, limit = 10) {
+  async getAllProducts(page=1, limit=10, optional = {}) {
     try {
       const response = await ProductsModel.paginate({}, {page, limit});
-      return response;
+      console.log(response);
     } catch (error) {
       console.log(error);
     }

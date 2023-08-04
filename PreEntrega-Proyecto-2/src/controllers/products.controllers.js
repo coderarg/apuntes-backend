@@ -12,9 +12,15 @@ export const readFileCtrl = async (req, res, next) => {
 
 export const getAllProductsCtrl = async (req, res, next) => {
   try {
-    const { page, limit } = req.query;
+    const { page, limit, sort, category, status } = req.query;
 
-    const response = await prodService.getAllProducts(page, limit);
+    const optional = {
+      sort, 
+      category, 
+      status
+    }
+
+    const response = await prodService.getAllProducts(page, limit, optional);
 
     const next = response.hasNextPage ? `http://localhost:8080/api/products/getall?page=${response.nextPage}&limit=${response.limit}` : null;
     const prev = response.hasPrevPage ? `http://localhost:8080/api/products/getall?page=${response.prevPage}&limit=${response.limit}` : null;
@@ -23,8 +29,8 @@ export const getAllProductsCtrl = async (req, res, next) => {
     else res.json([
       {
         info: {
-          "status": res.statusCode,
-          "payload": "no lo encontré",
+          "status": "Success",
+          "payload": response.docs,
           "total pages": response.totalPages,
           "prevPage": response.prevPage,
           "nextPage": response.nextPage,
@@ -33,8 +39,8 @@ export const getAllProductsCtrl = async (req, res, next) => {
           "hasNextPage": response.hasNextPage,
           "prevLink": prev,
           "nextLink": next
-       }
-      }, response.docs
+        }
+      }
     ]);
   } catch (error) {
     next(error);
@@ -67,7 +73,7 @@ export const updateProdCtrl = async (req, res, next) => {
   try {
     const { id } = req.params;
     const prodToUpdate = prodService.getProdById(id);
-    //Verificar que code no se repita(si se repite lanzar error)
+    //Verificar que "code" no se repita(si se repite lanzar error)
     if(!prodToUpdate) throw new Error('Product not found')
     else {
       const updatedProd = req.body;
