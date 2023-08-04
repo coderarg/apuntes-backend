@@ -42,6 +42,12 @@ app.get('/clear', (req, res)=> {
     // res.clearCookie('idioma').send('clear cookie');
 })
 
+app.get('/clear-signed', (req, res) => {
+    // Eliminar la cookie firmada "name"
+    res.clearCookie('name', { signed: true });
+    res.send('Cookie firmada eliminada correctamente.');
+});
+
 app.listen(8080, ()=>{
     console.log('server ok');
 });
