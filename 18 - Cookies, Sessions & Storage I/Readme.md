@@ -103,3 +103,21 @@ app.get('/clear-signed', (req, res) => {
 });
 ```
 
+# Sessions
+Las sesiones se guardan del lado del servidor, ya que este es más seguro.
+
+Hay 3 formas de guardar sessión:
+- Memoria
+- Archivo
+- Base de Datos
+
+## Instalación
+```shell
+    npm init -y
+    npm i express express-session
+```
+
+[+ info express-session](https://www.npmjs.com/package/express-session)
+
+En esta ocasión vamos a ver como se guarda la sessión en memoria.
+
