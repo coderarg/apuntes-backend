@@ -5,7 +5,6 @@ export default class ProductsDaoMongoDB {
   async getAllProducts(page=1, limit=10, sort, category = undefined, status = undefined) {
     try {
       const filter = {};
-    
       if(!!category) filter.category = category;
       if(!!status) filter.status = status;
       if(status === 'true') filter.stock = {$gt: 0};
@@ -16,7 +15,6 @@ export default class ProductsDaoMongoDB {
         if(sort === 'desc') sortOrder.price = -1;
       }
 
-      console.log(filter, sortOrder);
       const response = await ProductsModel.paginate(filter, {
         page, 
         limit,

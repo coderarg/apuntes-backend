@@ -14,8 +14,6 @@ export const getAllProductsCtrl = async (req, res, next) => {
   try {
     const { page, limit, sort, category, status } = req.query;
 
-    console.log(page, limit, sort, category, status);
-
     const response = await prodService.getAllProducts(page, limit, sort, category, status);
 
     const next = response.hasNextPage ? `http://localhost:8080/api/products/getall?page=${response.nextPage}&limit=${response.limit}` : null;
