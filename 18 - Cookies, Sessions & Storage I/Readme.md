@@ -121,3 +121,100 @@ Hay 3 formas de guardar sessión:
 
 En esta ocasión vamos a ver como se guarda la sessión en memoria.
 
+## Configuramos session:
+
+```javascript
+/* Server */
+import express from 'express';
+import session from 'express-session';
+
+const sessionConfig = {
+    secret: 'secret', //string para firmar las cookies
+    cookie: { maxAge: 10000 }, // tiempo máximo de vida en ms
+    saveUninitialized: true, // crea la sessión aunque no le hayamos pasado ningún dato, la crea vacía
+    resave: false // Fuerza la sessión a guardarse aunque no se haya inicializado.
+};
+
+// Generamos que la app use session
+app.use(session(sessionConfig));
+
+// Esta sería una pequeña base de datos a modo de simulación, de usuarios ya registrados.
+const users = [
+    {
+        username: 'juan',
+        password: 1234,
+        admin: true
+    },
+    {
+        username: 'jose',
+        password: 1234,
+        admin: false
+    }
+];
+
+// Generamos el endpoint para el logueo.
+app.post('/login', (req, res)=> {
+    //Traemos los datos de la web cuando se genera un logueo.
+    const { username, password } = req.body;
+    //Buscamos el index del usuario logueado, si no lo encuntra devuelve "-1";
+    const index = users.findIndex((user) => user.username === username && user.password === password);
+
+    if(index < 0) res.json({ msg: 'Unauthorized' })
+    else{ 
+        //Si el indice es >= que 0, entonces seteamos en una variable de la session la informacion del usuario. Podemos darle cualquier nombre, en nuestro caso usaremos "info"
+        const user = users[index];
+        req.session.info = {
+            loggedIn: true,
+            count: 1, //Cuantas veces se ingresa
+            admin: user.admin
+        }
+        res.json({ msg: `Bienvenido ${user.username}` })
+    }
+}); 
+
+app.get('/secret-endpoint', validateLogin, (req, res) => {
+    req.session.info.count++;
+    res.json({
+        msg: 'endpoint secreto',
+        session: req.session
+    })
+});
+
+app.get('/admin-secret-endpoint', validateLogin, isAdmin, (req, res) => {
+    req.session.info.count++;
+    res.json({
+        msg: 'endpoint secreto SOLO ADMINS',
+        session: req.session
+    })
+});
+
+
+// De esta manera llamamos el método de session para destruir la sesión.
+app.post('/logout', (req, res) => {
+    req.session.destroy();
+    res.json({ msg: 'session has been destroyed' })
+})
+
+
+/* ----------------------------------------------------- */
+
+/* Middlewares */
+
+// Ingresamos al req.session.info y verificamos si está logueado. Si es así, lo dejamos pasar.
+const validateLogin = (req, res, next) => {
+    if (req.session.info.loggedIn) next();
+    else res.json({ msg: 'Unauthorized' })
+};
+
+// Acá verificamos si el usuario es admin de la misma manera que la anterior.
+const isAdmin = (req, res, next) => {
+    if (req.session.info.admin) next();
+    else res.json({ msg: 'Unauthorized' })
+};
+
+/* ----------------------------------------------------- */
+
+app.listen(8080, ()=>{
+console.log('🚀 Server listening on port 8080');
+});
+```
