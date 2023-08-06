@@ -1,4 +1,5 @@
-# Cookies
+# Cookies, Session & Storage
+## Cookies
 Son archivos que podemos guardar del lado del cliente con información útil del usuario que visita el sitio web.
 Son independientes de cada navegador.
 Esta información se utiliza para concer las preferencias del usuario.
@@ -8,7 +9,7 @@ Esta información se utiliza para concer las preferencias del usuario.
 - Podemos asignarle clasves secretas para poder aumentar la seguridad.
 - Vivien en el navegador, así que no guardamos datos sensibles.
 
-## Instalación
+### Instalación
 Instalamos las dependencias y librería de cookie parser.
 
 ```shell
@@ -18,7 +19,7 @@ npm express cookie-parser
 
 [+info Cookie Parser](https://www.npmjs.com/package/cookie-parser)
 
-### Cookie Parser
+## Cookie Parser
 Trabaja como un middleware, a nivel de aplicación.
 
 ```javascript
@@ -103,7 +104,7 @@ app.get('/clear-signed', (req, res) => {
 });
 ```
 
-# Sessions
+## Sessions
 Las sesiones se guardan del lado del servidor, ya que este es más seguro.
 
 Hay 3 formas de guardar sessión:
@@ -111,7 +112,8 @@ Hay 3 formas de guardar sessión:
 - Archivo
 - Base de Datos
 
-## Instalación
+## Express Session
+### Instalación
 ```shell
     npm init -y
     npm i express express-session
@@ -121,7 +123,7 @@ Hay 3 formas de guardar sessión:
 
 En esta ocasión vamos a ver como se guarda la sessión en memoria.
 
-## Configuramos session:
+### Configuramos session:
 
 ```javascript
 /* Server */
