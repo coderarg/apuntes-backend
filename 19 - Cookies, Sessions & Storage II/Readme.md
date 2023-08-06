@@ -135,4 +135,100 @@ export const validateLogin = (req, res, next) => {
 };
 ```
 
-###  
+###  users.router.js
+Importamos router de express, los controladorores, el middleware, y creamos las rutas para cada controlador.
+
+```javascript
+import { Router } from "express";
+const router = Router();
+import { login, logout, visit, infoSession } from '../controllers/user.controller.js';
+import { validateLogin } from "../middlewares/validateLogin.js";
+
+router.post('/login', login);
+router.get('/info', validateLogin, infoSession);
+router.get('/secret-endpoint', validateLogin, visit);
+router.post('/logout', logout);
+
+export default router;
+```
+
+## DataBase Store
+Vamos a utilizar la base de datos de MongoDB para la permanencia de datos de las sesiones.
+
+### Instalamos dependencias
+Instalamos:
+- express
+- express-session
+- cookie-parser
+- mongoose
+- connect-mongo
+
+```shell
+npm init -y
+npm i express espress-session mongoose connect-mongo  cookie-parser
+
+```
+
+### ./db/dbConnection.js
+Creamos la conexión a la base de datos de mongo.
+
+```javascript
+import { connect } from 'mongoose';
+
+export const connectionString = 'mongodb://127.0.0.1:27017/coderhouse';
+
+try {
+    await connect(connectionString);
+    console.log('Conectado a la base de datos de MongoDB!');
+} catch (error) {
+    console.log(error);
+}
+```
+
+### server.js
+
+```javascript
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+
+//Importamos MongoStore de connect-mongo.
+import MongoStore from 'connect-mongo';
+import userRouter from './routes/user.router.js';
+import './db/dbConnection.js';
+import { connectionString } from './db/dbConnection.js';
+
+// Generamos las opciones de guardado de sessiones.
+const mongoStoreOptions = {
+    store: MongoStore.create({
+        //Pasamos el string de conexión de la db
+        mongoUrl: connectionString,
+        //Con crypto podemos encryptar los datos de sesión.
+        // crypto: {
+        //     secret: '1234'
+        // }
+    }),
+    // Las siguientes opciones son iguales para file, ya que son las opcines de cookies.
+    secret: '1234',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60000
+    }
+};
+
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
+// Pasamos el mongoStoreOptines por session.
+app.use(session(mongoStoreOptions));
+
+app.use('/api', userRouter);
+
+app.listen(8080, ()=>{
+console.log('🚀 Server listening on port 8080');
+});
+```
