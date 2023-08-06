@@ -1,39 +1,20 @@
-export const register = async(req, res, next) => {
-    try {
-        res.render('register');
-    } catch (error) {
-        next(error)        
-    }
-}
+export const register = (req, res) => {
+    res.render('register')
+};
 
-export const errorRegister = async(req, res, next) => {
-    try {
-        res.render('errorRegister');
-    } catch (error) {
-        next(error)        
-    }
-}
+export const errorRegister = (req, res) => {
+    res.render('errorRegister')
+};
 
-export const login = async(req, res, next) => {
-    try {
-        res.render('login');
-    } catch (error) {
-        next(error)        
-    }
-}
+export const login = (req, res) => {
+    res.render('login')
+};
 
-export const errorLogin = async(req, res, next) => {
-    try {
-        res.render('errorLogin');
-    } catch (error) {
-        next(error)        
-    }
-}
+export const errorLogin = (req, res) => {
+    res.render('errorLogin')
+};
 
-export const profile = async(req, res, next) => {
-    try {
-        res.render('profile');
-    } catch (error) {
-        next(error)        
-    }
-}
+export const profile = (req, res) => {
+    res.render('profile')
+    console.log(req.session);
+};

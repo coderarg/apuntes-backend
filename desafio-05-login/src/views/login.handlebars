@@ -1,24 +1,9 @@
-<h2>Resgistro</h2>
-
-<form action="/users/registro" method="post">
-    <fieldset>
-    <label for="first_name">First Name</label>
-    <input type="text" id="first_name" name="first_name">
-    </fieldset>
-    <fieldset>
-    <label for="last_name">Last Name</label>
-    <input type="text" id="last_name" name="last_name">
-    </fieldset>
-    <fieldset>
-    <label for="age">Age</label>
-    <input type="text" id="age" name="age">
-    </fieldset>
-    <fieldset>
-    <label for="email">Email</label>
-    <input type="text" id="email" name="email">
-    </fieldset>
-    <fieldset>
-    <label for="password">Password</label>
-    <input type="text" id="password" name="password">
-    </fieldset>
+<h1>LOGIN</h1>
+<form action='/users/login' method='post'>
+  Email: <input type='email' name='email' id='email' />
+  Password: <input type='password' name='password' id='password' />
+  <input type='submit' value='LOGIN' />
 </form>
+
+<h2>USUARIO NUEVO?</h2>
+<button onclick="location.href='/register'">Ir a registro</button>
