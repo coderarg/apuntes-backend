@@ -1,6 +1,6 @@
 import { connect } from 'mongoose';
 
-export const connectionString = 'mongodb://localhost:27017/coderhouse';
+export const connectionString = 'mongodb://127.0.0.1:27017/ecommerce';
 
 try {
     await connect(connectionString);
