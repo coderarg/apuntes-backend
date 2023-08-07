@@ -1,7 +1,7 @@
 {
   "name": "desafio-05-login",
   "version": "1.0.0",
-  "description": "",
+  "description": "Ajustar nuestro servidor principal para trabajar con un sistema de login.",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
@@ -18,7 +18,6 @@
     "express-handlebars": "^7.1.1",
     "express-session": "^1.17.3",
     "mongoose": "^7.4.2",
-    "nodemon": "^3.0.1",
-    "socket.io": "^4.7.2"
+    "nodemon": "^3.0.1"
   }
 }

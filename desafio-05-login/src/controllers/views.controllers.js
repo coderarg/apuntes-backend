@@ -14,7 +14,7 @@ export const errorLogin = (req, res) => {
     res.render('errorLogin')
 };
 
-export const profile = (req, res) => {
-    res.render('profile')
+export const products = (req, res) => {
+    res.render('products')
     console.log(req.session);
 };

@@ -1,11 +1,11 @@
 import { Router } from "express";
 const router = Router();
-import { login, register, errorLogin, errorRegister, profile } from "../controllers/views.controllers.js";
+import * as viewsCtrl from "../controllers/views.controllers.js";
 
-router.get('/login', login);
-router.get('/register', register);
-router.get('/error-login', errorLogin);
-router.get('/error-register', errorRegister);
-router.get('/profile', profile);
+router.get('/', viewsCtrl.login);
+router.get('/register', viewsCtrl.register);
+router.get('/error-login', viewsCtrl.errorLogin);
+router.get('/error-register', viewsCtrl.errorRegister);
+router.get('/profile', viewsCtrl.products);
 
 export default router;
