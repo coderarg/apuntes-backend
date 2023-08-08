@@ -26,9 +26,7 @@ const mongoStoreOptions = {
     },
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        maxAge: 36000000
-    }
+    cookie: {}
 };
 
 const app = express();
@@ -37,9 +35,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(errorHandler);
 
-app.engine('handlebars',handlebars.engine())
-app.set('views',__dirname+'/views')
-app.set('view engine', 'handlebars')
+app.engine('handlebars',handlebars.engine());
+app.set('views',__dirname+'/views');
+app.set('view engine', 'handlebars');
 
 app.use(cookieParser());
 app.use(session(mongoStoreOptions));

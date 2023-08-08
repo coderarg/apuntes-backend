@@ -42,7 +42,8 @@ export const getAllProductsCtrl = async (req, res, next) => {
     const productsMap = products.map((product) => {
       return product.toObject();
     })
-    if(!!req.cookies.email){
+    console.log("desde products.controller.js", req.session.user.email);
+    if(!!req.session.user.email){
       res.render('products', {
         title: "Products",
         products: productsMap,
