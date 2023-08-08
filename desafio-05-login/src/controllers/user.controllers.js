@@ -13,15 +13,15 @@ export const registerUser = async(req, res, next) => {
 
 export const loginUser = async(req, res, next) => {
     try {
-        const user = await userDao.loginUser(req.body);
-        if(user) {
-            req.session.info = {
-                email: user.email,
-                password: user.password
-            }
-            res.cookie('email', user.email, {
-                maxAge: 60000
-            })
+        const foundUser = await userDao.loginUser(req.body);
+        
+        if(foundUser) {
+            //No se le puede pasar un atributo de un objeto.
+            //req.session.user.email = foundUser.email;
+
+            //Primero creo el objeto user con los datos que necesito y luego lo paso por session.
+            const user = {email: foundUser.email}
+            req.session.user = user;
             res.redirect('/api/products');
         } else res.redirect('/error-login')
     } catch (error) {
