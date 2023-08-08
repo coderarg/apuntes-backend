@@ -47,7 +47,11 @@ export const getAllProductsCtrl = async (req, res, next) => {
         title: "Products",
         products: productsMap,
         nextButton: next,
-        prevButton: prev,
+        PrevButton: prev,
+        hasNextPage: response.hasNextPage,
+        hasPrevPage: response.hasPrevPage,
+        page: response.page
+
       });
     }else res.redirect('/error-login')
   } catch (error) {
