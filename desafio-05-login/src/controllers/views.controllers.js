@@ -7,7 +7,9 @@ export const errorRegister = (req, res) => {
 };
 
 export const login = (req, res) => {
-    res.render('login')
+    res.render('login', {
+        title: "Login"
+    })
 };
 
 export const errorLogin = (req, res) => {
@@ -15,6 +17,5 @@ export const errorLogin = (req, res) => {
 };
 
 export const products = (req, res) => {
-    res.render('products')
-    console.log(req.session);
-};
+    res.render('products');
+}

@@ -1,5 +1,14 @@
-<h3>Bienvenido {{user}}</h3>
+<h3>Bienvenido</h3>
 
-<h1>Proudctos</h1>
+<h1>Products</h1>
 
-<div id="products"></div>
+{{#each products}}
+<div>
+    <h3>{{this.title}}</h3>
+    <p>Description: {{this.description}}</p>
+    <p>Code: {{this.code}}</p>
+    <p>Price: U$D {{this.price}}</p>
+    <p>Stock: {{this.stock}}</p>
+    <p>Category: {{this.category}}</p>
+</div>
+{{/each}}

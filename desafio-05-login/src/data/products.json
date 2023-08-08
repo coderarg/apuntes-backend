@@ -1,0 +1,152 @@
+[
+    {
+        "title": "Toyota Supra MK4",
+        "description": "Toyota Supra MK4 3.0 Twin Turbo (1997)",
+        "code": "TSMK4",
+        "price": 65000,
+        "stock": 2,
+        "category": "Deportivo",
+        "thumbnail": ["toyota-supra.png"],
+        "status": true
+    },
+    {
+        "title": "Renault Megan RS",
+        "description": "Renault Megan RS 2.0",
+        "code": "RMRS2",
+        "price": 27000,
+        "stock": 0,
+        "category": "Deportivo",
+        "thumbnail": ["renault-megan-rs.png"],
+        "status": false
+    },
+    {
+        "title": "Subaru Impreza WRX STI 2004",
+        "description": "Descripción 3",
+        "code": "SIWRX",
+        "price": 24000,
+        "stock": 1,
+        "category": "Rally",
+        "thumbnail": ["subaru-impreza-wrx-sti.png"],
+        "status": true
+    },
+    {
+        "title": "Aston Martin DB11",
+        "description": "Aston Martin DB11 Twin Turbo V12 5.2",
+        "code": "AMDB11",
+        "price": 214000,
+        "stock": 0,
+        "category": "Lujoso",
+        "thumbnail": ["aston-martin-db11.png"],
+        "status": false
+    },
+    {
+        "title": "Volkswagen T-Cross 2023",
+        "description": "Volkswagen T-Cross 1.5 TSI",
+        "code": "VTC23",
+        "price": 12000,
+        "stock":5,
+        "category": "SUV",
+        "thumbnail": ["volkswagen-t-cross.png"],
+        "status": true
+    },
+    {
+        "title": "BMW Serie 1 1.6",
+        "description": "BMW Serie 1 1.6 118i Sport 170cv",
+        "code": "BMWS1",
+        "price": 22000,
+        "stock": 2,
+        "category": "Sedan",
+        "thumbnail": ["bmw-serie-1.png"],
+        "status": true
+    },
+    {
+        "title": "Porsche 911 Carrera",
+        "description": "Porsche 911 3.8 Carrera 4 S Coupe",
+        "code": "P911C",
+        "price": 127000,
+        "stock": 1,
+        "category": "Deportivo",
+        "thumbnail": ["porsche-911-carrera.png"],
+        "status": true
+    },
+    {
+        "title": "Jeep Wrangler Rubicon",
+        "description": "Jeep Wrangler 3.6 Rubicon Atx",
+        "code": "JWRATX",
+        "price": 50000,
+        "stock": 2,
+        "category": "Camioneta",
+        "thumbnail": ["jeep-wrangler-rubicon.png"],
+        "status": true
+    },
+    {
+        "title": "Chevrolet Camaro Yenko",
+        "description": "Chevrolet Camaro Yenko V8 7.0 1969",
+        "code": "CCY69",
+        "price": 310000,
+        "stock": 1,
+        "category": "Muscle",
+        "thumbnail": ["chevrolet-camaro-yenko.png"],
+        "status": true
+    },
+    {
+        "title": "Mazda RX7",
+        "description": "Mazda RX7 2002 enfierrado",
+        "code": "MRX7",
+        "price": 24000,
+        "stock": 1,
+        "category": "Deportivo",
+        "thumbnail": ["mazda-rx7.png"],
+        "status": true
+    },
+    {
+        "title": "Dodge Charger R/T",
+        "description": "Dodge Charger R/T V8",
+        "code": "DCRT",
+        "price": 199000,
+        "stock": 0,
+        "category": "Muscle",
+        "thumbnail": ["dodge-charger-rt.png"],
+        "status": false
+    },
+    {
+        "title": "Nissan Skyline GTR R34",
+        "description": "Nissan Skyline GTR R34 1994",
+        "code": "NSGTR",
+        "price": 130000,
+        "stock": 1,
+        "category": "Deportivo",
+        "thumbnail": ["nissan-skyline-gtr.png"],
+        "status": true
+    },
+    {
+        "title": "Lamborhini Murielago",
+        "description": "Lamborghini Murcielago V12 2002",
+        "code": "LM02",
+        "price": 110000,
+        "stock": 0,
+        "category": "Superdeportivo",
+        "thumbnail": ["lamborghini-murcielago.png"],
+        "status": false
+    },
+    {
+        "title": "Ford Mustang Mach I 69",
+        "description": "Ford Mustang Mach I 1969 V8 351",
+        "code": "FMMI",
+        "price": 200000,
+        "stock": 2,
+        "category": "Muscle",
+        "thumbnail": ["ford-mustang-machi.png"],
+        "status": true
+    },
+    {
+        "title": "Pontiac Firebird Trans AM 77",
+        "description": "Pontiac Firebird Trans AM 1977",
+        "code": "PFTAM",
+        "price": 217000,
+        "stock": 0,
+        "category": "Muscle",
+        "thumbnail": ["pontiac-firebird-trans.png"],
+        "status": false
+    }
+]
