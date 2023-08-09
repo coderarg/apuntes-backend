@@ -1,8 +1,8 @@
 import {dirname} from 'path'
 import { fileURLToPath } from 'url'
-export const __dirname = dirname(fileURLToPath(import.meta.url));
-
 import { hashSync, compareSync, genSaltSync } from 'bcrypt';
+
+export const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
  * Método que recibe password sin hashear y retorna password hasheada
