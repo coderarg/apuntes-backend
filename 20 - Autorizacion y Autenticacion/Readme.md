@@ -20,3 +20,22 @@ Tomando el ejemplo de la case pasada vamos a aplicar bcrypt para encryptar la co
 npm i bcrypt
 ```
 
+### utils.js
+
+```javascript
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+//Importamos los métodos que necesitamos de brcrypt
+import { hashSync, compareSync, genSaltSync } from 'bcrypt';
+
+export const __dirname = dirname(fileURLToPath(import.meta.url));
+
+//Se realiza el hasheo de la password con el string "salt" que le pasamos. Transforma una contraseña(string) en un string de diferentes carácteres.
+
+//genSaltSync recibe como parámetro el número de rounds que realiza para encryptar la contraseña
+export const createHash = password => hashSync(password, genSaltSync(10));
+
+//compareSync compara la contraseña guardada en nuestra base de datos y la que nos pasa el usuario. Esto devuelve true or false al comparar si la contraseña es válida.
+export const isValidPassword = (password, user) => compareSync(password, user.password);
+```
+

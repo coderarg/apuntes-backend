@@ -3,16 +3,14 @@ import { UserModel } from "./models/user.model.js";
 export default class UserDao {
     async registerUser(user) {
         try {
-            const { email } = user;
+            const { email, password } = user;
             const existUser = await UserModel.findOne({ email });
             console.log('existUser::', existUser);
             if(!existUser) {
                 if(email === 'adminCoder@coder.com' && password === 'adminCod3r123'){
-                    const newUser = await UserModel.create({...user, rol: 'admin'});
-                    return newUser;
+                    return await UserModel.create({...user, rol: 'admin'});
                 }
-                const newUser = await UserModel.create(user);
-                return newUser;
+                return await UserModel.create(user);
             } else return false;
         } catch (error) {
             console.log(error);
