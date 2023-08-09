@@ -16,9 +16,9 @@ export const getAllProductsCtrl = async (req, res, next) => {
 
     const response = await prodService.getAllProducts(page, limit, sort, category, status);
 
-    const next = response.hasNextPage ? `http://localhost:8080/api/products/getall?page=${response.nextPage}&limit=${response.limit}` : null;
+    const next = response.hasNextPage ? `http://localhost:8080/api/products/?page=${response.nextPage}&limit=${response.limit}` : null;
 
-    const prev = response.hasPrevPage ? `http://localhost:8080/api/products/getall?page=${response.prevPage}&limit=${response.limit}` : null;
+    const prev = response.hasPrevPage ? `http://localhost:8080/api/products/?page=${response.prevPage}&limit=${response.limit}` : null;
 
 /*     if (!response) throw new Error('Products not found');
     else res.json([
@@ -42,17 +42,18 @@ export const getAllProductsCtrl = async (req, res, next) => {
     const productsMap = products.map((product) => {
       return product.toObject();
     })
-
-    if(!!req.session.user.email){
+    const logedUser = req.session.user;
+    if(!!req.session.user){
       res.render('products', {
         title: "Products",
         products: productsMap,
         nextButton: next,
-        PrevButton: prev,
+        prevButton: prev,
         hasNextPage: response.hasNextPage,
         hasPrevPage: response.hasPrevPage,
-        page: response.page
-
+        page: response.page,
+        first_name: logedUser.first_name,
+        last_name: logedUser.last_name,
       });
     }else res.redirect('/error-login')
   } catch (error) {

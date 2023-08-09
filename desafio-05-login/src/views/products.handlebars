@@ -1,14 +1,23 @@
-<h3>Bienvenido</h3>
+<p>Hi {{first_name}} {{last_name}}!</p>
 
 <h1>Products</h1>
 
 {{#each products}}
-<div>
+<div class="product">
     <h3>{{this.title}}</h3>
-    <p>Description: {{this.description}}</p>
+    <p>{{this.description}}</p>
     <p>Code: {{this.code}}</p>
     <p>Price: U$D {{this.price}}</p>
     <p>Stock: {{this.stock}}</p>
     <p>Category: {{this.category}}</p>
 </div>
 {{/each}}
+
+{{#if hasPrevPage}}
+    <a href="{{prevButton}}">Página Anterior</a>
+{{/if}}
+
+{{#if hasNextPage}}
+    <a href="{{nextButton}}">Página Siguiente</a>
+{{/if}}
+

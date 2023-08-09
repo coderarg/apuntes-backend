@@ -20,7 +20,12 @@ export const loginUser = async(req, res, next) => {
             //req.session.user.email = foundUser.email;
 
             //Primero creo el objeto user con los datos que necesito y luego lo paso por session.
-            const user = {email: foundUser.email}
+            const user = {
+                email: foundUser.email,
+                first_name: foundUser.first_name,
+                last_name: foundUser.last_name,
+                age: foundUser.age
+            }
             req.session.user = user;
             res.redirect('/api/products');
         } else res.redirect('/error-login')
