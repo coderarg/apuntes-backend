@@ -202,6 +202,16 @@ app.use(morgan('combined'));
 
 ---
 
+## Middleware errorHandler
+
+```javascript
+export const errorHandler = (error, req, res, next) => {
+    console.log( `error ${error.message}`) 
+    const status = error.status || 400
+    res.status(status).send(error.message)
+}
+```
+
 # Multer
 Middleware utilizado para guardar archivos traídos desde body en una carpeta específica.
 
