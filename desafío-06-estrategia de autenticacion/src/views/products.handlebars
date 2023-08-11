@@ -1,0 +1,26 @@
+<h3>Hi {{first_name}} {{last_name}}!</h3>
+
+<a href="http://localhost:8080/users/logout">Cerrar Sesión</a>
+
+<h1>Products</h1>
+{{#each products}}
+    {{#if this.stock}}
+    <div class="product">
+        <h3>{{this.title}}</h3>
+        <p>{{this.description}}</p>
+        <p>Code: {{this.code}}</p>
+        <p>Price: U$D {{this.price}}</p>
+        <p>Stock: {{this.stock}}</p>
+        <p>Category: {{this.category}}</p>
+    </div>
+    {{/if}}
+{{/each}}
+
+<div>
+{{#if hasPrevPage}}
+    <a href="{{prevButton}}">Página Anterior</a>
+{{/if}}
+{{#if hasNextPage}}
+    <a href="{{nextButton}}">Página Siguiente</a>
+{{/if}}
+</div>
