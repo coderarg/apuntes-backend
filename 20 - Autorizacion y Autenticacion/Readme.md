@@ -161,13 +161,9 @@ const login = async(req, email, password, done) => {
 const registerStrategy = new LocalStrategy(strategyOptions, register);
 const loginStrategy = new LocalStrategy(strategyOptions, login);
 
-
-
 /* ----------------------------- inicializacion ----------------------------- */
 passport.use('login', loginStrategy);
 passport.use('register', registerStrategy);
-
-
 
 /* ------------------------- serialize y deserialize ------------------------ */
 //guarda al usuario en req.session.passport
@@ -176,8 +172,76 @@ passport.serializeUser((user, done)=>{
     done(null, user._id)
 });
 
+
 passport.deserializeUser(async(id, done)=> {
     const user = await userDao.getById(id);
     return done(null, user);
 });
 ```
+
+
+### server.js
+Inicializamos passport a nivel de aplicación como middleware para todas las rutas. ¡¡¡¡ANTES DE LAS RUTAS!!!!
+
+```javascript
+import passport from 'passport';
+import './passport/local-strategy.js';
+
+//!  --> ANTES DE LAS RUTAS <--
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Rutas
+app.use('/users', usersRouter);
+
+```
+
+### users.controllers.js
+En los controllers solo necesito tener las respuestas.
+```javascript
+import UserDao from "../daos/user.dao.js"
+const userDao = new UserDao();
+
+export const registerResponse = (req, res, next)=>{
+    try {
+        res.json({
+        msg: 'Register ok',
+        session: req.session 
+        });
+    } catch (error) {
+        next(error.message)
+    }
+}  
+
+export const loginResponse = async(req, res, next)=>{
+    try {
+        const user = await userDao.getById(req.session.passport.user);
+        res.json({
+        msg: 'Login ok',
+        user
+        })
+    } catch (error) {
+        next(error.message)
+    }
+}  
+```
+
+### users.router.js
+```javascript
+import { Router } from 'express'
+import { registerResponse, loginResponse } from '../controllers/user.controller.js';
+import passport from 'passport';
+import { isAuth } from '../middlewares/isAuth.js';
+
+const router = Router()
+
+router.post('/register', passport.authenticate('register'), registerResponse);
+
+router.post('/login', passport.authenticate('login'), loginResponse);
+
+router.get('/private', isAuth, (req, res) => res.send('route private'));
+
+
+export default router
+```
+

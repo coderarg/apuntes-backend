@@ -40,7 +40,6 @@ export default class ProductManager {
             let foundProduct = products.find((element) => {
                 return element.id === idNumber;
             });
-            console.log(foundProduct);
             return foundProduct;
         } catch (error) {
             console.log(error);

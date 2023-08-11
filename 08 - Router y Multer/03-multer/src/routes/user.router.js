@@ -97,7 +97,6 @@ router.delete('/:idUser', async (req, res) => {
 
 router.post('/profile', uploader.single('profile'), async (req, res) => {
     try {
-        console.log(req.file);
         const user = req.body;
         user.profile = req.file.path;
         const newUser = await userManager.createUser(user);
