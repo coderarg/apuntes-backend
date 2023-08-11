@@ -25,9 +25,12 @@ npm i bcrypt
 ```
 
 ### utils.js
+En el método de "register" vamos a guardar la contraseña hasheada aplicando el método "createHash" creado en utils.
+
+Al momento del login vamos a utilizar el método "isValidPassword" creado en utils para comparar la contraseña que viene desde el input del front (string) y la contraseña guardad en nuestra base de datos (hasheada). En este mismo orden deberemos pasar las mismas al método. Primero la contraseña que viene del front, en String, y luego la hasheada que traemos de la base de datos.
+
 
 ```javascript
-
 import { hashSync, compareSync, genSaltSync } from 'bcrypt';
 
 //Se realiza el hasheo de la password con el string "salt" que le pasamos. Transforma una contraseña(string) en un string de diferentes carácteres.
@@ -36,13 +39,10 @@ import { hashSync, compareSync, genSaltSync } from 'bcrypt';
 export const createHash = password => hashSync(password, genSaltSync(10));
 
 //compareSync compara la contraseña guardada en nuestra base de datos y la que nos pasa el front. Esto devuelve true or false al comparar si la contraseña es válida.
-export const isValidPassword = (user, password) => compareSync(user.password, password);
+export const isValidPassword = (password, user) => compareSync(password, user.password);
 ```
 
 ### user.dao.js
-En el método de "register" vamos a guardar la contraseña hasheada aplicando el método "createHash" creado en utils.
-
-Al momento del login vamos a utilizar el método "isValidPassword" creado en utils para comparar la contraseña guardad en nuestra base de datos (hasheada) y la contraseña que viene desde el input del front (string);
 
 ```javascript
 async registerUser(user) {
@@ -74,7 +74,6 @@ async loginUser(user) {
         const userExist = await UserModel.findOne({ email });
         if(userExist) {
             const passValid = isValidPassword(password, userExist);
-            console.log(passValid);
             if(!passValid) return false;
             else return userExist;
             // !passValid ? false : userExist
@@ -227,6 +226,7 @@ export const loginResponse = async(req, res, next)=>{
 ```
 
 ### users.router.js
+El método authenticate inicializa la estrategia
 ```javascript
 import { Router } from 'express'
 import { registerResponse, loginResponse } from '../controllers/user.controller.js';
