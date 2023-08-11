@@ -30,6 +30,9 @@ Tutores: Alejandro Trabaj Briceño, Gonzalo Almiron, Lautaro García, Diego Abad
 - [Clase 18 - Cookies, Session & Storage I](./18%20-%20Cookies,%20Sessions%20&%20Storage%20I/)  
 - [Clase 19 - Cookies, Session & Storage II](./19%20-%20Cookies,%20Sessions%20&%20Storage%20II/)  
 - [Clase 20 - Autorización y Autenticación](./20%20-%20Autorizacion%20y%20Autenticacion/)  
+- [Clase 21 -Estrategia de Autenticación por Terceros + JWT](./21%20-%20Estrategia%20de%20Autenticacion%20por%20Terceros%20+%20JWT/)  
+- [Clase 22 - Passport Avanzado](./22%20-%20Passport%20Avanzado/)  
+- [Clase 22b - After](./22b%20-%20After/)  
 
 ## Desafíos
 - [Desafío-01-Clases Js](./desafio-01-clases%20js/)  
@@ -37,6 +40,7 @@ Tutores: Alejandro Trabaj Briceño, Gonzalo Almiron, Lautaro García, Diego Abad
 - [Desafío-03-Server Express](./desafio-03-server%20express/)  
 - [Desafío-04-Handlebars y Websocket](./desafio-04-handlebars%20y%20websocket/)  
 - [Desafío-05-Login](./desafio-05-login/)  
+- [Desafío-06-Estrategia de Autenticación](./desafío-06-estrategia%20de%20autenticacion/)  
 
 ## Proyecto
 - [PreEntrega de Proyecto 1](./PreEntrega-Proyecto-1/)  
