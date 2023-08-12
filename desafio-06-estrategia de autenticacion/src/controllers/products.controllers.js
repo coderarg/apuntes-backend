@@ -4,7 +4,35 @@ export const readFileCtrl = async (req, res, next) => {
   try {
     const newProducts = await prodService.readFile();
     if (!newProducts) throw new Error("File Error!")
-    else res.json("Successful file reading")
+    else {
+      
+      const { page, limit, sort, category, status } = req.query;
+
+      const response = await prodService.getAllProducts(page, limit, sort, category, status);
+
+      const next = response.hasNextPage ? `http://localhost:8080/api/products/?page=${response.nextPage}&limit=${response.limit}` : null;
+
+      const prev = response.hasPrevPage ? `http://localhost:8080/api/products/?page=${response.prevPage}&limit=${response.limit}` : null;
+
+      const products = response.docs;
+      const productsMap = products.map((product) => {
+        return product.toObject();
+      })
+      const logedUser = req.session.user;
+      if(!!req.session.user){
+        res.render('products', {
+          title: "Products",
+          products: productsMap,
+          nextButton: next,
+          prevButton: prev,
+          hasNextPage: response.hasNextPage,
+          hasPrevPage: response.hasPrevPage,
+          page: response.page,
+          first_name: logedUser.first_name,
+          last_name: logedUser.last_name,
+        });
+      }else res.redirect('/error-login')
+    }
   } catch (error) {
     next(error);
   }

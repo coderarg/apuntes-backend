@@ -1,9 +1,8 @@
-import UserDao from "../daos/user.dao.js";
-const userDao = new UserDao();
+import * as userServices from '../services/users.services.js'
 
 export const registerUser = async(req, res, next) => {
     try {
-        const newUser = await userDao.registerUser(req.body);
+        const newUser = await userServices.registerUser(req.body);
         if(newUser) res.redirect('/');
         else res.redirect('/error-register');
     } catch (error) {
@@ -13,13 +12,10 @@ export const registerUser = async(req, res, next) => {
 
 export const loginUser = async(req, res, next) => {
     try {
-        const foundUser = await userDao.loginUser(req.body);
+        const foundUser = await userServices.loginUser(req.body);
         
         if(foundUser) {
-            //No se le puede pasar un atributo de un objeto.
-            //req.session.user.email = foundUser.email;
 
-            //Primero creo el objeto user con los datos que necesito y luego lo paso por session.
             const user = {
                 email: foundUser.email,
                 first_name: foundUser.first_name,
@@ -27,7 +23,7 @@ export const loginUser = async(req, res, next) => {
                 age: foundUser.age
             }
             req.session.user = user;
-            res.redirect('/api/products');
+            res.redirect('/products');
         } else res.redirect('/error-login')
     } catch (error) {
         next(error);
@@ -43,5 +39,29 @@ export const logoutUser = async (req, res, next) =>{
         res.redirect('/');
     } catch (error) {
         next(error);
+    }
+}
+
+export const registerResponse = (req, res, next)=>{
+    try {
+        res.json({
+            msg: 'Register ok',
+            session: req.session 
+        });
+    } catch (error) {
+        next(error.message)
+    }
+}  
+
+export const loginResponse = async(req, res, next)=>{
+    try {
+        
+        const user = await userServices.getById(req.session.passport.user);
+        res.json({
+            msg: 'Login ok',
+            user
+        })
+    } catch (error) {
+        next(error.message)
     }
 }

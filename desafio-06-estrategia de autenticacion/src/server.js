@@ -9,13 +9,14 @@ import viewsRouter from './routes/views.router.js';
 import prodRouter from './routes/products.router.js';
 
 import './config/dbConnection.js';
-import { connectionString } from './config/dbConnection.js';
+import { localString } from './config/dbConnection.js';
 import { __dirname } from './utils.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import passport from 'passport';
 
 const mongoStoreOptions = {
     store: MongoStore.create({
-        mongoUrl: connectionString,
+        mongoUrl: localString,
         crypto: {
             secret: '1234'
         }
@@ -42,7 +43,10 @@ app.set('view engine', 'handlebars');
 app.use(cookieParser());
 app.use(session(mongoStoreOptions));
 
-app.use('/api/products', prodRouter);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/products', prodRouter);
 app.use('/', viewsRouter);
 app.use('/users', userRouter);
 
