@@ -107,6 +107,10 @@ Creamos una carpeta llamada "passport" y dentro guardaremos la estrategia.
 ### local-strategy.js
 Siempre vamos a necesitar 2 funciónes principales.  Una para serializar y otra para deserializar al usuario.
 
+> dode(1, 2) recibe 2 parámetros.
+- 1 El error.
+- 2 El resultado de la búsqueda que hagamos o valor que retornemos.
+
 ```javascript
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';

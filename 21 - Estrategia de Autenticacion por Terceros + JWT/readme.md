@@ -91,7 +91,12 @@ Creamos las rutas de autenticación con GitHub.
 
 ```javascript
 router.get('/register-github', passport.authenticate('github', { scope: ['user:email'] }));
-
 router.get('/profile-github', passport.authenticate('github', { scope: ['user:email'] }), githubResponse);
-
 ```
+
+Debemos tener en cuenta que si utilizamos registro con autenticación de terceros, algunos datos de usuario que nosotros requerimos no serán retorandos por la API, como pueden ser: datos opcionales del usuario y contraseña.
+Por este motivo, se recomienda realizar una collección y modelo a parte para los diferentes tipos de registro.
+Una solución a la falta de contraseña, es generar una contraseña aleatoria que luego el usuario puede modificar a través de una autenticación por token.
+
+
+
