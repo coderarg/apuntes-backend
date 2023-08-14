@@ -4,6 +4,9 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import handlebars from 'express-handlebars';
 
+import passport from 'passport';
+import './passport/local-strategy.js';
+
 import userRouter from './routes/user.router.js';
 import viewsRouter from './routes/views.router.js';
 import prodRouter from './routes/products.router.js';
@@ -12,7 +15,6 @@ import './config/dbConnection.js';
 import { localString } from './config/dbConnection.js';
 import { __dirname } from './utils.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import passport from 'passport';
 
 const mongoStoreOptions = {
     store: MongoStore.create({
@@ -46,9 +48,9 @@ app.use(session(mongoStoreOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/products', prodRouter);
 app.use('/', viewsRouter);
-app.use('/users', userRouter);
+app.use('/api/products', prodRouter);
+app.use('/api/users', userRouter);
 
 app.listen(8080, ()=>{
 console.log('🚀 Server listening on port 8080');

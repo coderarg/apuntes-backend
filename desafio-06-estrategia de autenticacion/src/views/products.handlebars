@@ -1,9 +1,8 @@
 <h3>Hi {{first_name}} {{last_name}}!</h3>
 
-<a href="http://localhost:8080/users/logout">Cerrar Sesión</a>
+<a href="http://localhost:8080/api/users/logout">Cerrar Sesión</a>
 
 <h1>Products</h1>
-{{#if products}}
 {{#each products}}
     {{#if this.stock}}
     <div class="product">
@@ -16,12 +15,6 @@
     </div>
     {{/if}}
 {{/each}}
-    {{else}}
-    <form action="/products/readfile" method="post">
-        <h2>¿No ves productos?</h2>
-        <button type="submit" value="send">Carga DB</button>
-    </form>
-{{/if}}
 
 <div>
 {{#if hasPrevPage}}

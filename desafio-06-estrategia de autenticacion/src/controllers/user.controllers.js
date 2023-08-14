@@ -1,8 +1,10 @@
-import * as userServices from '../services/users.services.js'
+import UserDao from "../daos/user.dao.js";
+const userDao = new UserDao();
 
 export const registerUser = async(req, res, next) => {
     try {
-        const newUser = await userServices.registerUser(req.body);
+        const newUser = await userDao.registerUser(req.body);
+        console.log(req.body)
         if(newUser) res.redirect('/');
         else res.redirect('/error-register');
     } catch (error) {
@@ -12,10 +14,9 @@ export const registerUser = async(req, res, next) => {
 
 export const loginUser = async(req, res, next) => {
     try {
-        const foundUser = await userServices.loginUser(req.body);
-        
+        const foundUser = req.session.passport.user;
+        console.log(foundUser);
         if(foundUser) {
-
             const user = {
                 email: foundUser.email,
                 first_name: foundUser.first_name,
@@ -23,7 +24,7 @@ export const loginUser = async(req, res, next) => {
                 age: foundUser.age
             }
             req.session.user = user;
-            res.redirect('/products');
+            res.redirect('/api/products');
         } else res.redirect('/error-login')
     } catch (error) {
         next(error);
@@ -39,29 +40,5 @@ export const logoutUser = async (req, res, next) =>{
         res.redirect('/');
     } catch (error) {
         next(error);
-    }
-}
-
-export const registerResponse = (req, res, next)=>{
-    try {
-        res.json({
-            msg: 'Register ok',
-            session: req.session 
-        });
-    } catch (error) {
-        next(error.message)
-    }
-}  
-
-export const loginResponse = async(req, res, next)=>{
-    try {
-        
-        const user = await userServices.getById(req.session.passport.user);
-        res.json({
-            msg: 'Login ok',
-            user
-        })
-    } catch (error) {
-        next(error.message)
     }
 }
