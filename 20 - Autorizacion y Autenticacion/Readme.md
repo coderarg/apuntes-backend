@@ -49,7 +49,7 @@ async registerUser(user) {
     try {
         const { email, password } = user;
         const existUser = await UserModel.findOne({ email });
-        console.log('existUser::', existUser);
+
         if(!existUser) {
             if(email === 'adminCoder@coder.com' && password === 'adminCod3r123'){
                 return await UserModel.create({

@@ -15,3 +15,11 @@ Formato
 Link al repositorio de GitHub con el proyecto solicitado.
 Sugerencias
 El testeo se realizará de manera muy similar al anterior, puedes consultar el documento de testing aquí: 
+
+
+## Bugs
+
+No redirige a '/error-login' si email o contraseña son incorrectos, no sé desde donde realizar un redirect con el passport-local.
+
+
+

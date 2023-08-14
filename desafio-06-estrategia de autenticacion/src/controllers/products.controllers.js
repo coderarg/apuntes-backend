@@ -20,24 +20,6 @@ export const getAllProductsCtrl = async (req, res, next) => {
 
     const prev = response.hasPrevPage ? `http://localhost:8080/api/products/?page=${response.prevPage}&limit=${response.limit}` : null;
 
-/*     if (!response) throw new Error('Products not found');
-    else res.json([
-      {
-        info: {
-          "status": "Success",
-          "payload": response.docs,
-          "total pages": response.totalPages,
-          "prevPage": response.prevPage,
-          "nextPage": response.nextPage,
-          "page": response.page,
-          "hasPrevPage": response.hasPrevPage,
-          "hasNextPage": response.hasNextPage,
-          "prevLink": prev,
-          "nextLink": next
-        }
-      }
-    ]); */
-
     const products = response.docs;
     const productsMap = products.map((product) => {
       return product.toObject();
@@ -120,7 +102,6 @@ export const getByCodeCtrl = async (req, res, next) => {
 export const deleteProdCtrl = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log(id);
     await prodService.deleteProd(id);
     res.json({msg: 'Product deleted'});
   } catch (error) {

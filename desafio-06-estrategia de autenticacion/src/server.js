@@ -12,13 +12,13 @@ import viewsRouter from './routes/views.router.js';
 import prodRouter from './routes/products.router.js';
 
 import './config/dbConnection.js';
-import { localString } from './config/dbConnection.js';
+import { connectionString } from './config/dbConnection.js';
 import { __dirname } from './utils.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 const mongoStoreOptions = {
     store: MongoStore.create({
-        mongoUrl: localString,
+        mongoUrl: connectionString,
         crypto: {
             secret: '1234'
         }
