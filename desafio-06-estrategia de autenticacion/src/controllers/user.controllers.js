@@ -41,3 +41,22 @@ export const logoutUser = async (req, res, next) =>{
         next(error);
     }
 }
+
+export const githubResponse = async (req, res, next) => {
+    try {
+        console.log(req.user)
+        const { first_name, last_name, email, isGithub } = req.user;
+        res.json({
+            msg: "Register/Login Github OK",
+            session: req.session,
+            userData: {
+            first_name,
+            last_name,
+            email,
+            isGithub,
+            },
+        });
+    } catch (error) {
+        next(error.message);
+    }
+  };

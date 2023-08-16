@@ -6,6 +6,7 @@ import handlebars from 'express-handlebars';
 
 import passport from 'passport';
 import './passport/local-strategy.js';
+import './passport/github-strategy.js';
 
 import userRouter from './routes/user.router.js';
 import viewsRouter from './routes/views.router.js';
@@ -55,3 +56,4 @@ app.use('/api/users', userRouter);
 app.listen(8080, ()=>{
 console.log('🚀 Server listening on port 8080');
 });
+

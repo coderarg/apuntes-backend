@@ -1,17 +1,16 @@
-// npm i passport-github2
 import { Strategy as GithubStrategy } from 'passport-github2';
 import passport from 'passport';
 import UserDao from '../daos/user.dao.js';
 const userDao = new UserDao();
 
 const strategyOptions = {
-    clientID: 'Iv1.3c4696932577965e',
-    clientSecret: '24d21d0a9d0c6c15880a55cc0ba3a6be18246129',
-    callbackURL: 'http://localhost:8080/users/profile-github',
+    clientID: 'Iv1.829f1f2faa04145e',
+    clientSecret: '91396a4411d73cb8ed5c926e951c030597562e46',
+    callbackURL: 'http://localhost:8080/api/products',
 };
 
 const registerOrLogin = async (accessToken, refreshToken, profile, done) => {
-    // console.log('PROFILE --> ', profile);
+    ('PROFILE --> ', profile);
     const email = profile._json.email !== null ? profile._json.email : profile_json.blog;
     const user = await userDao.getByEmail( email );
     
