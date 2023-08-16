@@ -5,10 +5,11 @@ export default class UserDao {
     async registerUser(user) {
         try {
             const { email, password } = user;
-            const existUser = await UserModel.findOne({ email });
-
+            const existUser = await UserModel.findOne({ email: email });
             if(!existUser) {
-                if(email === 'adminCoder@coder.com' && password === 'adminCod3r123'){
+                if(email === 'adminCoder@coder.com' 
+                // No puedo consultar la contraseña, porque está hasheada, password === 'adminCod3r123'
+                ){
                     return await UserModel.create({
                         ...user, 
                         password: createHash(password),
@@ -19,6 +20,7 @@ export default class UserDao {
                     ...user,
                     password: createHash(password)
                 });
+
             } else return false;
         } catch (error) {
             console.log(error);

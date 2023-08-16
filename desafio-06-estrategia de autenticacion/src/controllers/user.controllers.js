@@ -1,11 +1,13 @@
 import UserDao from "../daos/user.dao.js";
 const userDao = new UserDao();
 
-export const registerUser = async(req, res, next) => {
+/* export const registerUser = async(req, res, next) => {
     try {
         const newUser = await userDao.registerUser(req.body);
-        if(newUser) res.redirect('/');
-        else res.redirect('/error-register');
+        //console.log("Req.Body",req.body);
+        //console.log("New User", newUser);
+        if(!newUser) res.redirect('/error-register');
+        else res.redirect('/');
     } catch (error) {
         next(error);
     }
@@ -29,7 +31,7 @@ export const loginUser = async(req, res, next) => {
         next(error);
     }
 };
-
+ */
 export const logoutUser = async (req, res, next) =>{
     try {
         req.session.destroy((error) => {
@@ -42,7 +44,7 @@ export const logoutUser = async (req, res, next) =>{
     }
 }
 
-export const githubResponse = async (req, res, next) => {
+/* export const githubResponse = async (req, res, next) => {
     try {
         console.log(req.user)
         const { first_name, last_name, email, isGithub } = req.user;
@@ -59,4 +61,4 @@ export const githubResponse = async (req, res, next) => {
     } catch (error) {
         next(error.message);
     }
-  };
+  }; */
