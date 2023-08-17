@@ -21,5 +21,7 @@ El testeo se realizará de manera muy similar al anterior, puedes consultar el d
 
 No redirige a '/error-login' si email o contraseña son incorrectos, no sé desde donde realizar un redirect con el passport-local.
 
+No funciona el inicio o registro con Github.
+
 
 

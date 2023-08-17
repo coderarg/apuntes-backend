@@ -22,14 +22,14 @@ const register = async(req, email, password, done) => {
     }
 };
 
-const login = async(req, email, password, done) => {
+const login = async (req, email, password, done) => {
     try {
         const user = { email, password };
         const userLogin = await userDao.loginUser(user);
 
-        if(!userLogin) {
-            return done(null, false);
-        }else return done(null, userLogin);
+        if(!userLogin) return done(null, false);
+        else return done(null, userLogin);
+
     } catch (error) {
         console.log(error);
     }

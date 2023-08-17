@@ -30,7 +30,7 @@ export default class UserDao {
     async loginUser(user) {
         try {
             const { email, password } = user;
-            const userExist = await UserModel.findOne({ email: email });
+            const userExist = await UserModel.findOne({email: email})
             if(userExist){
                 const passValid = isValidPassword(password, userExist);
                 if(!passValid) return false;
@@ -41,6 +41,7 @@ export default class UserDao {
             console.log(error);
         }
     };
+   
 
     async getByEmail(user) {
         try {
