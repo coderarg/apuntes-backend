@@ -18,7 +18,11 @@ router.post('/login', passport.authenticate('login', {
     passReqToCallback: true
 }));
 
+router.get('/register-github', passport.authenticate('github', { scope: ['user:email'] }));
+
+
 router.get('/logout', logoutUser);
+
 router.get('/private', isAuth, (req, res) => res.send('route private'));
 
 

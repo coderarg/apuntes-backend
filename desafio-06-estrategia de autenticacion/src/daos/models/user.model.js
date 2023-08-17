@@ -25,6 +25,10 @@ const userSchema = new Schema({
     rol: {
         type: String,
         default: 'user'
+    },
+    isGithub: {
+        type: Boolean,
+        default: false
     }
 });
 

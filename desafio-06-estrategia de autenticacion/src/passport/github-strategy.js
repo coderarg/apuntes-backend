@@ -10,7 +10,7 @@ const strategyOptions = {
 };
 
 const registerOrLogin = async (accessToken, refreshToken, profile, done) => {
-    ('PROFILE --> ', profile);
+    // console.log('PROFILE --> ', profile);
     const email = profile._json.email !== null ? profile._json.email : profile_json.blog;
     const user = await userDao.getByEmail( email );
     
@@ -29,5 +29,6 @@ const registerOrLogin = async (accessToken, refreshToken, profile, done) => {
     });
     return done(null, newUser);
 }
+
 
 passport.use('github', new GithubStrategy(strategyOptions, registerOrLogin));
