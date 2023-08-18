@@ -40,11 +40,13 @@ Creamos un nuevo archivo dentro de la carpeta "passport" llamado github-strategy
 
 ### github-strategy.js
 ```javascript
+// Importamos Strategy y la nombramos como GithubStrategy desde passport-github2.
 import { Strategy as GithubStrategy } from 'passport-github2';
 import passport from 'passport';
 import UserDao from '../daos/user.dao.js';
 const userDao = new UserDao();
 
+//Guardamos los datos que nos da Github al crear la api.
 const strategyOptions = {
     clientID: 'Iv1.3c4696932577965e',
     clientSecret: '24d21d0a9d0c6c15880a55cc0ba3a6be18246129',

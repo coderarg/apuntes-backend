@@ -24,8 +24,9 @@ export const getAllProductsCtrl = async (req, res, next) => {
     const productsMap = products.map((product) => {
       return product.toObject();
     })
-    const logedUser = req.session.user;
-    if(!!req.session.user){
+    const logedUser = res.passport;
+    console.log("LogedUser", req.passport);
+    if(logedUser){
       res.render('products', {
         title: "Products",
         products: productsMap,

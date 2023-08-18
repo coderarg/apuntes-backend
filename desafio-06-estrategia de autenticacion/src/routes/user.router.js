@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Router } from "express";
 import { logoutUser } from "../controllers/user.controllers.js";
-import { isAuth } from '../middlewares/isAuth.js';
+import * as productCtrl from '../controllers/products.controllers.js';
 
 const router = Router();
 
@@ -18,12 +18,9 @@ router.post('/login', passport.authenticate('login', {
     passReqToCallback: true
 }));
 
-router.get('/register-github', passport.authenticate('github', { scope: ['user:email'] }));
+router.get('/register-github', passport.authenticate('github', {scope:['user:email']}));
 
 
 router.get('/logout', logoutUser);
-
-router.get('/private', isAuth, (req, res) => res.send('route private'));
-
 
 export default router;
