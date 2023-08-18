@@ -50,8 +50,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', viewsRouter);
+app.use('/api/', userRouter);
 app.use('/api/products', prodRouter);
-app.use('/api/users', userRouter);
 
 app.listen(8080, ()=>{
 console.log('🚀 Server listening on port 8080');

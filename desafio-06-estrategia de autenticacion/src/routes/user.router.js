@@ -20,6 +20,12 @@ router.post('/login', passport.authenticate('login', {
 
 router.get('/register-github', passport.authenticate('github', {scope:['user:email']}));
 
+router.post('/products', passport.authenticate('github', {
+    successRedirect: '/api/products',
+    failureRedirect: '/error-login',
+    passReqToCallback: true
+}));
+
 
 router.get('/logout', logoutUser);
 

@@ -24,9 +24,9 @@ export const getAllProductsCtrl = async (req, res, next) => {
     const productsMap = products.map((product) => {
       return product.toObject();
     })
-    const logedUser = res.passport;
-    console.log("LogedUser", req.passport);
-    if(logedUser){
+
+    console.log(req.session.passport);
+    if(true){
       res.render('products', {
         title: "Products",
         products: productsMap,
@@ -35,8 +35,7 @@ export const getAllProductsCtrl = async (req, res, next) => {
         hasNextPage: response.hasNextPage,
         hasPrevPage: response.hasPrevPage,
         page: response.page,
-        first_name: logedUser.first_name,
-        last_name: logedUser.last_name,
+        first_name : logedUser.full_name
       });
     }else res.redirect('/error-login')
   } catch (error) {
